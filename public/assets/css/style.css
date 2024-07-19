@@ -1,0 +1,91 @@
+@import url("//fonts.googleapis.com/css?family=Lato");
+@import "../bootstrap/dist/css/bootstrap.min.css";
+/**
+@import "../datatables/datatables.min.css";
+ */
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+@import url("//cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.10.8/sweetalert2.min.css");
+
+body, h1,h2,h3,h4,h5{
+    font-family: "Lato", sans-serif;
+//font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+header a{
+    color: #ffffff !important;
+}
+header .nav-link:hover{
+    color:#000!important;
+    background-color:#f1f1f1!important;
+}
+ul#nav-tab>li>a:hover{
+    color: #ffffff!important;
+    background-color: green;
+}
+.loader {
+    width: 50px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 8px solid;
+    border-color: #000 #0000;
+    animation: l1 1s infinite;
+}
+@keyframes l1 {to{transform: rotate(.5turn)}}
+
+.dt-search{
+    float: right;
+}
+
+.w3-light-grey,.w3-hover-light-grey:hover,.w3-light-gray,.w3-hover-light-gray:hover{
+    color:#000!important;
+    background-color:#f1f1f1!important;
+}
+
+.w3-white,.w3-hover-white:hover{
+    color:#000!important;
+    background-color:#fff!important;
+}
+
+.w3-black,.w3-hover-black:hover{
+    color:#fff!important;
+    background-color:#000!important;
+}
+
+.w3-padding-32{
+    padding-top:32px!important;
+    padding-bottom:32px!important;
+}
+
+.w3-margin-bottom{margin-bottom:16px!important}
+.w3-padding-large{padding:12px 24px!important}
+.w3-margin{margin:16px!important}
+.w3-margin-top{margin-top:16px!important}
+.w3-margin-bottom{margin-bottom:16px!important}
+.w3-margin-left{margin-left:16px!important}
+.w3-margin-right{margin-right:16px!important}
+
+.w3-button:hover{
+    color:#000!important;
+    background-color:#ccc!important;
+}
+
+.w3-dark-grey,.w3-hover-dark-grey:hover,.w3-dark-gray,.w3-hover-dark-gray:hover{
+    color:#fff!important;
+    background-color:#616161!important;
+}
+
+
+
+.w3-bar{
+    min-width: 100%;
+    width: 100%;
+}
+
+.w3-btn,.w3-button{border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap}
+.w3-btn:hover{box-shadow:0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)}
+.w3-btn,.w3-button{-webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+
+
+.dataTables_wrapper {
+    background-color: #100f0f; /* Set background color */
+    font-family: Arial, sans-serif; /* Change font */
+}
