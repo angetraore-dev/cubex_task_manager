@@ -24,6 +24,9 @@ class LoginController
         require_once DOCROOT .'/templates/layout.php';
     }
 
+    /**
+     * @return false|string
+     */
     function loginForm()
     {
         ob_start();
@@ -61,6 +64,23 @@ class LoginController
         </div>
     <?php
         return ob_get_clean();
+    }
+
+    /**
+     * @return void
+     */
+    protected function before()
+    {
+    }
+    /**
+     * @return void
+     */
+    protected function after()
+    {
+    }
+    public function redirect($url)
+    {
+        header('Location:'.HTTP);
     }
 
     public function loginRequest():void
