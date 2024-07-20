@@ -56,9 +56,7 @@ $(document).ready(function (){
                         }).then(() => $('#loginform').get(0).reset())
 
                     }else {
-                        toastMixin.fire({
-                            text:response
-                        }).then(() => window.location.replace("http://localhost/php/taskmanagerapp/dashboard"))
+                        window.location.replace("http://localhost/php/taskmanagerapp"+response)
                     }
 
                 }

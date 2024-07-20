@@ -39,29 +39,36 @@ class Route
         $vals = scandir(DOCROOT.'/src/Controllers');
 
         $uri = self::processURI();
+        //var_dump($uri);
 
-        if ( in_array($uri['controller'].'.php', $vals) ){
+        //Check if uri require a disponible Controller
+        if ( ! in_array($uri['controller'].'.php', $vals) ){
+            require_once DOCROOT .'/templates/404.php';
+        }
 
-            $controller = 'App\Controllers\\'.$uri["controller"];
-            $method = $uri['method'];
-            $args = $uri['args'];
+        //Check if User is authenticate when route is called
+        if ( !Auth::isLoggedIn() && $uri['controller'] == 'DashboardController' || $uri['controller'] == 'AdminController')
+        {
+            $title = 'Error 403';
+            $content = Auth::AuthorizationRequired();
+            require_once DOCROOT .'/templates/layout.php';
+        }
 
-            if ( ! method_exists($controller, $method) ){
+        $controller = 'App\Controllers\\'.$uri["controller"];
+        $method = $uri['method'];
+        $args = $uri['args'];
 
-                $method = 'index';
-                $args ? ( new $controller())->{$method}(...$args) :
-                    ( new $controller())->{$method}()
-                ;
-            }
+        if ( ! method_exists($controller, $method) ){
 
+            $method = 'index';
             $args ? ( new $controller())->{$method}(...$args) :
                 ( new $controller())->{$method}()
             ;
-
-        }else{
-
-            require_once DOCROOT .'/templates/404.php';
         }
+
+        $args ? ( new $controller())->{$method}(...$args) :
+            ( new $controller())->{$method}()
+        ;
     }
 
 }

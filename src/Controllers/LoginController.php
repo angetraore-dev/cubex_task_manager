@@ -6,7 +6,6 @@ use App\Auth;
 use App\Models\Database;
 use App\Models\StaticDb;
 use App\Models\User;
-use JetBrains\PhpStorm\NoReturn;
 
 class LoginController
 {
@@ -101,32 +100,6 @@ class LoginController
         }
     }
 
-    public function destroyAction() {
-        Auth::logout();
-        $this->redirect('/login/showLogoutMessage');
-    }
-
-
-    public function logoutMessage(): bool|string
-    {
-        ob_start();
-        ?>
-        <div class="col-sm-12 jumbotron text-center py-4  my-4" style="min-height: 620px;">
-            <h1 class="text-success bg-white my-2 rounded"><i class="alert-warning"></i> You are successfully logout !</h1>
-            <p><a href="<?= HTTP.'/login';?>" class="btn btn-sm btn-success"><i class="fa fa-reply"></i> login</a></p>
-        </div>
-        <?php
-        return ob_get_clean();
-    }
-
-    /**
-     * @return void
-     */
-    public function showLogoutMessageAction() {
-        $content = $this->logoutMessage();
-        require_once DOCROOT .'/templates/layout.php';
-    }
-
     /**
      * @return void
      */
@@ -141,7 +114,9 @@ class LoginController
                     if ( $user ){
 
                         Auth::login($user);
-                        echo $_SESSION['username'];
+                        //$this->redirect(Auth::getReturnToPage());
+                        //echo $_SESSION['username'];
+                        echo Auth::getReturnToPage();
 
                     }
                     echo false;

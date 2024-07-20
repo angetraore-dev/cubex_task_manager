@@ -51,21 +51,6 @@ class StaticDb extends Database
     /**
      * @return void
      */
-    public static function AuthorizationRequired(): void
-    {
-        ?>
-        <div class="col-sm-12 jumbotron text-center  my-4" style="min-height: 620px;">
-            <h1 class="text-danger"><i class="alert-warning"></i> You have not Authorized to access this resource!</h1>
-            <p><a href="<?= HTTP.'/login';?>" class="btn btn-sm btn-success"><i class="fa fa-reply"></i> Go Back</a></p>
-        </div>
-
-        <?php
-        //header("location: ?page=login");
-    }
-
-    /**
-     * @return void
-     */
     public static function RedirectToDashboardifUserLogged(): void
     {  ?>
         <div class="col-sm-12 jumbotron text-center py-4  my-4" style="min-height: 620px;">
