@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Models\User;
+
 class Auth
 {
     /**
@@ -14,6 +16,7 @@ class Auth
         $_SESSION['user_id'] = $user->getUserId();
         $_SESSION['username'] = $user->getFullname();
         $_SESSION['email'] = $user->getEmail();
+
     }
 
     /**
@@ -46,6 +49,17 @@ class Auth
      */
     public static function getReturnToPage() {
         return $_SESSION['return_to'] ?? '/';
+    }
+
+    /**
+     * @return array|false|mixed
+     */
+    public static function getUser(){
+
+        if (isset($_SESSION['user_id'])){
+            return User::findById($_SESSION['user_id']);
+        }
+        return false;
     }
 
 }

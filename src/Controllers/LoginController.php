@@ -2,18 +2,20 @@
 
 namespace App\Controllers;
 
+use App\Auth;
 use App\Models\Database;
 use App\Models\StaticDb;
 use App\Models\User;
+use JetBrains\PhpStorm\NoReturn;
 
 class LoginController
 {
-    private User $user;
-
-    public function __construct()
-    {
-        $this->user = new User();
-    }
+    //private User $user;
+    //
+    //    public function __construct()
+    //    {
+    //        $this->user = new User();
+    //    }
     /**
      * @return void
      */
@@ -78,26 +80,71 @@ class LoginController
     protected function after()
     {
     }
-    public function redirect($url)
+
+    /**
+     * @param $url
+     * @return void
+     */
+    public function redirect($url): void
     {
-        header('Location:'.HTTP);
+        header('Location:'.HTTP .$url, true, 303);
+        exit();
     }
 
+    /**
+     * @return void
+     */
+    public function requireLogin()
+    {
+        if ( !Auth::getUser()){
+            $this->redirect('/login');
+        }
+    }
+
+    public function destroyAction() {
+        Auth::logout();
+        $this->redirect('/login/showLogoutMessage');
+    }
+
+
+    public function logoutMessage(): bool|string
+    {
+        ob_start();
+        ?>
+        <div class="col-sm-12 jumbotron text-center py-4  my-4" style="min-height: 620px;">
+            <h1 class="text-success bg-white my-2 rounded"><i class="alert-warning"></i> You are successfully logout !</h1>
+            <p><a href="<?= HTTP.'/login';?>" class="btn btn-sm btn-success"><i class="fa fa-reply"></i> login</a></p>
+        </div>
+        <?php
+        return ob_get_clean();
+    }
+
+    /**
+     * @return void
+     */
+    public function showLogoutMessageAction() {
+        $content = $this->logoutMessage();
+        require_once DOCROOT .'/templates/layout.php';
+    }
+
+    /**
+     * @return void
+     */
     public function loginRequest():void
     {
         if ( $_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST) ){
             switch ($_POST){
                 case isset($_POST["login"]):
                     $data = json_decode($_POST["login"]);
-                    $authenticate = User::authenticate($data->floatingEmail, $data->floatingPassword);
+                    $user = User::authenticate($data->floatingEmail, $data->floatingPassword);
 
-                    if ( $authenticate ){
-                        echo "Welcome ".$authenticate->getFullname();
+                    if ( $user ){
+
+                        Auth::login($user);
+                        echo $_SESSION['username'];
+
                     }
                     echo false;
-
-                    //var_dump($authenticate);
-
                     break;
                 default: StaticDb::notFound(); break;
             }

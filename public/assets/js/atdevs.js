@@ -58,7 +58,7 @@ $(document).ready(function (){
                     }else {
                         toastMixin.fire({
                             text:response
-                        }).then(() => console.log(response))
+                        }).then(() => window.location.replace("http://localhost/php/taskmanagerapp/dashboard"))
                     }
 
                 }
