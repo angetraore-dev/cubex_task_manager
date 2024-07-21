@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="#">
+    <link rel="shortcut icon" href="<?= HTTP .'/assets/bootstrap/icons/globe-asia-australia.svg'?>">
     <link rel="stylesheet" href="<?= HTTP .'/assets/css/style.css'?>">
-    <title class="text-uppercase"><?= SITE_NAME ."-". $title ?></title>
+    <title class="text-uppercase"><?= SITE_NAME ." - ". $title ?></title>
 </head>
 <body>
 <header class="text-uppercase fw-bold fs-6">
@@ -19,22 +19,49 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto me-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="<?=HTTP.'/home'?>">home</a>
-                    </li>
+                <?php if (isset($_SESSION['user_id']) && $_SESSION['role'] == 1): ?>
+                    <ul class="navbar-nav ms-auto me-0">
+                        <li class="nav-item">
+                            <span class="nav-link"><?= 'admin ' .$_SESSION['username'] ?></span>
+                        </li>
 
-                    <li class="nav-item">
-                        <a href="<?=HTTP.'/login'?>" class="nav-link">sign in</a>
-                    </li>
+                        <li class="nav-item">
+                            <a href="<?=HTTP.'/logout'?>" class="nav-link">logout</a>
+                        </li>
 
-                </ul>
+                    </ul>
+                <?php elseif (isset($_SESSION['user_id']) && $_SESSION['role'] == 2):?>
+
+                    <ul class="navbar-nav ms-auto me-0">
+                        <li class="nav-item">
+                            <span class="nav-link"><?= 'responsible ' .$_SESSION['username'] ?></span>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="<?=HTTP.'/logout'?>" class="nav-link">logout</a>
+                        </li>
+
+                    </ul>
+                <?php else:?>
+
+                    <ul class="navbar-nav ms-auto me-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="<?=HTTP.'/home'?>">home</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="<?=HTTP.'/login'?>" class="nav-link">sign in</a>
+                        </li>
+
+                    </ul>
+                <?php endif;?>
+
             </div>
 
         </div>
     </nav>
 </header>
-<div class="main">
+<div class="main min-vh-100">
     <?= $content ?>
 </div>
 <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">

@@ -141,7 +141,8 @@ class User
      */
     public static function findByEmail($identifier)
     {
-        return StaticDb::getDB()->query("SELECT * FROM user WHERE email = '$identifier' LIMIT 1", get_called_class(), true);
+        $stmt = "SELECT * FROM user WHERE email = '$identifier' LIMIT 1";
+        return StaticDb::getDB()->query($stmt, get_called_class(), true);
     }
 
     /**
@@ -150,7 +151,7 @@ class User
      */
     public static function findById($identifier)
     {
-        $sql = 'SELECT * FROM user WHERE user_id = ?';
+        $sql = "SELECT * FROM user WHERE user_id = ?";
         return StaticDb::getDB()->prepare($sql, [$identifier], get_called_class(), true);
     }
 
