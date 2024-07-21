@@ -47,10 +47,25 @@ class Route
         }
 
         //Check if User is authenticate when route is called
-        if ( !Auth::isLoggedIn() && $uri['controller'] == 'DashboardController' || $uri['controller'] == 'AdminController')
+        if ( !Auth::isLoggedIn() && $uri['controller'] == 'DashboardController')
         {
             $title = 'Error 403';
             $content = Auth::AuthorizationRequired();
+            require_once DOCROOT .'/templates/layout.php';
+        }
+
+        if ( !Auth::isLoggedIn() && $uri['controller'] == 'AdminController' )
+        {
+            $title = 'Error 403';
+            $content = Auth::AuthorizationRequired();
+            require_once DOCROOT .'/templates/layout.php';
+        }
+
+        if ((Auth::isLoggedIn()) && $uri['controller'] == 'AdminController' && $_SESSION['role'] != 1)
+        {
+            //echo $_SESSION['role'];
+            $title = 'Error 403';
+            $content = Auth::notAuthorized();
             require_once DOCROOT .'/templates/layout.php';
         }
 

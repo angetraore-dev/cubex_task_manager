@@ -115,9 +115,7 @@ class LoginController
 
                         Auth::login($user);
                         //$this->redirect(Auth::getReturnToPage());
-                        //echo $_SESSION['username'];
                         echo Auth::getReturnToPage();
-
                     }
                     echo false;
                     break;
@@ -130,19 +128,5 @@ class LoginController
 
     }
 
-}
 
-// for create user by admin if ( !$isAlready ){
-//                        $passwordHashed = password_hash(
-//                            $data->floatingPassword,
-//                            PASSWORD_DEFAULT
-//                        );
-//                        $field = [
-//                            'fullname' => 'Ange Traore',
-//                            'password' => $passwordHashed,
-//                            'email' => $data->floatingEmail,
-//                            'serviceid' => 1
-//                        ];
-//                        $createUser = $this->user->create($field);
-//                        echo "return of creation " .$createUser;
-//                    }
+}

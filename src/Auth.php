@@ -18,7 +18,8 @@ class Auth
         $_SESSION['email'] = $user->getEmail();
         $_SESSION['role'] = $user->getRoleid();
 
-        if (isset($_SESSION['role']) && $_SESSION['role'] == 1){
+        //isset($_SESSION['role']) &&
+        if ( $_SESSION['role'] == 1){
 
             $_SESSION['return_to'] = '/admin';
 
@@ -101,5 +102,22 @@ class Auth
         <?php
         return ob_get_clean();
     }
+
+    /**
+     * @return bool|string
+     */
+    public static function notAuthorized():bool|string
+    {
+        ob_start();
+        ?>
+        <div class="col-sm-12 jumbotron text-center  my-4" style="min-height: 620px;">
+            <h1 class="text-danger"><i class="alert-warning"></i> Access denied !</h1>
+            <p><a href="<?= HTTP. Auth::getReturnToPage() ;?>" class="btn btn-sm btn-success"><i class="fa fa-reply"></i> Sign in</a></p>
+        </div>
+
+        <?php
+        return ob_get_clean();
+    }
+
 
 }

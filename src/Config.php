@@ -9,7 +9,7 @@ class Config
      */
     public static function conf(): void
     {
-        define("SITE_NAME", 'CUBEX TASK MANAGER');
+        define("SITE_NAME", 'Cubex Task Manager');
         if ($_SERVER["HTTP_HOST"] == 'localhost'){
             define("ENV", 'development');
             $servername = $_SERVER["SERVER_NAME"] ."/php"; //return localhost/php

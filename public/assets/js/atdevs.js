@@ -48,7 +48,6 @@ $(document).ready(function (){
                     $(".fa-spin").addClass('d-none').fadeOut();
 
                     if ( !response ){
-
                         toastMixin.fire({
                             icon: "error",
                             title: "Error",
@@ -56,7 +55,7 @@ $(document).ready(function (){
                         }).then(() => $('#loginform').get(0).reset())
 
                     }else {
-                        window.location.replace("http://localhost/php/taskmanagerapp"+response)
+                       window.location.replace("http://localhost/php/taskmanagerapp"+response)
                     }
 
                 }

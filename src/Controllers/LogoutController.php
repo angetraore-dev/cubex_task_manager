@@ -44,9 +44,9 @@ class LogoutController
             $this->destroyAction();
             $this->showLogoutMessageAction();
         }
-        header('Location:'.HTTP.'/login');
-        exit();
-        //require DOCROOT .'/templates/404.php';
+        //header('Location:'.HTTP.'/login');
+        //exit();
+        require DOCROOT .'/templates/404.php';
     }
 
 }
