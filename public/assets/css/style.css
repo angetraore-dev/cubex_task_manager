@@ -1,4 +1,4 @@
-@import url("//fonts.googleapis.com/css?family=Lato");
+@import url("//fonts.googleapis.com/css2?family=Patrick+Hand&display=swap");
 @import "../bootstrap/dist/css/bootstrap.min.css";
 /**
 @import "../datatables/datatables.min.css";
@@ -7,8 +7,15 @@
 @import url("//cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.10.8/sweetalert2.min.css");
 
 body, h1,h2,h3,h4,h5{
-    font-family: "Lato", sans-serif;
-//font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Patrick Hand", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.patrick-hand-regular {
+    font-family: "Patrick Hand", cursive;
+    font-weight: 400;
+    font-style: normal;
 }
 header a{
     color: #ffffff !important;
