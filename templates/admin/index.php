@@ -3,49 +3,66 @@
 
     <!-- Container for first buttons line -->
     <div class="row d-flex justify-content-between">
-        <div class="col-md-7 g-3 border-2 border-danger">
-            <!-- add department delete department-->
-            <div class="justify-content-around py-2">
-                <button type="button" class="col-4 btn btn-success btn-outline-light text-uppercase border-success">
-                    <span class="fw-bold">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 24 24">
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
-                    </svg> Department
-                    </span>
-                </button>
-                <button type="button" class="col-5 btn btn-danger btn-outline-light text-uppercase border-danger">
-                    <span class="fw-bold">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 24 24">
-                          <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
-                        </svg>
-                    </span>
-                    delete department
-                </button>
-            </div>
 
-            <div class="justify-content-around py-2">
-                <button type="button" class="col-4 btn btn-success btn-outline-light text-uppercase border-success">
-                    <span class="fw-bold">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 24 24">
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
-                    </svg> User
-                    </span>
-                </button>
-                <button type="button" class="col-5 btn btn-danger btn-outline-light text-uppercase border-danger">
-                    <span class="fw-bold">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 24 24">
-                          <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
-                        </svg>
-                    </span>
-                    delete user
-                </button>
+        <!-- Left Buttons div -->
+        <div class="col-md-7 mt-4">
+            <div class="col-4 border p-4 shadow shadow-lg bg-body-tertiary rounded rounded-2">
+                <!-- add department delete department-->
+                <fieldset class="border border-2 p-2 fw-bold text-uppercase">
+                    <legend  class="float-none w-auto">Department</legend>
+                    <div class="d-flex col justify-content-between">
+
+                        <div class="d-flex gap-2 m-2">
+                            <button type="button" id="add-dep" class="add-dep col btn btn-success btn-outline-light text-uppercase border-success">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="d-flex gap-2 m-2">
+                            <button type="button" id="del-dep" class="del-dep col btn btn-danger btn-outline-light text-uppercase border-danger">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- add User delete delete user -->
+                <fieldset class="border border-2 p-2 fw-bold text-end text-uppercase">
+                    <legend  class="float-none w-auto">User</legend>
+                    <div class="d-flex col justify-content-between">
+
+                        <div class="d-flex gap-2 m-2">
+                            <button type="button" id="add-user" class="add-user col btn btn-success btn-outline-light text-uppercase border-success">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="d-flex gap-2 m-2">
+                            <button type="button" id="del-user" class="del-user col btn btn-danger btn-outline-light text-uppercase border-danger">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
             </div>
         </div>
 
-        <!-- filter for departments and responsibles -->
+        <!-- Right Buttons div -->
         <div class="col-md-4 g-3 border-2 border-primary">
+            <!--filter for departments and responsibles-->
            <div class="justify-content-around py-2 d-inline-flex">
 
+               <!-- List of all departments -->
                <div class="dropdown mx-2">
                    <button class="btn btn-outline-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                        departments
@@ -57,8 +74,7 @@
                    </ul>
                </div>
 
-
-
+               <!-- List of all responsible -->
                <div class="dropdown mx-2">
                    <button class="btn btn-outline-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                        responsibles
@@ -69,20 +85,29 @@
                        <li><a class="dropdown-item" href="#">Something else here</a></li>
                    </ul>
                </div>
-
            </div>
-
-
         </div>
     </div>
 
-    <!-- Container for add a Task -->
+    <!-- Centered Button -->
     <div class="row d-flex justify-content-center align-items-center my-4">
-        <button type="button" class="btn btn-success btn-outline-light col-4 text-uppercase">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 24 24">
-                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
-            </svg>Add Task
-        </button>
+        <div class="col-4 shadow-lg mb-5 p-4">
+            <fieldset class="border border-2 p-2 fw-bold text-center text-uppercase">
+
+                <legend  class="float-none w-auto">add task</legend>
+
+                <div class="d-flex col  align-items-center justify-content-center">
+                    <div>
+                        <button type="button" id="add-user" class="add-user col btn btn-success btn-outline-light text-uppercase border-success">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
     </div>
 
 </div>
