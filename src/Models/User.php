@@ -13,7 +13,12 @@ class User
     protected $password;
     protected $email;
     protected $roleid;
-    protected $serviceid;
+    protected $department;
+    private Database $database;
+    function __construct()
+    {
+        $this->database = new Database();
+    }
 
     /**
      * @return mixed
@@ -98,33 +103,46 @@ class User
     /**
      * @return mixed
      */
-    public function getServiceid()
+    public function getDepartment()
     {
-        return $this->serviceid;
+        return $this->department;
     }
 
     /**
-     * @param mixed $serviceid
+     * @param mixed $department
      * @return User
      */
-    public function setServiceid($serviceid)
+    public function setDepartment($department)
     {
-        $this->serviceid = $serviceid;
+        $this->department = $department;
         return $this;
     }
 
-    private Database $database;
-    function __construct()
-    {
-        $this->database = new Database();
-    }
     /**
      * @return mixed
      */
     public static function read()
     {
-        return StaticDb::getDB()->query("SELECT * FROM user", get_called_class(), false);
+        return StaticDb::getDB()->query("SELECT * FROM user", get_called_class());
     }
+
+    function delGrpedForm()
+    {
+        $userList = self::read();
+        if ($userList):
+
+        ?>
+        <form class="row g-3 needs-validation delgped" id="delgped" novalidate>
+            <?php foreach ($userList as $item): ?>
+                <input required type="checkbox" name="<?='list_'.$item->getUserId()?>" value="<?=$item->getUserId()?>"><?=$item->getFullname()?>
+            <?php endforeach;?>
+            <div class="invalid-feedback">You must select at least one item</div>
+            <button type="button" class="btn btn-secondary cancelDelGpedUser" data-bs-dismiss="modal">cancel</button>
+            <button type="button" id="delGpedUser" name="delGpedUser" class="btn btn-primary">delete</button>
+        </form>
+    <?php else: echo "<p class='text-muted text-center'>No data found</p>"; endif;
+    }
+
 
     /**
      * @param string $identifier
