@@ -50,12 +50,26 @@ class AdminController
                     echo $save;
                     break;
                 case isset($_POST["delUserForm"]):
+                    //Display form list of user
                     $this->user->delGrpedForm();
                     break;
                 case isset($_POST["deleteUser"]):
                     $data = json_decode($_POST["deleteUser"]);
                     foreach ($data as $key => $value){
                         $del = $this->user->delete($value);
+                    }
+                    echo $del;
+                    break;
+
+                case isset($_POST["delDepForm"]):
+                    $this->department->delGrpedForm();
+                    break;
+
+                case isset($_POST["deleteDepartment"]):
+                    $data = json_decode($_POST["deleteDepartment"]);
+                    $del = 0;
+                    foreach ($data as $value){
+                        $del = $this->department->delete($value);
                     }
                     echo $del;
                     break;

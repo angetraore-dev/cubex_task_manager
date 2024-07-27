@@ -1,5 +1,22 @@
 $(document).ready(function (){
     console.log("angetraore-dev: +225 0507 333 944");
+
+    //Check Form Input
+    function checkform(form) {
+        // get all the inputs within the submitted form
+        var inputs = form.getElementsByTagName('input');
+        for (var i = 0; i < inputs.length; i++) {
+            // only validate the inputs that have the required attribute
+            if(inputs[i].hasAttribute("required")){
+                if(inputs[i].value == ""){
+                    // found an empty field that is required
+                    alert("Please fill all required fields");
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     //Toast
     let toastMixin = Swal.mixin({
         toast: true,
@@ -101,6 +118,58 @@ $(document).ready(function (){
         $("#departmentForm").get(0).reset();
     })
 
+    //Display del department form on click
+    $('.delDep').click(function (){
+        $.post({
+            url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+            data:{delDepForm:1},
+            success:function (response) {
+                $(".delDepList").html(response);
+            }
+        })
+    })
+
+    $(document).on("click", "form #delGpedDep", function (){
+        let form = document.querySelector(".delgped-dep");
+
+        if (!form.checkValidity()){
+            form.classList.add('was-validated')
+        }else {
+            let obj={};
+            let formdata = new FormData(form);
+            formdata.forEach((value, key) => obj[key]=value);
+            if (jQuery.isEmptyObject(obj)){
+
+                toastMixin.fire({
+                    icon:"warning",
+                    title:"Please select someone to delete!",
+                    text: "Please select someone to delete"
+                })
+
+            }else {
+                $.post({
+                    url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+                    data:{deleteDepartment:JSON.stringify(obj)},
+                    success:function (response) {
+                        console.log(response)
+                        if (response != true){
+
+                            toastMixin.fire({
+                                icon:"error",
+                                title:"Something went wrong!",
+                                text: "please contact the developer."
+                            })
+                        }else {
+                            toastMixin.fire({
+                                text: "Department sucessfully deleted"
+                            }).then(() => window.location.reload())
+                        }
+                    }
+                })
+            }
+        }
+    })
+
     //User Process
     $('#saveUser').click(function (){
         let form = document.querySelector('#userForm');
@@ -154,27 +223,40 @@ $(document).ready(function (){
             let obj={};
             let formData = new FormData(data);
             formData.forEach((value,key) => obj[key] = value);
+            if (jQuery.isEmptyObject(obj)){
+                toastMixin.fire({
+                    icon:"warning",
+                    title:"Please select someone to delete!",
+                    text: "Please select someone to delete"
+                })
+            }else {
+                $.post({
+                    url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+                    data:{deleteUser:JSON.stringify(obj)},
+                    success:function (response){
+                        if (response == true){
 
-            $.post({
-                url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
-                data:{deleteUser:JSON.stringify(obj)},
-                success:function (response){
-                    if (response == true){
+                            toastMixin.fire({
+                                text: "User sucessfully deleted"
+                            }).then(() => window.location.reload())
 
-                        toastMixin.fire({
-                            text: "User sucessfully deleted"
-                        }).then(() => window.location.reload())
-                    }else {
-                        toastMixin.fire({
-                            icon:"error",
-                            title:"Something went wrong!",
-                            text: "please contact the developer."
-                        })
+                        }else {
+                            toastMixin.fire({
+                                icon:"error",
+                                title:"Something went wrong!",
+                                text: "please contact the developer."
+                            })
+                        }
                     }
-                }
-            })
+                })
+
+            }
         }
     })
+
+
+
+
 
 })
 //$(document).on('click', 'li', function(){

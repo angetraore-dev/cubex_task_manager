@@ -130,12 +130,15 @@ class User
     {
         $userList = self::read();
         if ($userList):
-
         ?>
         <form class="row g-3 needs-validation delgped" id="delgped" novalidate>
-            <?php foreach ($userList as $item): ?>
-                <input required type="checkbox" name="<?='list_'.$item->getUserId()?>" value="<?=$item->getUserId()?>"><?=$item->getFullname()?>
-            <?php endforeach;?>
+            <?php foreach ($userList as $item): if($_SESSION["user_id"] != $item->getUserId()):?>
+                <div class="input-group <?=$item->getUserId()?>">
+                    <input class="form-check-input" required type="checkbox" id="<?='list_'.$item->getUserId()?>" name="<?='list_'.$item->getUserId()?>" value="<?=$item->getUserId()?>">
+                    <label class="form-check-label mx-1" for="<?='list_'.$item->getUserId()?>"><?=$item->getFullname()?></label>
+                </div>
+
+            <?php endif; endforeach;?>
             <div class="invalid-feedback">You must select at least one item</div>
             <button type="button" class="btn btn-secondary cancelDelGpedUser" data-bs-dismiss="modal">cancel</button>
             <button type="button" id="delGpedUser" name="delGpedUser" class="btn btn-primary">delete</button>
