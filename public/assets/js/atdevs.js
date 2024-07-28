@@ -168,12 +168,12 @@ $(document).ready(function (){
             url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
             data:{userByDep:id},
             success:function (response) {
-                //console.log(response)
-                $(".userbydepartment").html(response);
+                console.log(response)
+                $("#userbydepartment-1").html(response);
             }
         })
         //display all task by the concerned department
-        console.log(id)
+        //console.log(id)
     })
 
     //User Process

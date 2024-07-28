@@ -95,9 +95,9 @@ ob_start();?>
                     <button class="btn btn-outline-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         responsibles
                     </button>
-                    <div class="dropdown-menu userbydepartment">
+                    <ul class="dropdown-menu" id="userbydepartment-1">
 
-                    </div>
+                    </ul>
 
                 </div>
             </div>

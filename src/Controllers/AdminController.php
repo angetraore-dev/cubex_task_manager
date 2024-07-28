@@ -79,18 +79,18 @@ class AdminController
                     $data = $this->user->findByDepartmentId($id);
                     if ($data){
                         $output = "";
-
-                        $output .="<ul class='dropdown-menu' id='userbydepartment'>";
+                        //$output .="<ul class='dropdown-menu' id='userbydepartment'>";
                         foreach ($data as $datum){
-                            $output .="<li class='dropdown-item' id='".$datum->getUserId()."'>".$datum->getUserId() .$datum->getFullname()."</li>";
+                            $output .="<li class='dropdown-item list-unstyled' id='".$datum->getUserId()."'>".$datum->getUserId() .$datum->getFullname()."</li>";
                         }
 
-                        $output .= "</ul>";
+                        //$output .= "</ul>";
                         echo $output;
                     }else{
+                        echo "<li>No records found</li>";
 
                     }
-                    var_dump($data);
+                    //var_dump($data);
 
             }
         }
