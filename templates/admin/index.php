@@ -69,13 +69,21 @@ ob_start();?>
             <div class="d-flex ms-0 me-auto shadow-lg justify-content-around rounded rounded-2 mb-5 p-2">
 
                 <!-- List of all departments -->
-                <div class="dropdown mx-2">
+                <div class="dropdown mx-2 departmentlist" id="departmentlist">
                     <button class="btn btn-outline-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         departments
                     </button>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu depList">
                         <?php $dropdown_department = Department::readAll(); if($dropdown_department): foreach ($dropdown_department as $item): ?>
-                            <li class="list-unstyled deptarment text-center" data-id="<?= $item->getDepartmentId()?>"><a class="dropdown-item" href="#" data-id="<?= $item->getDepartmentId()?>" ><?= $item->getLibelle()?></a></li>
+                            <li class="list-unstyled deptarment" data-id="<?= $item->getDepartmentId()?>">
+                                <a class="dropdown-item" href="#">
+                                    <span class="d-block">
+                                    <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="<?=$item->getColor()?>"></rect></svg>
+                                    <?= $item->getLibelle()?>
+                                    </span>
+                                </a>
+
+                            </li>
                         <?php endforeach; else:?>
                             <li class="text-center text-muted"><span> No records found</span></li>
                         <?php endif;?>
@@ -87,11 +95,10 @@ ob_start();?>
                     <button class="btn btn-outline-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         responsibles
                     </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">loop foreach</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
+                    <div class="dropdown-menu userbydepartment">
+
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -137,6 +144,13 @@ ob_start();?>
                     <div class="form-group">
                         <label for="department_libelle">Department name</label>
                         <input type="text" name="department_libelle" id="department_libelle" class="form-control" required>
+                        <div class="invalid-feedback">
+                            enter a department
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="department_color">Department color</label>
+                        <input type="color" name="department_color" id="department_color" class="form-control" required>
                         <div class="invalid-feedback">
                             enter a department
                         </div>

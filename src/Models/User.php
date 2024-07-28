@@ -170,10 +170,20 @@ class User
      * @param $identifier
      * @return array|false|mixed
      */
-    public static function findById($identifier)
+    public static function findById($identifier): mixed
     {
         $sql = "SELECT * FROM user WHERE user_id = ?";
         return StaticDb::getDB()->prepare($sql, [$identifier], get_called_class(), true);
+    }
+
+    /**
+     * @param $departmentid
+     * @return array|false|mixed
+     */
+    public static function findByDepartmentId($departmentid): mixed
+    {
+        $sql = "SELECT * FROM user WHERE department = ?";
+        return StaticDb::getDB()->prepare($sql,[$departmentid], get_called_class());
     }
 
     /**
@@ -181,7 +191,7 @@ class User
      * @param $password
      * @return array|false|mixed
      */
-    public static function authenticate($email, $password)
+    public static function authenticate($email, $password): mixed
     {
         $user = static::findByEmail($email);
         if ($user){

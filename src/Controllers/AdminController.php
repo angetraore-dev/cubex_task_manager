@@ -31,7 +31,7 @@ class AdminController
                 case isset($_POST["saveDepartment"]):
 
                     $item = json_decode($_POST["saveDepartment"]);
-                    $field = ['libelle' => $item->department_libelle];
+                    $field = ['libelle' => $item->department_libelle, 'color'=> $item->department_color];
                     $save = $this->department->create($field);
                     echo $save;
                     break;
@@ -73,6 +73,24 @@ class AdminController
                     }
                     echo $del;
                     break;
+
+                case isset($_POST["userByDep"]):
+                    $id = $_POST["userByDep"];
+                    $data = $this->user->findByDepartmentId($id);
+                    if ($data){
+                        $output = "";
+
+                        $output .="<ul class='dropdown-menu' id='userbydepartment'>";
+                        foreach ($data as $datum){
+                            $output .="<li class='dropdown-item' id='".$datum->getUserId()."'>".$datum->getUserId() .$datum->getFullname()."</li>";
+                        }
+
+                        $output .= "</ul>";
+                        echo $output;
+                    }else{
+
+                    }
+                    var_dump($data);
 
             }
         }

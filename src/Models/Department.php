@@ -8,6 +8,7 @@ class Department
 {
     protected $department_id;
     protected $libelle;
+    protected $color;
 
     private Database $database;
     function __construct()
@@ -23,6 +24,13 @@ class Department
         return $this->department_id;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getColor()
+    {
+        return $this->color;
+    }
 
     /**
      * @return mixed
@@ -39,6 +47,16 @@ class Department
     public function setLibelle($libelle)
     {
         $this->libelle = $libelle;
+        return $this;
+    }
+
+    /**
+     * @param mixed $color
+     * @return Department
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
         return $this;
     }
 

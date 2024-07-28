@@ -1,22 +1,6 @@
 $(document).ready(function (){
     console.log("angetraore-dev: +225 0507 333 944");
 
-    //Check Form Input
-    function checkform(form) {
-        // get all the inputs within the submitted form
-        var inputs = form.getElementsByTagName('input');
-        for (var i = 0; i < inputs.length; i++) {
-            // only validate the inputs that have the required attribute
-            if(inputs[i].hasAttribute("required")){
-                if(inputs[i].value == ""){
-                    // found an empty field that is required
-                    alert("Please fill all required fields");
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
     //Toast
     let toastMixin = Swal.mixin({
         toast: true,
@@ -107,7 +91,13 @@ $(document).ready(function (){
                     }else {
                         toastMixin.fire({
                             text: "Department sucessfully create"
-                        }).then(() => $("#departmentForm").get(0).reset())
+                        }).then(() => {
+                            $("#departmentForm").get(0).reset();
+                            var myModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('addDepartment'));
+                            myModal.hide();
+
+                            $("#departmentlist").load(location.href+" #departmentlist>*","");
+                        })
                     }
                 }
             })
@@ -170,10 +160,25 @@ $(document).ready(function (){
         }
     })
 
+    //display task by department and users list by department
+    $(document).on("click", 'li[data-id] a', function (){
+        const id = $(this).closest('li').data('id');
+        //display user of the department concerned
+        $.post({
+            url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+            data:{userByDep:id},
+            success:function (response) {
+                //console.log(response)
+                $(".userbydepartment").html(response);
+            }
+        })
+        //display all task by the concerned department
+        console.log(id)
+    })
+
     //User Process
     $('#saveUser').click(function (){
         let form = document.querySelector('#userForm');
-        //console.log(form)
         if (!form.checkValidity()){
             form.classList.add('was-validated');
         }else {
