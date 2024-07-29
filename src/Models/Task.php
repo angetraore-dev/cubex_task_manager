@@ -221,8 +221,8 @@ class Task
     public static function findTaskByJoinDepartment($departmentId): mixed
     {
         $sql =
-            "SELECT task_id, title, todo, due_date, created_at, isChecked, isArchived, userid, isCheckedByAdmin, file 
-            FROM task JOIN user u on u.user_id = task.userid WHERE u.department = ?";
+            "SELECT task_id, title, todo, due_date, created_at, isChecked, isArchived, task.userid, isCheckedByAdmin, file, d.libelle, r.role_name, u.fullname 
+            FROM task JOIN user u on u.user_id = task.userid JOIN role r on r.role_id = u.roleid JOIN department d on d.department_id = u.department WHERE u.department = ?";
         return StaticDb::getDB()->prepare($sql, [$departmentId], __CLASS__, false);
     }
 

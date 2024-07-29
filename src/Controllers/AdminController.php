@@ -105,9 +105,52 @@ class AdminController
                 case isset($_POST["depTask"]):
                     $departmentId = $_POST["depTask"];
                     $departmentTasks = Task::findTaskByJoinDepartment($departmentId);
-                    if ($departmentTasks){
-                        //display task of department
-                        echo "he";
+                    //var_dump($departmentTasks);
+                    if ($departmentTasks){?>
+                        <div class="table-responsive" id="DepartmentTasksTableDiv">
+                            <table class="table text-uppercase text-center caption-top" id="DepartmentTasksTable">
+                                <caption><h3><?=$departmentTasks[0]->libelle. "'s department"?></h3></caption>
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Tasks</th>
+                                    <th scope="col">Checked</th>
+                                    <th scope="col">Department</th>
+                                    <th scope="col">Responsible</th>
+                                    <th scope="col">Date & Hour</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php $i=1; foreach ($departmentTasks as $task):?>
+                                    <tr>
+                                        <td><?=$i++?></td>
+                                        <td><?=$task->getTitle() .'<br>' .$task->getTodo()?></td>
+                                        <td>
+                                            <div class="input-group-sm">
+                                                <input type="checkbox" value="<?=$task->getIsChecked()?>" name="responsible" id="responsible">
+                                                <label for="responsible">Done by responsible</label>
+                                            </div>
+                                            <div class="input-group-sm">
+                                                <input type="checkbox" value="<?=$task->getIsCheckedByAdmin()?>" name="admin" id="admin">
+                                                <label for="admin">Done by Admin</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                                <span class="d-block">
+                                                <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="<?=$task->color?>"></rect></svg>
+                                                <?= $task->libelle?>
+                                                </span>
+                                        </td>
+                                        <td><?=$task->fullname?></td>
+                                        <td><?php $f = new DateTime($task->due_date); echo $f->format('Y-m-d, H:i A') ?></td>
+                                    </tr>
+                                <?php endforeach;?>
+                                </tbody>
+
+                            </table>
+                        </div>
+
+                        <?php
                     }else{
                         //display no task exist for thiis department
                         echo "<p class='text-muted text-center'>No records found for this department </p>";
@@ -118,15 +161,15 @@ class AdminController
                     $userid = $_POST["userTask"];
                     $userTasks = Task::findByUserId($userid);
                     if ($userTasks){?>
-                        <div class="table-responsive" id="userTaskTable">
-                            <table class="table text-uppercase text-center">
+                        <div class="table-responsive" id="userTaskTableDiv">
+                            <table class="table text-uppercase text-center caption-top" id="userTaskTable">
+                                <caption class="text-dark fw-bold"><h3><?=$userTasks[0]->fullname."'s tasks"?></h3></caption>
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Tasks</th>
                                         <th scope="col">Checked</th>
                                         <th scope="col">Department</th>
-                                        <th scope="col">Responsible</th>
                                         <th scope="col">Date & Hour</th>
                                     </tr>
                                 </thead>
@@ -134,7 +177,7 @@ class AdminController
                                     <?php $i=1; foreach ($userTasks as $task):?>
                                         <tr>
                                             <td><?=$i++?></td>
-                                            <td><?=$task->getTitle() .'<br>' .$task->getTodo()?></td>
+                                            <td><?=$task->getTitle() .'<br>' .$task->getTodo() .'<br>'.$task->getFile()?></td>
                                             <td>
                                                 <div class="input-group-sm">
                                                     <input type="checkbox" value="<?=$task->getIsChecked()?>" name="responsible" id="responsible">
@@ -151,8 +194,7 @@ class AdminController
                                                 <?= $task->libelle?>
                                                 </span>
                                             </td>
-                                            <td><?=$task->fullname?></td>
-                                            <td><?= date('Y-m-d, H:i A',$task->getDueDate()) ?></td>
+                                            <td><?php $f = new DateTime($task->due_date); echo $f->format('Y-m-d H:i A') ?></td>
                                         </tr>
                                     <?php endforeach;?>
                                 </tbody>
