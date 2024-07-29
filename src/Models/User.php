@@ -15,6 +15,7 @@ class User
     protected $roleid;
     protected $department;
     private Database $database;
+
     function __construct()
     {
         $this->database = new Database();

@@ -3,17 +3,21 @@
 namespace App\Controllers;
 
 use App\Models\Department;
+use App\Models\Task;
 use App\Models\User;
+use DateTime;
 
 class AdminController
 {
     private Department $department;
     private User $user;
+    private Task $task;
 
     public function __construct()
     {
         $this->department = new Department();
         $this->user = new User();
+        $this->task = new Task();
 
     }
 
@@ -23,17 +27,22 @@ class AdminController
         require_once DOCROOT .'/templates/admin/index.php';
     }
 
+    /**
+     * @throws \Exception
+     */
     public function adminRequest()
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST))
         {
             switch ($_POST){
+
                 case isset($_POST["saveDepartment"]):
 
                     $item = json_decode($_POST["saveDepartment"]);
                     $field = ['libelle' => $item->department_libelle, 'color'=> $item->department_color];
                     $save = $this->department->create($field);
                     echo $save;
+
                     break;
                 case isset($_POST["saveUser"]):
 
@@ -48,10 +57,12 @@ class AdminController
                     ];
                     $save = $this->user->create($field);
                     echo $save;
+
                     break;
                 case isset($_POST["delUserForm"]):
                     //Display form list of user
                     $this->user->delGrpedForm();
+
                     break;
                 case isset($_POST["deleteUser"]):
                     $data = json_decode($_POST["deleteUser"]);
@@ -59,12 +70,12 @@ class AdminController
                         $del = $this->user->delete($value);
                     }
                     echo $del;
-                    break;
 
+                    break;
                 case isset($_POST["delDepForm"]):
                     $this->department->delGrpedForm();
-                    break;
 
+                    break;
                 case isset($_POST["deleteDepartment"]):
                     $data = json_decode($_POST["deleteDepartment"]);
                     $del = 0;
@@ -72,25 +83,87 @@ class AdminController
                         $del = $this->department->delete($value);
                     }
                     echo $del;
-                    break;
 
+                    break;
                 case isset($_POST["userByDep"]):
+
                     $id = $_POST["userByDep"];
                     $data = $this->user->findByDepartmentId($id);
                     if ($data){
                         $output = "";
-                        //$output .="<ul class='dropdown-menu' id='userbydepartment'>";
                         foreach ($data as $datum){
-                            $output .="<li class='dropdown-item list-unstyled' id='".$datum->getUserId()."'>".$datum->getUserId() .$datum->getFullname()."</li>";
-                        }
 
-                        //$output .= "</ul>";
+                            $output .="<li class='dropdown-item list-unstyled' data-id='".$datum->getUserId()."'><p>".$datum->getFullname()."</p></li>";
+                        }
+                        $output .="<li class='dropdown-item list-unstyled alldep' data-id='".$id."'>all department's tasks</li>";
                         echo $output;
                     }else{
                         echo "<li>No records found</li>";
-
                     }
-                    //var_dump($data);
+
+                    break;
+                case isset($_POST["depTask"]):
+                    $departmentId = $_POST["depTask"];
+                    $departmentTasks = Task::findTaskByJoinDepartment($departmentId);
+                    if ($departmentTasks){
+                        //display task of department
+                    }else{
+                        //display no task exist for thiis department
+                        echo "<p class='text-muted text-center'>No records found for this department </p>";
+                    }
+                    break;
+                case isset($_POST["userTask"]):
+                    $userid = $_POST["userTask"];
+                    $userTasks = Task::findByUserId($userid);
+                    //$userTasks = $this->task->findByUserId2($userid);
+                    //var_dump($userTasks);
+                    if ($userTasks){?>
+                        <div class="table-responsive" id="userTaskTable">
+                            <table class="table text-uppercase text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Tasks</th>
+                                        <th scope="col">Checked</th>
+                                        <th scope="col">Department</th>
+                                        <th scope="col">Responsible</th>
+                                        <th scope="col">Date & Hour</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $i=1; foreach ($userTasks as $task):?>
+                                        <tr>
+                                            <td><?=$i++?></td>
+                                            <td><?=$task->getTitle() .'<br>' .$task->getTodo()?></td>
+                                            <td>
+                                                <div class="input-group-sm">
+                                                    <input type="checkbox" value="<?=$task->getIsChecked()?>" name="responsible" id="responsible">
+                                                    <label for="responsible">Done by responsible</label>
+                                                </div>
+                                                <div class="input-group-sm">
+                                                    <input type="checkbox" value="<?=$task->getIsCheckedByAdmin()?>" name="admin" id="admin">
+                                                    <label for="admin">Done by Admin</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="d-block">
+                                                <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="<?=$task->color?>"></rect></svg>
+                                                <?= $task->libelle?>
+                                                </span>
+                                            </td>
+                                            <td><?=$task->fullname?></td>
+                                            <td><?= date('Y-m-d, H:i A',$task->getDueDate()) ?></td>
+                                        </tr>
+                                    <?php endforeach;?>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    <?php
+                    }else{
+                        echo "<p class='text-muted text-center'>No user tasks found </p>";
+                    }
+
 
             }
         }

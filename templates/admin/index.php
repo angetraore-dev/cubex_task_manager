@@ -126,6 +126,11 @@ ob_start();?>
         </div>
     </div>
 
+    <div class="row">
+        <div class="row my-2 d-none" id="user-task-table"></div>
+        <div class="row my-2 d-none" id="department-task-table"></div>
+    </div>
+
 </div>
 <?php $content = ob_get_clean(); ?>
 

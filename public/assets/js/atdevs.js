@@ -160,7 +160,7 @@ $(document).ready(function (){
         }
     })
 
-    //display task by department and users list by department
+    //display task by USER
     $(document).on("click", 'li[data-id] a', function (){
         const id = $(this).closest('li').data('id');
         //display user of the department concerned
@@ -168,12 +168,42 @@ $(document).ready(function (){
             url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
             data:{userByDep:id},
             success:function (response) {
-                console.log(response)
+                //console.log(response)
                 $("#userbydepartment-1").html(response);
             }
         })
-        //display all task by the concerned department
-        //console.log(id)
+
+    })
+
+    //display task table by USER
+    $(document).on("click", 'li[data-id] p', function (){
+        const userid = $(this).closest('li').data('id');
+        console.log(userid)
+        $.post({
+            url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+            data:{userTask:userid},
+            success:function (response) {
+                //display table of user's task
+                $('#department-task-table').load(location.href+" #department-task-table>*","");
+                $("#user-task-table").removeClass('d-none').fadeIn().html(response);
+            }
+        })
+    })
+
+    //display task table by DEPARTMENT
+    $(document).on('click', 'li.alldep', function (){
+        const departmentId = $(this).closest('li').data('id');
+        $.post({
+            url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+            data:{depTask:departmentId},
+            success:function (response){
+                //diplay table of specific department
+               // $("#user-task-table").addClass('d-none').fadeOut();
+                $('#user-task-table').load(location.href+" #user-task-table>*","");
+
+                $("#department-task-table").removeClass('d-none').fadeIn().html(response);
+            }
+        })
     })
 
     //User Process

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use PDO;
 
+#[AllowDynamicProperties]
 class Department
 {
     protected $department_id;
