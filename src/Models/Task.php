@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use PDO;
+use \AllowDynamicProperties;
 
 #[AllowDynamicProperties]
 class Task
@@ -211,13 +212,6 @@ class Task
     {
         $sql = "SELECT task_id, d.color, title, todo, due_date, created_at, isChecked, isArchived, userid, isCheckedByAdmin, file, u.user_id, u.fullname, u.roleid, u.department, d.department_id, d.libelle, d.color FROM task JOIN user u on u.user_id = task.userid JOIN role r on r.role_id = u.roleid JOIN department d on d.department_id = u.department WHERE userid = ? ";
         return StaticDb::getDB()->prepare($sql, [$userid], get_called_class());
-    }
-
-    public function findByUserId2($userid):mixed
-    {
-        $sql = "SELECT task_id, d.color, title, todo, due_date, created_at, isChecked, isArchived, userid, isCheckedByAdmin, file, user_id, fullname, password, email, roleid, department, department_id, libelle, color FROM task JOIN user u on u.user_id = task.userid JOIN role r on r.role_id = u.roleid JOIN department d on d.department_id = u.department WHERE userid = ? ";
-        $db = $this->database->prepare($sql, [$userid], get_called_class());
-        return $db;
     }
 
     /**

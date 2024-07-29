@@ -4,6 +4,8 @@ namespace App\Models;
 
 use PDO;
 
+use \AllowDynamicProperties;
+
 #[AllowDynamicProperties]
 class Department
 {

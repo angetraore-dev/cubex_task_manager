@@ -5,7 +5,9 @@ namespace App\Models;
 use Exception;
 use PDO;
 //use App\Models\Database;
+use \AllowDynamicProperties;
 
+#[AllowDynamicProperties]
 class User
 {
     protected $user_id;

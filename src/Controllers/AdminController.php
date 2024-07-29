@@ -107,16 +107,16 @@ class AdminController
                     $departmentTasks = Task::findTaskByJoinDepartment($departmentId);
                     if ($departmentTasks){
                         //display task of department
+                        echo "he";
                     }else{
                         //display no task exist for thiis department
                         echo "<p class='text-muted text-center'>No records found for this department </p>";
                     }
                     break;
                 case isset($_POST["userTask"]):
+
                     $userid = $_POST["userTask"];
                     $userTasks = Task::findByUserId($userid);
-                    //$userTasks = $this->task->findByUserId2($userid);
-                    //var_dump($userTasks);
                     if ($userTasks){?>
                         <div class="table-responsive" id="userTaskTable">
                             <table class="table text-uppercase text-center">
@@ -163,6 +163,7 @@ class AdminController
                     }else{
                         echo "<p class='text-muted text-center'>No user tasks found </p>";
                     }
+                    break;
 
 
             }
