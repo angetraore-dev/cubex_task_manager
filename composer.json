@@ -1,0 +1,37 @@
+{
+  "name": "vendor_name/taskmanagerapp",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "angetraore-dev",
+      "email": "angetraore.dev@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    },
+    "classmap": [
+      "src"
+    ]
+  },
+  "require": {
+    "twbs/bootstrap": "v5.3.3",
+    "twbs/bootstrap-icons": "^v1.11.1",
+    "datatables/datatables": "1.*",
+    "datatables.net/datatables.net": "^2.0.5",
+    "ext-pdo": "*",
+    "ext-gd": "*"
+  },
+  "scripts": {
+    "post-update-cmd": [
+      "cp -R vendor/twbs/bootstrap/dist public/assets/bootstrap",
+      "cp -R vendor/twbs/bootstrap-icons/icons public/assets/bootstrap",
+      "cp -R vendor/datatables/datatables public/assets",
+      "cp -R vendor/components/jquery public/assets",
+      "cp -R vendor/datatables.net/datatables.net public/assets"
+    ]
+  }
+}
