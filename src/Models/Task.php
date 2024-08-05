@@ -335,7 +335,7 @@ class Task
                 </div>
             <div class="col-md-6 mb-3">
                     <label for="file" class="form-label">File</label>
-                    <input type="file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" name="file" id="file" class="form-control" multiple="multiple">
+                    <input type="file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" name="file[]" id="file" class="form-control" multiple="multiple">
                 </div>
             <div class="text-end mb-3">
                     <button type="button" class="btn btn-sm btn-secondary closeTaskFormBtn">Cancel</button>

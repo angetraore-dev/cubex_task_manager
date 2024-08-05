@@ -7,6 +7,7 @@ use App\Models\StaticDb;
 use App\Models\Task;
 use App\Models\User;
 use DateTime;
+use App\Config;
 
 class AdminController
 {
@@ -232,17 +233,37 @@ class AdminController
 
     public function addtaskRequest():void
     {
-        $field = array();
         $arrFiles = $_FILES['file'];
+        //</pre>Array
+        //(
+        //    [name] => armoiries.png
+        //    [full_path] => armoiries.png
+        //    [type] => image/png
+        //    [tmp_name] => /private/var/tmp/phprvLVOl
+        //    [error] => 0
+        //    [size] => 2426190
+        //)
         if (!empty($arrFiles)){
-            for ($i =0; $i < count($arrFiles); $i++)
-                foreach ($arrFiles as $key => $name){
-                    var_dump($name);
-                }
-            //$field['field'] = json_encode($arrFiles[$i], JSON_PRETTY_PRINT);
-        }
-        echo print_r(json_decode($field['field']), true);
+            $targetDir =  'assignedFiles';
 
+            foreach ($arrFiles['tmp_name'] as $key => $tmp_name){
+
+                foreach ( $arrFiles['name'] as $keyName => $name){
+
+                    if ($key == $keyName){
+
+                        $fileName = $name;
+                        $tmpName = $tmp_name;
+
+                        $dest = DOCROOT ."/".$targetDir."/".$fileName;
+                        $upload = move_uploaded_file($tmpName, $dest);
+                        echo $upload;
+                    }
+
+                }
+            }
+
+        }
     }
 
 }
