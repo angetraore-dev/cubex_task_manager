@@ -1,4 +1,5 @@
 <IfModule mod_rewrite.c>
+Options -MultiViews
     RewriteEngine On
 
     # Stop processing if already in the /public directory

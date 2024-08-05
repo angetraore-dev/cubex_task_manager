@@ -17,6 +17,18 @@ $(document).ready(function (){
         }
     });
 
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'le',
+        iconColor: 'white',
+        customClass: {
+            popup: 'colored-toast',
+        },
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+    })
+
     //For datatable return int on string or char
     let intVal = function (i) {
         return typeof i === 'string'
@@ -30,6 +42,30 @@ $(document).ready(function (){
     //All top buttons div
     let depUserTaskDiv = $("#depUserTaskDiv");
     let taskFormDiv = $("#taskFormDiv");
+    //TaskByUserTable
+    const taskByUserTable = $('#userTaskTable');
+    //user-task-table-div
+    let userTaskTable = $('#user-task-table');
+    //department-task-table
+    let departmentTaskTable = $('#department-task-table');
+
+    //Draw Task By User Table
+    taskByUserTable.DataTable({
+        "RowId": 0,
+        "searching": true,
+        "paging":true,
+        "pageLength": 10,
+        "orderable":true,
+        "order": [[1, 'asc']],
+        "autoWidth": false,
+        "selected": false,
+        "columns":[
+            {"data":0},
+            {"data":1},
+            {"data":2},
+            {"data":3}
+        ]
+    }).draw();
 
     //Login Process
     $("#loginform").on("submit", function (event){
@@ -182,14 +218,14 @@ $(document).ready(function (){
     //display task table by USER
     $(document).on("click", 'li[data-id] p', function (){
         const userid = $(this).closest('li').data('id');
-        console.log(userid)
+        //console.log(userid)
         $.post({
             url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
             data:{userTask:userid},
             success:function (response) {
                 //display table of user's task
-                $('#department-task-table').load(location.href+" #department-task-table>*","");
-                $("#user-task-table").removeClass('d-none').fadeIn().html(response);
+                departmentTaskTable.load(location.href+" #department-task-table>*","");
+                userTaskTable.removeClass('d-none').fadeIn().html(response);
             }
         })
     })
@@ -326,24 +362,92 @@ $(document).ready(function (){
                 processData:false,
                 data:formdata,
                 success:function (response) {
-                    console.log(response)
+                    //console.log(response)
                     if (response != true){
 
                         toastMixin.fire({
                             icon:"error",
                             text:"Something went wrong, please contact the admin"
                         })
+                            //.then(()=> window.location.reload())
 
                     }else {
                         toastMixin.fire({
-                            text:"Task successfull Assigned"
-                        }).then( () => {
-                            form.reset();
+                            title:"Task successfull Assigned",
+                            text:"Would you want to assign another task ?",
+                            timer:false,
+                            timerProgressBar: false,
+                            showConfirmButton: true,
+                            confirmButtonText: "Yes",
+                            showCancelButton:true,
+                            customClass: {
+                                actions: 'my-actions',
+                                //cancelButton: 'order-1 right-gap',
+                                confirmButton: 'order-2',
+                                cancelButton: 'order-3',
+                            },
+                        }).then( (result) => {
+                            if (result.isConfirmed){
+                                form.reset();
+                            }else {
+                                window.location.reload()
+                            }
                         })
                     }
                 }
             })
         }
+    })
+
+    //Delete Task
+    $(document).on('click', 'tr button#delTask', function (){
+        let tr = $(this).closest('tr');
+        const taskid = tr.find('#delTask').data('id');
+        toastMixin.fire({
+            icon:"warning",
+            title:"warning",
+            text:"Do you want to delete this task?",
+            showConfirmButton:true,
+            confirmButtonText: "Yes",
+            showCancelButton: true,
+            timer:false,
+            timerProgressBar:false
+        }).then((response)=>{
+            if (response.isConfirmed){
+                let userid = tr.find("#userid").val();
+
+                $.post({
+                    url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+                    data:{delTask:taskid},
+                    success:function (response) {
+                        if (!response){
+                            toastMixin.fire({
+                                icon:"error",
+                                title:"error",
+                                text:"Something went wrong, please contact the admin"
+                            })
+                        }else {
+                            Toast.fire({
+                                icon:"success",
+                                iconColor: "succes",
+                                text:"Successfull delete"
+                            }).then(() => {
+                                $.post({
+                                    url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+                                    data:{userTask:userid},
+                                    success:function (response){
+                                        //loader.removeClass('d-none').fadeIn()
+                                        departmentTaskTable.load(location.href+" #department-task-table>*","");
+                                        //userTaskTable.load(location.href+ "#user-ask-table>*","")
+                                        userTaskTable.removeClass('d-none').fadeIn().html(response);
+                                    }
+                                })
+                            })
+                        }
+                    }
+                })
+            }
+        })
     })
 
 

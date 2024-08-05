@@ -165,21 +165,33 @@ class AdminController
                     if ($userTasks){?>
                         <div class="table-responsive" id="userTaskTableDiv">
                             <table class="table text-uppercase text-center caption-top" id="userTaskTable">
-                                <caption class="text-dark fw-bold"><h3><?=$userTasks[0]->fullname."'s tasks"?></h3></caption>
+                                <caption class="text-dark fw-bold"><h3><?=$userTasks[0]->fullname."'s tasks of " .$userTasks[0]->libelle?></h3></caption>
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Tasks</th>
                                         <th scope="col">Checked</th>
-                                        <th scope="col">Department</th>
-                                        <th scope="col">Date & Hour</th>
+                                        <th scope="col">Due Date</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $i=1; foreach ($userTasks as $task):?>
+                                    <?php $i=1; foreach ($userTasks as $task): ?>
                                         <tr>
-                                            <td><?=$i++?></td>
-                                            <td><?=$task->getTitle() .'<br>' .$task->getTodo() .'<br>'.$task->getFile()?></td>
+                                            <td>
+                                                <ul>
+                                                    <li class="list-unstyled d-flex justify-content-between"><?=$i++?> <button class="btn btn-danger border border-0 delTask" id="delTask" type="button" data-id="<?=$task->task_id?>"><i class="fa fa-trash"></i> </button></li>
+                                                </ul>
+                                                <input type="hidden" id="userid" value="<?=$task->getUserId()?>">
+                                            </td>
+                                            <td><?php echo $task->getTitle() .'<br>' .$task->getTodo() .'<br>';
+                                                if ($task->getFile()){
+                                                    $item = json_decode($task->getFile(), true);
+                                                    foreach ($item as $file){?>
+                                                    <a href="<?= HTTP .'/'.$file ?>" target="_blank" download><i class="fa fa-paperclip"></i> </a>
+                                                    <?php
+                                                    }
+                                                }
+                                            ?></td>
                                             <td>
                                                 <div class="input-group-sm">
                                                     <input type="checkbox" value="<?=$task->getIsChecked()?>" name="responsible" id="responsible">
@@ -190,12 +202,7 @@ class AdminController
                                                     <label for="admin">Done by Admin</label>
                                                 </div>
                                             </td>
-                                            <td>
-                                                <span class="d-block">
-                                                <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="<?=$task->color?>"></rect></svg>
-                                                <?= $task->libelle?>
-                                                </span>
-                                            </td>
+
                                             <td><?php $f = new DateTime($task->due_date); echo $f->format('Y-m-d H:i A') ?></td>
                                         </tr>
                                     <?php endforeach;?>
@@ -212,6 +219,11 @@ class AdminController
                 case isset($_POST["taskBtn"]):
                     $this->task->taskForm();
                     break;
+                case isset($_POST["delTask"]):
+                    $identifier =$_POST["delTask"];
+                    $del = $this->task->delete($identifier);
+                    echo $del;
+
                 default: StaticDb::notFound(); break;
             }
         }
@@ -219,14 +231,12 @@ class AdminController
 
     public function addtaskRequest():void
     {
-        $field = array();
         $arrFiles = $_FILES['file'];
         $fileData = "";
 
         if (!empty($arrFiles)){
-            $targetDir =  'assignedFiles';
+            $targetDir =  "assignedFiles";
             $fileArr = array();
-
 
             foreach ($arrFiles['tmp_name'] as $key => $tmp_name){
 
@@ -235,7 +245,6 @@ class AdminController
                     foreach ($arrFiles['full_path'] as $keyfile => $filePath){
 
                         if ($key == $keyName){
-
                             $fileName = basename($name);
                             $tmpName = $tmp_name;
 
@@ -245,9 +254,6 @@ class AdminController
                             if ($upload){
 
                                 $fileArr[$keyName] = "assignedFiles/".$fileName;
-                                //$fileArr['full_path'][$keyName] = $filePath;
-                                //$fileArr['name'][$keyName] = $fileName;
-
                             }
                         }
                     }
@@ -265,10 +271,8 @@ class AdminController
             'userid'=> $_POST["userid"],
             'file' => $fileData
         ];
-
         $createTask = $this->task->create($field);
         echo $createTask;
-
     }
 
 }
