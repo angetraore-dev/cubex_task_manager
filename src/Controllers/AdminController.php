@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Department;
+use App\Models\StaticDb;
 use App\Models\Task;
 use App\Models\User;
 use DateTime;
@@ -207,9 +208,41 @@ class AdminController
                     }
                     break;
 
+                case isset($_POST["taskBtn"]):
+                    $this->task->taskForm();
+                    break;
 
+                case isset($_POST["taskFormSend"]):
+                    $data = json_decode($_POST["taskFormSend"]);
+                    $arrFiles = $data->file;
+                    //echo print_r($arrFiles, true);
+                    if ($arrFiles){
+                        $targetDir = "assignedFiles";
+                        foreach ($arrFiles as $key => $file){
+                            echo print_r($file, true);
+                        }
+
+                    }
+                    break;
+
+                default: StaticDb::notFound(); break;
             }
         }
+    }
+
+    public function addtaskRequest():void
+    {
+        $field = array();
+        $arrFiles = $_FILES['file'];
+        if (!empty($arrFiles)){
+            for ($i =0; $i < count($arrFiles); $i++)
+                foreach ($arrFiles as $key => $name){
+                    var_dump($name);
+                }
+            //$field['field'] = json_encode($arrFiles[$i], JSON_PRETTY_PRINT);
+        }
+        echo print_r(json_decode($field['field']), true);
+
     }
 
 }

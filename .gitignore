@@ -1,0 +1,9 @@
+/vendor/
+/.idea/php.xml
+/.idea/symfony2.xml
+/.idea/dataSources.xml
+/.idea/vcs.xml
+/.idea/modules.xml
+/.idea/.name
+/.idea/taskmanagerapp.iml
+/public/assets/bootstrap
