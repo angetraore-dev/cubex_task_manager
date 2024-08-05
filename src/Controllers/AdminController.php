@@ -212,20 +212,6 @@ class AdminController
                 case isset($_POST["taskBtn"]):
                     $this->task->taskForm();
                     break;
-
-                case isset($_POST["taskFormSend"]):
-                    $data = json_decode($_POST["taskFormSend"]);
-                    $arrFiles = $data->file;
-                    //echo print_r($arrFiles, true);
-                    if ($arrFiles){
-                        $targetDir = "assignedFiles";
-                        foreach ($arrFiles as $key => $file){
-                            echo print_r($file, true);
-                        }
-
-                    }
-                    break;
-
                 default: StaticDb::notFound(); break;
             }
         }
@@ -233,37 +219,56 @@ class AdminController
 
     public function addtaskRequest():void
     {
+        $field = array();
         $arrFiles = $_FILES['file'];
-        //</pre>Array
-        //(
-        //    [name] => armoiries.png
-        //    [full_path] => armoiries.png
-        //    [type] => image/png
-        //    [tmp_name] => /private/var/tmp/phprvLVOl
-        //    [error] => 0
-        //    [size] => 2426190
-        //)
+        $fileData = "";
+
         if (!empty($arrFiles)){
             $targetDir =  'assignedFiles';
+            $fileArr = array();
+
 
             foreach ($arrFiles['tmp_name'] as $key => $tmp_name){
 
                 foreach ( $arrFiles['name'] as $keyName => $name){
 
-                    if ($key == $keyName){
+                    foreach ($arrFiles['full_path'] as $keyfile => $filePath){
 
-                        $fileName = $name;
-                        $tmpName = $tmp_name;
+                        if ($key == $keyName){
 
-                        $dest = DOCROOT ."/".$targetDir."/".$fileName;
-                        $upload = move_uploaded_file($tmpName, $dest);
-                        echo $upload;
+                            $fileName = basename($name);
+                            $tmpName = $tmp_name;
+
+                            $dest = DOCROOT ."/".$targetDir."/".$fileName;
+                            $upload = move_uploaded_file($tmpName, $dest);
+
+                            if ($upload){
+
+                                $fileArr[$keyName] = "assignedFiles/".$fileName;
+                                //$fileArr['full_path'][$keyName] = $filePath;
+                                //$fileArr['name'][$keyName] = $fileName;
+
+                            }
+                        }
                     }
 
                 }
             }
-
+            $fileData = json_encode($fileArr);
         }
+
+        $field = [
+            'title' => $_POST["title"],
+            'todo'=> $_POST["todo"],
+            'due_date'=> date('Y-m-d H:i:s',strtotime($_POST["due_date"])),
+            'created_at'=> date('Y-m-d'),
+            'userid'=> $_POST["userid"],
+            'file' => $fileData
+        ];
+
+        $createTask = $this->task->create($field);
+        echo $createTask;
+
     }
 
 }

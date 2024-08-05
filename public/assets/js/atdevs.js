@@ -320,39 +320,27 @@ $(document).ready(function (){
             form.classList.add('was-validated')
         }else {
             let formdata = new FormData(form);
-            var object = {};
-            formdata.forEach((value, key) => {
-                // Reflect.has in favor of: object.hasOwnProperty(key)
-                if(!Reflect.has(object, key)){
-                    object[key] = value;
-                    return;
-                }
-                if(!Array.isArray(object[key])){
-                    object[key] = [object[key]];
-                }
-                object[key].push(value);
-            });
-            var json = JSON.stringify(object);
-            console.log(json)
-
             $.post({
-                url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
-                data:{taskFormSend:json},
+                url:"http://localhost/php/taskmanagerapp/admin/addtaskRequest",
+                contentType:false,
+                processData:false,
+                data:formdata,
                 success:function (response) {
-                    alert(response)
                     console.log(response)
-                    //if (response){
-                    //                         toastMixin.fire({
-                    //                             text:"Task successfull Assigned"
-                    //                         }).then( () => {
-                    //                             form.reset();
-                    //                         })
-                    //                     }else {
-                    //                         toastMixin.fire({
-                    //                             icon:"error",
-                    //                             text:"Something went wrong, please contact the admin"
-                    //                         })
-                    //                     }
+                    if (response != true){
+
+                        toastMixin.fire({
+                            icon:"error",
+                            text:"Something went wrong, please contact the admin"
+                        })
+
+                    }else {
+                        toastMixin.fire({
+                            text:"Task successfull Assigned"
+                        }).then( () => {
+                            form.reset();
+                        })
+                    }
                 }
             })
         }
@@ -371,3 +359,21 @@ $(document).ready(function (){
 //         //$("#detail_facture_div").fadeOut();
 //
 //     });
+
+
+
+
+//var object = {};
+//             formdata.forEach((value, key) => {
+//                 // Reflect.has in favor of: object.hasOwnProperty(key)
+//                 if(!Reflect.has(object, key)){
+//                     object[key] = value;
+//                     return;
+//                 }
+//                 if(!Array.isArray(object[key])){
+//                     object[key] = [object[key]];
+//                 }
+//                 object[key].push(value);
+//             });
+//             var json = JSON.stringify(object);
+//             console.log(json)
