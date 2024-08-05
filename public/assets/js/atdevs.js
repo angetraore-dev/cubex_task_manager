@@ -333,12 +333,29 @@ $(document).ready(function (){
                             icon:"error",
                             text:"Something went wrong, please contact the admin"
                         })
+                            //.then(()=> window.location.reload())
 
                     }else {
                         toastMixin.fire({
-                            text:"Task successfull Assigned"
-                        }).then( () => {
-                            form.reset();
+                            title:"Task successfull Assigned",
+                            text:"Would you want to assign another task ?",
+                            timer:false,
+                            timerProgressBar: false,
+                            showConfirmButton: true,
+                            confirmButtonText: "Yes",
+                            showCancelButton:true,
+                            customClass: {
+                                actions: 'my-actions',
+                                //cancelButton: 'order-1 right-gap',
+                                confirmButton: 'order-2',
+                                cancelButton: 'order-3',
+                            },
+                        }).then( (result) => {
+                            if (result.isConfirmed){
+                                form.reset();
+                            }else {
+                                window.location.reload()
+                            }
                         })
                     }
                 }

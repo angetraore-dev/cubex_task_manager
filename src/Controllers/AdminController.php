@@ -172,14 +172,22 @@ class AdminController
                                         <th scope="col">Tasks</th>
                                         <th scope="col">Checked</th>
                                         <th scope="col">Department</th>
-                                        <th scope="col">Date & Hour</th>
+                                        <th scope="col">Due Date</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php $i=1; foreach ($userTasks as $task):?>
                                         <tr>
                                             <td><?=$i++?></td>
-                                            <td><?=$task->getTitle() .'<br>' .$task->getTodo() .'<br>'.$task->getFile()?></td>
+                                            <td><?php echo $task->getTitle() .'<br>' .$task->getTodo() .'<br>';
+                                                if ($task->getFile()){
+                                                    $item = json_decode($task->getFile(), true);
+                                                    foreach ($item as $file){?>
+                                                    <a href="<?= HTTP .'/'.$file ?>" target="_blank" download><i class="fa fa-paperclip"></i> </a>
+                                                    <?php
+                                                    }
+                                                }
+                                            ?></td>
                                             <td>
                                                 <div class="input-group-sm">
                                                     <input type="checkbox" value="<?=$task->getIsChecked()?>" name="responsible" id="responsible">
@@ -212,21 +220,19 @@ class AdminController
                 case isset($_POST["taskBtn"]):
                     $this->task->taskForm();
                     break;
-                default: StaticDb::notFound(); break;
+                //default: StaticDb::notFound(); break;
             }
         }
     }
 
     public function addtaskRequest():void
     {
-        $field = array();
         $arrFiles = $_FILES['file'];
         $fileData = "";
 
         if (!empty($arrFiles)){
-            $targetDir =  'assignedFiles';
+            $targetDir =  "assignedFiles";
             $fileArr = array();
-
 
             foreach ($arrFiles['tmp_name'] as $key => $tmp_name){
 
@@ -235,7 +241,6 @@ class AdminController
                     foreach ($arrFiles['full_path'] as $keyfile => $filePath){
 
                         if ($key == $keyName){
-
                             $fileName = basename($name);
                             $tmpName = $tmp_name;
 
@@ -245,8 +250,6 @@ class AdminController
                             if ($upload){
 
                                 $fileArr[$keyName] = "assignedFiles/".$fileName;
-                                //$fileArr['full_path'][$keyName] = $filePath;
-                                //$fileArr['name'][$keyName] = $fileName;
 
                             }
                         }
@@ -265,10 +268,8 @@ class AdminController
             'userid'=> $_POST["userid"],
             'file' => $fileData
         ];
-
         $createTask = $this->task->create($field);
         echo $createTask;
-
     }
 
 }
