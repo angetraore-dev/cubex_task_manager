@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Models;
-//require_once (DOCROOT.'/config/param.php');
 
-class StaticDb extends Database
+use App\Param;
+use Exception;
+use PDO;
+
+class StaticDb
 {
-    private static Database|null $db = null;
+    private static $db = null;
 
     /**
      * @return Database|null
@@ -17,6 +20,21 @@ class StaticDb extends Database
         }
         return self::$db;
     }
+
+    //public static function dbConnect()
+    //    {
+    //        static $dbb = null;
+    //        if ($dbb === null){
+    //            try {
+    //                $dbb = new PDO('mysql:host='.Param::DB_HOST.';dbname='.Param::DB_NAME.';charset=utf8',Param::DB_USER, Param::DB_PASS);
+    //                $dbb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    //            }catch (Exception $exception){
+    //                echo $exception->getMessage();
+    //                die();
+    //            }
+    //        }
+    //        return $dbb;
+    //    }
 
     /**
      * @param $class

@@ -43,29 +43,22 @@ $(document).ready(function (){
     let depUserTaskDiv = $("#depUserTaskDiv");
     let taskFormDiv = $("#taskFormDiv");
     //TaskByUserTable
-    const taskByUserTable = $('#userTaskTable');
+    let taskByUserTable = $('#userTaskTable');//$(this).closest('#userTaskTable')
     //user-task-table-div
     let userTaskTable = $('#user-task-table');
     //department-task-table
     let departmentTaskTable = $('#department-task-table');
 
+    console.log(taskByUserTable)
     //Draw Task By User Table
-    taskByUserTable.DataTable({
-        "RowId": 0,
-        "searching": true,
-        "paging":true,
-        "pageLength": 10,
-        "orderable":true,
-        "order": [[1, 'asc']],
-        "autoWidth": false,
-        "selected": false,
-        "columns":[
-            {"data":0},
-            {"data":1},
-            {"data":2},
-            {"data":3}
-        ]
-    }).draw();
+    taskByUserTable.DataTable().draw();
+    if (taskByUserTable instanceof $.fn.dataTable.Api) {
+        console.log("is initialized")
+        // variable "table" is a valid initialized DataTable ... do datatable stuff
+    } else {
+        // variable "table" is not a datatable... do other stuff
+        console.log("is not initialized")
+    }
 
     //Login Process
     $("#loginform").on("submit", function (event){
@@ -237,11 +230,9 @@ $(document).ready(function (){
             url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
             data:{depTask:departmentId},
             success:function (response){
-                //diplay table of specific department
-               // $("#user-task-table").addClass('d-none').fadeOut();
-                $('#user-task-table').load(location.href+" #user-task-table>*","");
 
-                $("#department-task-table").removeClass('d-none').fadeIn().html(response);
+                userTaskTable.load(location.href+" #user-task-table>*","");
+                departmentTaskTable.removeClass('d-none').fadeIn().html(response);
             }
         })
     })

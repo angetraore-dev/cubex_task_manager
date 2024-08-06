@@ -6,7 +6,7 @@ use PDO;
 
 use \AllowDynamicProperties;
 
-#[AllowDynamicProperties]
+//#[AllowDynamicProperties]
 class Department
 {
     protected $department_id;

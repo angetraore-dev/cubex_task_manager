@@ -2,39 +2,20 @@
 
 namespace App\Models;
 
-use Exception;
 use PDO;
 use App\Param;
-//require_once (DOCROOT.'/config/param.php');
 
 class Database
 {
-    /**
-     * @return PDO|void
-     */
-    public function dbConnect():PDO|null
-    {
-        //return new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8',DB_USER, DB_PASS);
-        try {
+    //private $conn;
 
-            return new PDO('mysql:host='.Param::DB_HOST.';dbname='.Param::DB_NAME.';charset=utf8',Param::DB_USER, Param::DB_PASS);
-
-        }catch (Exception $exception){
-            echo $exception->getMessage();
-        }
-    }
 
     /**
-     * @return PDO|null
+     * @return PDO
      */
-    public static function staticDbConnect()
+    public function dbConnect(): PDO
     {
-        static $db = null;
-        if ($db === null){
-            $db = new PDO('mysql:host='.Param::DB_HOST.';dbname='.Param::DB_NAME.';charset=utf8',Param::DB_USER, Param::DB_PASS);
-            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        }
-        return $db;
+        return new PDO('mysql:host='.Param::DB_HOST.';dbname='.Param::DB_NAME.';charset=utf8',Param::DB_USER, Param::DB_PASS);
     }
 
     /**
@@ -43,7 +24,7 @@ class Database
      * @param bool $one
      * @return array|false|mixed
      */
-    public function query($stmt, $class_name, bool $one = false)
+    public function query($stmt, $class_name, bool $one = false): mixed
     {
         $request = $this->dbConnect()->query($stmt);
         $request->setFetchMode(PDO::FETCH_CLASS, $class_name);
@@ -61,7 +42,7 @@ class Database
      * @param bool $one
      * @return array|false|mixed
      */
-    public function prepare($stmt, $attributes, $class_name, bool $one = false )
+    public function prepare($stmt, $attributes, $class_name, bool $one = false ): mixed
     {
         $request = $this->dbConnect()->prepare($stmt);
         $request->execute($attributes);
@@ -76,7 +57,7 @@ class Database
     /**
      * @return false|string
      */
-    public function LastInsertId()
+    public function LastInsertId(): bool|string
     {
         return $this->dbConnect()->lastInsertId();
     }

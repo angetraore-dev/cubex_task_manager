@@ -107,19 +107,19 @@ class AdminController
                 case isset($_POST["depTask"]):
                     $departmentId = $_POST["depTask"];
                     $departmentTasks = Task::findTaskByJoinDepartment($departmentId);
-                    //var_dump($departmentTasks);
+                    var_dump($departmentTasks);
                     if ($departmentTasks){?>
                         <div class="table-responsive" id="DepartmentTasksTableDiv">
                             <table class="table text-uppercase text-center caption-top" id="DepartmentTasksTable">
-                                <caption><h3><?=$departmentTasks[0]->libelle. "'s department"?></h3></caption>
+                                <caption><h3 class="d-inline"><?='<svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="'.$departmentTasks[0]->color.'"></rect></svg>
+                                ' . $departmentTasks[0]->libelle. ' department'?></h3></caption>
                                 <thead>
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Tasks</th>
                                     <th scope="col">Checked</th>
-                                    <th scope="col">Department</th>
                                     <th scope="col">Responsible</th>
-                                    <th scope="col">Date & Hour</th>
+                                    <th scope="col">Due date</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -137,12 +137,7 @@ class AdminController
                                                 <label for="admin">Done by Admin</label>
                                             </div>
                                         </td>
-                                        <td>
-                                                <span class="d-block">
-                                                <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="<?=$task->color?>"></rect></svg>
-                                                <?= $task->libelle?>
-                                                </span>
-                                        </td>
+
                                         <td><?=$task->fullname?></td>
                                         <td><?php $f = new DateTime($task->due_date); echo $f->format('Y-m-d, H:i A') ?></td>
                                     </tr>
