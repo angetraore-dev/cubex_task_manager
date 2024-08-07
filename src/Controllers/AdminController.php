@@ -133,14 +133,17 @@ class AdminController
                                         <td><?=$i++?></td>
                                         <td><?=$task->getTitle() .'<br>' .$task->getTodo()?></td>
                                         <td>
-                                            <div class="input-group-sm">
-                                                <input type="checkbox" value="<?=$task->getIsChecked()?>" name="responsible" id="responsible">
-                                                <label for="responsible">Done by responsible</label>
-                                            </div>
-                                            <div class="input-group-sm">
-                                                <input type="checkbox" value="<?=$task->getIsCheckedByAdmin()?>" name="admin" id="admin">
-                                                <label for="admin">Done by Admin</label>
-                                            </div>
+                                            <ul class="list-unstyled">
+                                                <li class="list-unstyled">
+                                                    <input type="checkbox" value="<?=$task->getIsChecked()?>" <?php echo ($task->getIsChecked()) ? 'checked="checked"' : ''?> name="responsible" id="responsible">
+                                                    <label for="responsible">responsible</label>
+                                                </li>
+
+                                                <li class="unstyled-list">
+                                                    <input type="checkbox" value="<?=$task->getIsCheckedByAdmin()?>" <?php echo ($task->getIsCheckedByAdmin()) ? 'checked="checked"' : ''?> name="admin" id="admin">
+                                                    <label for="admin">Admin</label>
+                                                </li>
+                                            </ul>
                                         </td>
 
                                         <td><?=$task->fullname?></td>
@@ -197,14 +200,18 @@ class AdminController
                                                 }
                                             ?></td>
                                             <td>
-                                                <div class="input-group-sm">
-                                                    <input type="checkbox" value="<?=$task->getIsChecked()?>" name="responsible" id="responsible">
-                                                    <label for="responsible">Done by responsible</label>
-                                                </div>
-                                                <div class="input-group-sm">
-                                                    <input type="checkbox" value="<?=$task->getIsCheckedByAdmin()?>" name="admin" id="admin">
-                                                    <label for="admin">Done by Admin</label>
-                                                </div>
+                                                <ul class="list-unstyled">
+                                                    <li>
+                                                        <input type="checkbox" value="<?=$task->getIsChecked()?>" <?php echo ($task->getIsChecked()) ? 'checked="checked"' : ''?> name="responsible" id="responsible">
+                                                        <label for="responsible">responsible</label>
+                                                    </li>
+                                                    <li>
+                                                        <input type="checkbox" value="<?=$task->getIsCheckedByAdmin()?>" <?php echo ($task->getIsCheckedByAdmin()) ? 'checked="checked"' : ''?> name="admin" id="admin">
+                                                        <label for="admin">Admin</label>
+                                                    </li>
+
+                                                </ul>
+
                                             </td>
 
                                             <td><?php if($task->getDueDate()){

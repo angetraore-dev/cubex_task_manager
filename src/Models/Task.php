@@ -192,14 +192,59 @@ class Task
     }
 
     /**
+     * All Tasks
      * @return array|false|mixed
      */
     public static function read(): mixed
     {
-        return StaticDb::getDB()->query("SELECT * FROM task", get_called_class());
+        $sql = "SELECT task_id, title, todo, due_date, created_at, isChecked, isArchived, userid, isCheckedByAdmin, file, u.fullname, d.color, d.libelle, d.department_id FROM task INNER JOIN user u on u.user_id = task.userid INNER JOIN department d on d.department_id = u.department";
+        return StaticDb::getDB()->query($sql, get_called_class());
     }
 
     /**
+     * Tasks still actives and not checked
+     * Due_date >= CURRENT DATE
+     * @return mixed
+     */
+    public static function activesTasks():mixed
+    {
+        $sql = "SELECT task_id, title, todo, due_date, created_at, isChecked, isArchived, userid, isCheckedByAdmin, file, u.fullname, d.color, d.libelle, d.department_id FROM task INNER JOIN user u on u.user_id = task.userid INNER JOIN department d on d.department_id = u.department WHERE due_date>= CAST(CURRENT_DATE AS DATE ) && task.isChecked is false";
+        return StaticDb::getDb()->query($sql, get_called_class());
+    }
+
+    /**
+     * InWaiting Tasks to Confirm By admin or return
+     * @return mixed
+     */
+    public static function inWaiting():mixed
+    {
+        $sql = "SELECT task_id, title, todo, due_date, created_at, isChecked, isArchived, userid, isCheckedByAdmin, file, u.fullname, d.color, d.libelle, d.department_id FROM task INNER JOIN user u on u.user_id = task.userid INNER JOIN department d on d.department_id = u.department WHERE task.isChecked is true && task.isCheckedByAdmin is false";
+        return StaticDb::getDb()->query($sql, get_called_class());
+    }
+
+    /**
+     * Late On delivery
+     * CURRENT_DATE + 2 DAYS >= DUE_DATE
+     * @return mixed
+     */
+    public static function lateOnDelivery():mixed
+    {
+        $sql = "SELECT task_id, title, todo, due_date, created_at, isChecked, isArchived, userid, isCheckedByAdmin, file, u.fullname, d.color, d.libelle, d.department_id FROM task INNER JOIN user u on u.user_id = task.userid INNER JOIN department d on d.department_id = u.department WHERE DATE_ADD(CAST(CURRENT_DATE AS DATE ), INTERVAL 3 DAY ) >= due_date && task.isChecked is false";
+        return StaticDb::getDb()->query($sql, get_called_class());
+    }
+
+    /**
+     * Archived Tasks
+     * @return mixed
+     */
+    public static function archived():mixed
+    {
+        $sql = "SELECT task_id, title, todo, due_date, created_at, isChecked, isArchived, userid, isCheckedByAdmin, file, u.fullname, d.color, d.libelle, d.department_id FROM task INNER JOIN user u on u.user_id = task.userid INNER JOIN department d on d.department_id = u.department WHERE task.isArchived is true";
+        return StaticDb::getDb()->query($sql, get_called_class());
+    }
+
+    /**
+     * Tasks By user
      * @param $userid
      * @return mixed
      */

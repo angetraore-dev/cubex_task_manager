@@ -2,6 +2,26 @@ $(document).ready(function (){
     console.log("angetraore-dev: +225 0507 333 944");
     //refresh div $("#departmentlist").load(location.href+" #departmentlist>*","")
 
+    //stay on tab active on refresh
+    $(document).on('click', 'a[data-bs-toggle="tab"]', function (e) {
+        try {
+            localStorage.setItem('activeTab', e.target.dataset.bsTarget);
+        } catch (e) {
+            console.log("localstorage is not allowed in code snippets here test it on jsfiddle");
+        }
+        //console.log(localStorage.getItem('activeTab'));
+    });
+    try {
+        var activeTab = localStorage.getItem('activeTab');
+    } catch (e) {
+        console.log("localstorage is not allowed in code snippets here test it on jsfiddle");
+    }
+    if (activeTab) {
+        let triggerEL = document.querySelector(`a[data-bs-target="${activeTab}"]`);
+        if (triggerEL) {
+            bootstrap.Tab.getOrCreateInstance(triggerEL).show()
+        }
+    }
     //Toast
     let toastMixin = Swal.mixin({
         toast: true,
@@ -37,6 +57,7 @@ $(document).ready(function (){
                 ? i
                 : 0;
     };
+    //DataTable.moment("DD-MM-YYYY");
 
     let loader = $("#loaderDiv");
     //All top buttons div
@@ -73,10 +94,10 @@ $(document).ready(function (){
             {"data":1},
             {"data":2},
             {"data":3},
-            {"data":4, "render":function (){
-                return "hey";
-                }},
-            {"data":5}
+            {"data":4},
+            {"data":5},
+            {"data":6}
+
         ]
     })
     //TaskByDepartment in AdminController

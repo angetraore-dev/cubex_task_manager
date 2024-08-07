@@ -1,6 +1,7 @@
 <?php
 use App\Models\Department;
 use App\Models\Role;
+use App\Models\Task;
 
 ob_start();?>
 <div class="container-fluid">
@@ -125,49 +126,76 @@ ob_start();?>
     </div>
 
     <!-- Form add Task Div -->
-    <div class="col-md-8 mx-auto d-flex justify-content-center align-items-center d-none" id="taskFormDiv">
-
-    </div>
-
+    <div class="col-md-8 mx-auto d-flex justify-content-center align-items-center d-none" id="taskFormDiv"></div>
     <div class="row">
-        <ul class="nav nav-fill nav-tabs" role="tablist">
+        <div class="table-responsive">
+            <table class="table table-condensed text-uppercase" id="activesTasksTable">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>id</th>
+                    <th>task</th>
+                    <th>checked</th>
+                    <th>department</th>
+                    <th>responsible</th>
+                    <th>due date</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <?php $activeTasksList= Task::inWaiting(); var_dump($activeTasksList);?>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row my-2 d-none" id="user-task-table"></div>
+        <div class="row my-2 d-none" id="department-task-table"></div>
+        <div class="text-end">
+            <button type="button" class="btn btn-success btn-outline-secondary text-white text-center" onclick="return window.location.reload();">REFRESH</button>
+        </div>
+    </div>
+    <!-- Tabs d-non -->
+    <div class="row d-none">
+        <ul class="nav nav-fill nav-tabs btn" role="tablist">
             <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="fill-tab-activesTasks" data-bs-toggle="tab" href="#fill-tabpanel-0" role="tab" aria-controls="fill-tabpanel-0" aria-selected="true"> Actives Tasks </a>
+                <a class="nav-link active" id="activesTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-activesTasks" role="tab" aria-controls="nav-activesTasks" aria-selected="true"> Actives Tasks </a>
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link" id="fill-tab-archivedTasks" data-bs-toggle="tab" href="#fill-tabpanel-1" role="tab" aria-controls="fill-tabpanel-1" aria-selected="false"> Archived Tasks </a>
+                <a class="nav-link" id="archivedTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-archivedTasks" role="tab" aria-controls="nav-archivedTasks" aria-selected="false"> Archived Tasks </a>
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link" id="fill-tab-futureTasks" data-bs-toggle="tab" href="#fill-tabpanel-2" role="tab" aria-controls="fill-tabpanel-2" aria-selected="false"> Today Tasks </a>
+                <a class="nav-link" id="futuresTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-futuresTasks" role="tab" aria-controls="nav-futuresTasks" aria-selected="false"> Today Tasks </a>
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link" id="fill-inWaitingTasks" data-bs-toggle="tab" href="#fill-tabpanel-3" role="tab" aria-controls="fill-tabpanel-3" aria-selected="false"> Tasks in Waiting </a>
+                <a class="nav-link" id="inWaitingTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-inWaitingTasks" role="tab" aria-controls="nav-inWaitingTasks" aria-selected="false"> Tasks in Waiting </a>
             </li>
         </ul>
         <div class="tab-content pt-5" id="tab-content">
             <!-- Actives Tasks -->
-            <div class="tab-pane active" id="fill-tabpanel-0" role="tabpanel" aria-labelledby="fill-tab-activesTasks">
+            <div class="tab-pane active" id="nav-activesTasks" role="tabpanel" aria-labelledby="nav-activesTasks">
 
                 <div class="row my-2" id="activesTasksTableDiv">
                     <div class="table-responsive">
+                        <!--
                         <table class="table table-condensed text-uppercase" id="activesTasksTable">
                             <thead>
                             <tr>
                                 <th>#</th>
                                 <th>id</th>
                                 <th>task</th>
-                                <th>due date</th>
                                 <th>checked</th>
-                                <th>active task</th>
+                                <th>department</th>
+                                <th>responsible</th>
+                                <th>due date</th>
                             </tr>
                             </thead>
                             <tbody></tbody>
                         </table>
+                        -->
                     </div>
                 </div>
             </div>
             <!--ArchivedTasks -->
-            <div class="tab-pane" id="fill-tabpanel-1" role="tabpanel" aria-labelledby="fill-tab-1">
+            <div class="tab-pane" id="nav-archivedTasks" role="tabpanel" aria-labelledby="nav-archivedTasks">
                 <div class="row my-2" id="archivedTableDiv">
                     <div class="table-responsive">
                         <table class="table table-condensed text-uppercase" id="archivedTasksTable">
@@ -188,17 +216,11 @@ ob_start();?>
 
             </div>
             <!--Future Tasks -->
-            <div class="tab-pane" id="fill-tabpanel-2" role="tabpanel" aria-labelledby="fill-tab-2">Today and future tasks</div>
+            <div class="tab-pane" id="nav-futuresTasks" role="tabpanel" aria-labelledby="nav-futuresTasks">Today and future tasks</div>
             <!-- In waiting To check Tasks -->
-            <div class="tab-pane" id="fill-tabpanel-3" role="tabpanel" aria-labelledby="fill-tab-3">In waiting task</div>
+            <div class="tab-pane" id="nav-inWaitingTasks" role="tabpanel" aria-labelledby="nav-inWaitingTasks">In waiting task</div>
 
-            <div class="text-end">
-                <button type="button" class="btn btn-success btn-outline-secondary text-white text-center" onclick="return window.location.reload();">REFRESH</button>
-            </div>
         </div>
-
-        <div class="row my-2 d-none" id="user-task-table"></div>
-        <div class="row my-2 d-none" id="department-task-table"></div>
     </div>
 
 </div>
@@ -280,7 +302,7 @@ ob_start();?>
                         <div class="invalid-feedback">Please enter a role user</div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="role">User department</label>
+                        <label for="department">User department</label>
                         <select class="form-select" id="department" name="department" required>
                             <option class="form-control" value="">choose department</option>
                             <?php $department = Department::readAll(); if($department) : foreach ($department as $dep): ?>
