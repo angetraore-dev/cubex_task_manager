@@ -205,7 +205,7 @@ class Task
      */
     public static function findByUserId($userid): mixed
     {
-        $sql = "SELECT task.task_id, d.color, title, todo, due_date, created_at, isChecked, isArchived, userid, isCheckedByAdmin, file, u.user_id, u.fullname, u.roleid, u.department, d.department_id, d.libelle, d.color FROM task JOIN user u on u.user_id = task.userid JOIN role r on r.role_id = u.roleid JOIN department d on d.department_id = u.department WHERE userid = ? ";
+        $sql = "SELECT task.task_id, d.color, title, todo, due_date, created_at, isChecked, isArchived, isCheckedByAdmin, userid, file, u.fullname, d.libelle FROM task JOIN user u on u.user_id = task.userid JOIN department d on d.department_id = u.department WHERE userid = ? ";
         return StaticDb::getDB()->prepare($sql, [$userid], get_called_class());
     }
 
@@ -216,7 +216,7 @@ class Task
     public static function findTaskByJoinDepartment($departmentId): mixed
     {
         //task_id, title, todo, due_date, created_at, isChecked, isArchived, task.userid, isCheckedByAdmin, file,, d.libelle, r.role_name, u.fullname, d.color
-        $sql = "SELECT * FROM task INNER JOIN user u on u.user_id = task.userid INNER JOIN role r on r.role_id = u.roleid INNER JOIN department d on d.department_id = u.department WHERE u.department = ?";
+        $sql = "SELECT task_id, title, todo, due_date, created_at, isChecked, isArchived, userid, isCheckedByAdmin, file, u.fullname, d.color, d.libelle, d.department_id FROM task INNER JOIN user u on u.user_id = task.userid INNER JOIN department d on d.department_id = u.department WHERE u.department = ?";
         return StaticDb::getDB()->prepare($sql, [$departmentId], get_called_class(), false);
     }
 

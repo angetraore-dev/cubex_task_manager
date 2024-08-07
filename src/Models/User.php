@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Exception;
-use PDO;
 //use App\Models\Database;
 //use \AllowDynamicProperties;
 
@@ -16,12 +14,6 @@ class User
     protected $email;
     protected $roleid;
     protected $department;
-    //private Database $database;
-
-    function __construct()
-    {
-        //$this->database = new Database();
-    }
 
     /**
      * @return mixed
@@ -34,7 +26,7 @@ class User
     /**
      * @return mixed
      */
-    public function getFullname()
+    public function getFullname(): mixed
     {
         return $this->fullname;
     }
@@ -43,7 +35,7 @@ class User
      * @param mixed $fullname
      * @return User
      */
-    public function setFullname($fullname)
+    public function setFullname($fullname): static
     {
         $this->fullname = $fullname;
         return $this;
@@ -52,7 +44,7 @@ class User
     /**
      * @return mixed
      */
-    public function getPassword()
+    public function getPassword(): mixed
     {
         return $this->password;
     }
@@ -61,7 +53,7 @@ class User
      * @param mixed $password
      * @return User
      */
-    public function setPassword($password)
+    public function setPassword($password): static
     {
         $this->password = $password;
         return $this;
@@ -70,7 +62,7 @@ class User
     /**
      * @return mixed
      */
-    public function getEmail()
+    public function getEmail(): mixed
     {
         return $this->email;
     }
@@ -79,7 +71,7 @@ class User
      * @param mixed $email
      * @return User
      */
-    public function setEmail($email)
+    public function setEmail($email): static
     {
         $this->email = $email;
         return $this;
@@ -88,7 +80,7 @@ class User
     /**
      * @return mixed
      */
-    public function getRoleid()
+    public function getRoleid(): mixed
     {
         return $this->roleid;
     }
@@ -97,7 +89,7 @@ class User
      * @param mixed $roleid
      * @return User
      */
-    public function setRoleid($roleid)
+    public function setRoleid($roleid): static
     {
         $this->roleid = $roleid;
         return $this;
@@ -106,7 +98,7 @@ class User
     /**
      * @return mixed
      */
-    public function getDepartment()
+    public function getDepartment(): mixed
     {
         return $this->department;
     }
@@ -115,7 +107,7 @@ class User
      * @param mixed $department
      * @return User
      */
-    public function setDepartment($department)
+    public function setDepartment($department): static
     {
         $this->department = $department;
         return $this;
@@ -124,12 +116,15 @@ class User
     /**
      * @return mixed
      */
-    public static function read()
+    public static function read(): mixed
     {
         return StaticDb::getDB()->query("SELECT * FROM user", get_called_class());
     }
 
-    function delGrpedForm()
+    /**
+     * @return void
+     */
+    function delGrpedForm():void
     {
         $userList = self::read();
         if ($userList):
@@ -185,7 +180,7 @@ class User
      */
     public static function findByDepartmentId($departmentid): mixed
     {
-        $sql = "SELECT * FROM user WHERE department = ?";
+        $sql = "SELECT *, d.libelle, d.color FROM user INNER JOIN department d on d.department_id = user.department WHERE department = ?";
         return StaticDb::getDB()->prepare($sql,[$departmentid], get_called_class());
     }
 
@@ -207,88 +202,4 @@ class User
 
 
 
-
-
 }
-
-//public function create(array $field):bool
-//    {
-//        $implodeColumns = implode(', ', array_keys($field));
-//        $implodePlaceholders = implode(', :', array_keys($field));
-//        $request = "INSERT INTO user($implodeColumns) VALUES (:". $implodePlaceholders .")";
-//
-//        $stmt = $this->database->dbConnect()->prepare($request);
-//
-//        foreach ( $field as $key => $value ){
-//            $stmt->bindValue(':'.$key, $value);
-//        }
-//
-//        if ($stmt->execute()){
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    /**
-//     * @param int $identifier
-//     * @param array $field
-//     * @return bool
-//     */
-//    public function update(int $identifier, array $field):bool
-//    {
-//        $st = "";
-//        $counter = 1;
-//        $total_fields = count($field);
-//        foreach ($field as $key => $value){
-//            if ($counter == $total_fields){
-//                $set = "$key = :" .$key;
-//                $st = $st . $set;
-//
-//            }else{
-//                $set = "$key = :" .$key . ", ";
-//                $st = $st . $set;
-//                $counter++;
-//            }
-//        }
-//        $stmt ="";
-//        $stmt .="UPDATE user SET " .$st;
-//        $stmt .=" WHERE user_id = " .$identifier;
-//        $req = $this->database->dbConnect()->prepare($stmt);
-//
-//        foreach ($field as $key => $value){
-//            $req->bindValue(':' .$key, $value);
-//        }
-//        if ($req->execute()){
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    /**
-//     * @param $identifier
-//     * @return bool
-//     */
-//    public function delete($identifier):bool
-//    {
-//        $stmt = "DELETE FROM user WHERE user_id = :user_id";
-//        $request = $this->database->dbConnect()->prepare($stmt);
-//        $request->bindValue(':user_id', $identifier, PDO::PARAM_INT);
-//        if ($request->execute()){
-//            return true;
-//        }
-//        return false;
-//    }
-
-
-///**
-//     * @return PDO|void
-//     */
-//    function UserDbConnect()
-//    {
-//        try {
-//            return new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8',DB_USER, DB_PASS);
-//
-//        }catch (Exception $exception){
-//            echo $exception->getMessage();
-//        }
-//    }

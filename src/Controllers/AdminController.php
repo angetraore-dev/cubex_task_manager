@@ -116,8 +116,8 @@ class AdminController
                     if ($departmentTasks){?>
                         <div class="table-responsive" id="DepartmentTasksTableDiv">
                             <table class="table text-uppercase text-center caption-top" id="DepartmentTasksTable">
-                                <caption><h3 class="d-inline"><?='<svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="'.$departmentTasks[0]->color.'"></rect></svg>
-                                ' . $departmentTasks[0]->libelle. ' department'?></h3></caption>
+                                <caption><h3 class="d-inline"><?=$departmentTasks[0]->libelle. ' department <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="'.$departmentTasks[0]->color.'"></rect></svg>
+                                '?></h3></caption>
                                 <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -164,10 +164,11 @@ class AdminController
 
                     $userid = $_POST["userTask"];
                     $userTasks = Task::findByUserId($userid);
+                    //var_dump($userTasks);
                     if ($userTasks){?>
                         <div class="table-responsive" id="userTaskTableDiv">
                             <table class="table text-uppercase text-center caption-top" id="userTaskTable">
-                                <caption class="text-dark fw-bold"><h3><?=$userTasks[0]->fullname."'s tasks of " .$userTasks[0]->libelle?></h3></caption>
+                                <caption class="text-dark fw-bold"><h3 class="d-inline"><?=$userTasks[0]->fullname."'s tasks of " .$userTasks[0]->libelle . ' <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="'.$userTasks[0]->color.'"></rect></svg>';?></h3></caption>
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
@@ -181,7 +182,7 @@ class AdminController
                                         <tr>
                                             <td>
                                                 <ul>
-                                                    <li class="list-unstyled d-flex justify-content-between"><?=$i++?> <button class="btn btn-danger border border-0 delTask" id="delTask" type="button" data-id="<?=$task->task_id?>"><i class="fa fa-trash"></i> </button></li>
+                                                    <li class="list-unstyled d-flex justify-content-between"><?=$i++?> <button class="btn btn-danger border border-0 delTask" id="delTask" type="button" data-id="<?=$task->getTaskId()?>"><i class="fa fa-trash"></i> </button></li>
                                                 </ul>
                                                 <input type="hidden" id="userid" value="<?=$task->getUserId()?>">
                                             </td>
@@ -205,7 +206,9 @@ class AdminController
                                                 </div>
                                             </td>
 
-                                            <td><?php $f = new DateTime($task->due_date); echo $f->format('Y-m-d H:i A') ?></td>
+                                            <td><?php if($task->getDueDate()){
+                                                    $f = new DateTime($task->getDueDate()); echo $f->format('Y-m-d H:i A');
+                                                } ?></td>
                                         </tr>
                                     <?php endforeach;?>
                                 </tbody>
