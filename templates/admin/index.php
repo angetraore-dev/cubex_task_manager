@@ -9,9 +9,11 @@ ob_start();?>
         <!-- Container for first buttons line row mt-4-->
         <div class="row justify-content-between mt-4">
             <!-- Left Buttons div -->
-            <div class="col-sm-3 ">
-                <!-- add department delete department-->
-                <div class="row justify-content-around bg-body-tertiary shadow-lg rounded rounded-2 mx-2 mb-3 p-1">
+            <div class="col-sm-4  ">
+                <!-- add department delete department
+                justify-content-around
+                -->
+                <div class="bg-body-tertiary shadow-lg rounded rounded-2 mb-3 p-1">
                     <fieldset class="border border-2 p-1 fw-bolder text-uppercase">
                         <legend  class="float-none w-auto text-wrap">Department</legend>
                         <div class="d-flex col justify-content-between">
@@ -37,7 +39,7 @@ ob_start();?>
                 </div>
 
                 <!-- add User delete delete user -->
-                <div class="row justify-content-around bg-body-tertiary shadow-lg rounded rounded-2 mx-2 mb-3 p-2">
+                <div class="justify-content-around bg-body-tertiary shadow-lg rounded rounded-2 mx-2 mb-3 p-2">
                     <fieldset class="border border-2 p-2 fw-bold text-end text-uppercase">
                         <legend  class="float-none w-auto">User</legend>
                         <div class="d-flex col justify-content-between">
@@ -64,9 +66,9 @@ ob_start();?>
             </div>
 
             <!-- Right Buttons div -->
-            <div class="col-sm-3">
+            <div class="col-sm-4">
                 <!--filter for departments and responsibles-->
-                <div class="d-flex ms-0 me-auto shadow-lg justify-content-around rounded rounded-2 mb-5 p-2">
+                <div class="d-flex shadow-lg justify-content-between rounded rounded-2 mb-5 p-1">
 
                     <!-- List of all departments -->
                     <div class="dropdown mx-2 departmentlist" id="departmentlist">
@@ -128,6 +130,72 @@ ob_start();?>
     </div>
 
     <div class="row">
+        <ul class="nav nav-fill nav-tabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="fill-tab-activesTasks" data-bs-toggle="tab" href="#fill-tabpanel-0" role="tab" aria-controls="fill-tabpanel-0" aria-selected="true"> Actives Tasks </a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="fill-tab-archivedTasks" data-bs-toggle="tab" href="#fill-tabpanel-1" role="tab" aria-controls="fill-tabpanel-1" aria-selected="false"> Archived Tasks </a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="fill-tab-futureTasks" data-bs-toggle="tab" href="#fill-tabpanel-2" role="tab" aria-controls="fill-tabpanel-2" aria-selected="false"> Today Tasks </a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="fill-inWaitingTasks" data-bs-toggle="tab" href="#fill-tabpanel-3" role="tab" aria-controls="fill-tabpanel-3" aria-selected="false"> Tasks in Waiting </a>
+            </li>
+        </ul>
+        <div class="tab-content pt-5" id="tab-content">
+            <!-- Actives Tasks -->
+            <div class="tab-pane active" id="fill-tabpanel-0" role="tabpanel" aria-labelledby="fill-tab-activesTasks">
+
+                <div class="row my-2" id="activesTasksTableDiv">
+                    <div class="table-responsive">
+                        <table class="table table-condensed text-uppercase" id="activesTasksTable">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>id</th>
+                                <th>task</th>
+                                <th>due date</th>
+                                <th>checked</th>
+                                <th>active task</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--ArchivedTasks -->
+            <div class="tab-pane" id="fill-tabpanel-1" role="tabpanel" aria-labelledby="fill-tab-1">
+                <div class="row my-2" id="archivedTableDiv">
+                    <div class="table-responsive">
+                        <table class="table table-condensed text-uppercase" id="archivedTasksTable">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>id</th>
+                                <th>task</th>
+                                <th>due date</th>
+                                <th>checked</th>
+                                <th>archived</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <!--Future Tasks -->
+            <div class="tab-pane" id="fill-tabpanel-2" role="tabpanel" aria-labelledby="fill-tab-2">Today and future tasks</div>
+            <!-- In waiting To check Tasks -->
+            <div class="tab-pane" id="fill-tabpanel-3" role="tabpanel" aria-labelledby="fill-tab-3">In waiting task</div>
+
+            <div class="text-end">
+                <button type="button" class="btn btn-success btn-outline-secondary text-white text-center" onclick="return window.location.reload();">REFRESH</button>
+            </div>
+        </div>
 
         <div class="row my-2 d-none" id="user-task-table"></div>
         <div class="row my-2 d-none" id="department-task-table"></div>

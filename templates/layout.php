@@ -6,6 +6,8 @@
     <link rel="shortcut icon" href="<?= HTTP .'/assets/bootstrap/icons/globe-asia-australia.svg'?>">
     <link rel="stylesheet" href="<?= HTTP .'/assets/css/style.css'?>">
     <title class="text-uppercase"><?= SITE_NAME ." - ". $title ?></title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.dataTables.css" />
+
 </head>
 <body>
 <header class="text-uppercase fw-bold fs-6">
@@ -84,12 +86,16 @@
 <script type="text/javascript" src="<?= HTTP .'/assets/bootstrap/dist/js/bootstrap.bundle.js'?>"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<!--DataTables Scripts-->
-<script src="<?=HTTP.'/assets/datatables.net/js/dataTables.js'?>"></script>
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<!--DataTables Scripts
+<script src="<=HTTP.'/assets/datatables.net/js/dataTables.js'?>"></script>
+<script src="https://cdn.datatables.net/2.1.3/js/dataTables.min.js"></script>
+
+-->
+<script src="https://cdn.datatables.net/2.1.3/js/dataTables.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.4.0/js/buttons.print.min.js"></script>-->
+<!--<script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.min.js"></script>-->
+<script src="https://cdn.datatables.net/buttons/1.4.0/js/buttons.print.min.js"></script>
 <!-- End dataTables -->
 
 <script type="text/javascript" src="<?=HTTP.'/assets/js/atdevs.js'?>"></script>

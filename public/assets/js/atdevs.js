@@ -42,17 +42,101 @@ $(document).ready(function (){
     //All top buttons div
     let depUserTaskDiv = $("#depUserTaskDiv");
     let taskFormDiv = $("#taskFormDiv");
-    //TaskByUserTable
-    let taskByUserTable = $('#userTaskTable');//$(this).closest('#userTaskTable')
-    //user-task-table-div
-    let userTaskTable = $('#user-task-table');
-    //department-task-table
-    let departmentTaskTable = $('#department-task-table');
+    //TaskByUserTable in AdminController
+    let taskByUserTableVeritable = $(this).closest('#userTaskTable').DataTable({
+        "RowId": 0,
+        "searching": true,
+        "paging":true,
+        "pageLength": 2,
+        "orderable":true,
+        "order": [[1, 'asc']],
+        "autoWidth": false,
+        "selected": false,
+        "columns":[
+            {"data":0},
+            {"data":1},
+            {"data":2},
+            {"data":3}
+        ]
+    });
+    let globalTable = $("#activesTasksTable").DataTable({
+        "RowId": 0,
+        "searching": true,
+        "paging":true,
+        "pageLength": 2,
+        "orderable":true,
+        "order": [[1, 'asc']],
+        "autoWidth": false,
+        "selected": false,
+        "columns":[
+            {"data":0},
+            {"data":1},
+            {"data":2},
+            {"data":3},
+            {"data":4, "render":function (){
+                return "hey";
+                }},
+            {"data":5}
+        ]
+    })
+    //TaskByDepartment in AdminController
+    let DepartmentTasksTableVeritable = $(this).closest('#DepartmentTasksTable').DataTable({
+        "destroy":true,
+        "RowId": 0,
+        "searching": true,
+        "paging":true,
+        "pageLength": 2,
+        "orderable":true,
+        "order": [[1, 'asc']],
+        "autoWidth": false,
+        "selected": false,
+        "columns":[
+            {"data":0},
+            {"data":1},
+            {"data":2},
+            {"data":3},
+            {"data":4}
+        ],
+        dom: '<"card-header border-bottom p-1"<"head-label"><"dt-action-buttons text-end"B>><"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+        buttons: [
+            {
+                text: 'Set Status',
+                className: 'btn btn-outline-warning',
+                action: function(e, dt, node, config) {
 
-    console.log(taskByUserTable)
-    //Draw Task By User Table
-    taskByUserTable.DataTable().draw();
-    if (taskByUserTable instanceof $.fn.dataTable.Api) {
+                    var client_table = DepartmentTasksTableVeritable.dataTable();
+
+                    var rows = $(client_table.$('input[type="checkbox"]').map(function() {
+                        return $(this).prop("checked") ? $(this).closest('tr') : null;
+                    }));
+
+                    // here I got the rows, but I don't know how to get the value of simsPid. iccid, and imei
+
+                    $.each(rows, function(index, rowId) {
+
+
+                    });
+
+                }
+            },
+            {
+                text: 'Discard',
+                className: 'btn btn-outline-secondary',
+                action: function(e, dt, node, config) {
+
+                }
+            }
+        ]
+    });
+
+    //user-task-table-div
+    let userTaskTableDivInDashboard = $('#user-task-table');
+    //department-task-table-div
+    let departmentTaskTableDivInDashboard = $('#department-task-table');
+
+
+
+    if (DepartmentTasksTableVeritable instanceof $.fn.dataTable.Api) {
         console.log("is initialized")
         // variable "table" is a valid initialized DataTable ... do datatable stuff
     } else {
@@ -174,7 +258,7 @@ $(document).ready(function (){
                     url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
                     data:{deleteDepartment:JSON.stringify(obj)},
                     success:function (response) {
-                        console.log(response)
+                        //console.log(response)
                         if (response != true){
 
                             toastMixin.fire({
@@ -217,8 +301,8 @@ $(document).ready(function (){
             data:{userTask:userid},
             success:function (response) {
                 //display table of user's task
-                departmentTaskTable.load(location.href+" #department-task-table>*","");
-                userTaskTable.removeClass('d-none').fadeIn().html(response);
+                departmentTaskTableDivInDashboard.load(location.href+" #department-task-table>*","");
+                userTaskTableDivInDashboard.removeClass('d-none').fadeIn().html(response);
             }
         })
     })
@@ -231,8 +315,9 @@ $(document).ready(function (){
             data:{depTask:departmentId},
             success:function (response){
 
-                userTaskTable.load(location.href+" #user-task-table>*","");
-                departmentTaskTable.removeClass('d-none').fadeIn().html(response);
+                userTaskTableDivInDashboard.load(location.href+" #user-task-table>*","");
+                departmentTaskTableDivInDashboard.removeClass('d-none').fadeIn().html(response);
+               new DataTable(DepartmentTasksTableVeritable);
             }
         })
     })
@@ -322,6 +407,8 @@ $(document).ready(function (){
 
     //Task Process
     $('#addTaskBtn').click(function (){
+        userTaskTableDivInDashboard.addClass('d-none').fadeOut()
+        departmentTaskTableDivInDashboard.addClass('d-none').fadeOut();
         depUserTaskDiv.addClass('d-none').fadeOut();
         loader.removeClass('d-none');
         $.post({
@@ -428,9 +515,9 @@ $(document).ready(function (){
                                     data:{userTask:userid},
                                     success:function (response){
                                         //loader.removeClass('d-none').fadeIn()
-                                        departmentTaskTable.load(location.href+" #department-task-table>*","");
-                                        //userTaskTable.load(location.href+ "#user-ask-table>*","")
-                                        userTaskTable.removeClass('d-none').fadeIn().html(response);
+                                        departmentTaskTableDivInDashboard.load(location.href+" #department-task-table>*","");
+                                        //userTaskTableDivInDashboard.load(location.href+ "#user-ask-table>*","")
+                                        userTaskTableDivInDashboard.removeClass('d-none').fadeIn().html(response);
                                     }
                                 })
                             })

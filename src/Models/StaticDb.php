@@ -10,41 +10,6 @@ use PDO;
 
 class StaticDb extends Database
 {
-    //private static Database $db;
-
-    ///**
-    //     * @return Database
-    //     */
-    //    public static function getDB():?Database
-    //    {
-    //        if (self::$db === null){
-    //            self::$db = new Database();
-    //        }
-    //        return self::$db;
-    //    }
-
-    //public static function dbConnect()
-    //    {
-    //        static $dbb = null;
-    //        if ($dbb === null){
-    //            try {
-    //                $dbb = new PDO('mysql:host='.Param::DB_HOST.';dbname='.Param::DB_NAME.';charset=utf8',Param::DB_USER, Param::DB_PASS);
-    //                $dbb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    //            }catch (Exception $exception){
-    //                echo $exception->getMessage();
-    //                die();
-    //            }
-    //        }
-    //        return $dbb;
-    //    }
-
-
-
-    public static function LastInsert()
-    {
-
-        return self::getDB()->LastInsertId();
-    }
 
     /**
      * @return void

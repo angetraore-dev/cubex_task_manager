@@ -16,14 +16,6 @@ class Database
         //$this->db = new PDO('mysql:host='.Param::DB_HOST.';dbname='.Param::DB_NAME.';charset=utf8',Param::DB_USER, Param::DB_PASS);
     }
 
-    ///**
-    //     * @return PDO
-    //     */
-    //    public function dbConnect(): PDO
-    //    {
-    //        return new PDO('mysql:host='.Param::DB_HOST.';dbname='.Param::DB_NAME.';charset=utf8',Param::DB_USER, Param::DB_PASS);
-    //    }
-
     /**
      * @return PDO|void
      */
@@ -160,12 +152,5 @@ class Database
         return $request->fetchAll();
     }
 
-    /**
-     * @return false|string
-     */
-    public function LastInsertId(): bool|string
-    {
-        return $this->getPDO()->lastInsertId();
-    }
 
 }

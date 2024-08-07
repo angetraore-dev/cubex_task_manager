@@ -112,7 +112,7 @@ class AdminController
                 case isset($_POST["depTask"]):
                     $departmentId = $_POST["depTask"];
                     $departmentTasks = Task::findTaskByJoinDepartment($departmentId);
-                    var_dump($departmentTasks);
+                    //var_dump($departmentTasks);
                     if ($departmentTasks){?>
                         <div class="table-responsive" id="DepartmentTasksTableDiv">
                             <table class="table text-uppercase text-center caption-top" id="DepartmentTasksTable">
@@ -128,7 +128,7 @@ class AdminController
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <?php $i=1; foreach ($departmentTasks as $task):?>
+                                <?php $users = User::read(); $i=1; foreach ($departmentTasks as $task): ?>
                                     <tr>
                                         <td><?=$i++?></td>
                                         <td><?=$task->getTitle() .'<br>' .$task->getTodo()?></td>
@@ -148,6 +148,7 @@ class AdminController
                                                 $f = new DateTime($task->getDueDate()); echo $f->format('Y-m-d, H:i A');
                                             }  ?></td>
                                     </tr>
+
                                 <?php endforeach;?>
                                 </tbody>
 
