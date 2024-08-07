@@ -6,6 +6,7 @@ use App\Models\Department;
 use App\Models\StaticDb;
 use App\Models\Task;
 use App\Models\User;
+use App\Models\Database;
 use DateTime;
 use App\Config;
 
@@ -14,12 +15,14 @@ class AdminController
     private Department $department;
     private User $user;
     private Task $task;
+    private Database $database;
 
     public function __construct()
     {
         $this->department = new Department();
         $this->user = new User();
         $this->task = new Task();
+        $this->database = new Database();
 
     }
 
@@ -42,7 +45,9 @@ class AdminController
 
                     $item = json_decode($_POST["saveDepartment"]);
                     $field = ['libelle' => $item->department_libelle, 'color'=> $item->department_color];
-                    $save = $this->department->create($field);
+                    $class_name = 'department';
+                    $save = $this->database->insert($field, $class_name);
+                    //$save = $this->department->create($field);
                     echo $save;
 
                     break;
@@ -57,7 +62,7 @@ class AdminController
                         'roleid' => $item->role,
                         'department' => $item->department
                     ];
-                    $save = $this->user->create($field);
+                    $save = $this->database->insert($field, 'user');
                     echo $save;
 
                     break;
@@ -69,7 +74,7 @@ class AdminController
                 case isset($_POST["deleteUser"]):
                     $data = json_decode($_POST["deleteUser"]);
                     foreach ($data as $key => $value){
-                        $del = $this->user->delete($value);
+                        $del = $this->database->delete($value, 'user');
                     }
                     echo $del;
 
@@ -82,7 +87,7 @@ class AdminController
                     $data = json_decode($_POST["deleteDepartment"]);
                     $del = 0;
                     foreach ($data as $value){
-                        $del = $this->department->delete($value);
+                        $del = $this->database->delete($value, 'department');
                     }
                     echo $del;
 
@@ -139,7 +144,9 @@ class AdminController
                                         </td>
 
                                         <td><?=$task->fullname?></td>
-                                        <td><?php $f = new DateTime($task->due_date); echo $f->format('Y-m-d, H:i A') ?></td>
+                                        <td><?php if($task->getDueDate()){
+                                                $f = new DateTime($task->getDueDate()); echo $f->format('Y-m-d, H:i A');
+                                            }  ?></td>
                                     </tr>
                                 <?php endforeach;?>
                                 </tbody>
@@ -216,7 +223,7 @@ class AdminController
                     break;
                 case isset($_POST["delTask"]):
                     $identifier =$_POST["delTask"];
-                    $del = $this->task->delete($identifier);
+                    $del = $this->database->delete($identifier, 'task');
                     echo $del;
 
                 default: StaticDb::notFound(); break;
@@ -266,7 +273,7 @@ class AdminController
             'userid'=> $_POST["userid"],
             'file' => $fileData
         ];
-        $createTask = $this->task->create($field);
+        $createTask = $this->database->insert($field, 'task');
         echo $createTask;
     }
 

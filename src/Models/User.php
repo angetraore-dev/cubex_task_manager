@@ -5,9 +5,9 @@ namespace App\Models;
 use Exception;
 use PDO;
 //use App\Models\Database;
-use \AllowDynamicProperties;
+//use \AllowDynamicProperties;
 
-#[AllowDynamicProperties]
+//#[AllowDynamicProperties]
 class User
 {
     protected $user_id;
@@ -16,11 +16,11 @@ class User
     protected $email;
     protected $roleid;
     protected $department;
-    private Database $database;
+    //private Database $database;
 
     function __construct()
     {
-        $this->database = new Database();
+        //$this->database = new Database();
     }
 
     /**
@@ -205,77 +205,80 @@ class User
         return false;
     }
 
-    public function create(array $field):bool
-    {
-        $implodeColumns = implode(', ', array_keys($field));
-        $implodePlaceholders = implode(', :', array_keys($field));
-        $request = "INSERT INTO user($implodeColumns) VALUES (:". $implodePlaceholders .")";
 
-        $stmt = $this->database->dbConnect()->prepare($request);
-
-        foreach ( $field as $key => $value ){
-            $stmt->bindValue(':'.$key, $value);
-        }
-
-        if ($stmt->execute()){
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * @param int $identifier
-     * @param array $field
-     * @return bool
-     */
-    public function update(int $identifier, array $field):bool
-    {
-        $st = "";
-        $counter = 1;
-        $total_fields = count($field);
-        foreach ($field as $key => $value){
-            if ($counter == $total_fields){
-                $set = "$key = :" .$key;
-                $st = $st . $set;
-
-            }else{
-                $set = "$key = :" .$key . ", ";
-                $st = $st . $set;
-                $counter++;
-            }
-        }
-        $stmt ="";
-        $stmt .="UPDATE user SET " .$st;
-        $stmt .=" WHERE user_id = " .$identifier;
-        $req = $this->database->dbConnect()->prepare($stmt);
-
-        foreach ($field as $key => $value){
-            $req->bindValue(':' .$key, $value);
-        }
-        if ($req->execute()){
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * @param $identifier
-     * @return bool
-     */
-    public function delete($identifier):bool
-    {
-        $stmt = "DELETE FROM user WHERE user_id = :user_id";
-        $request = $this->database->dbConnect()->prepare($stmt);
-        $request->bindValue(':user_id', $identifier, PDO::PARAM_INT);
-        if ($request->execute()){
-            return true;
-        }
-        return false;
-    }
 
 
 
 }
+
+//public function create(array $field):bool
+//    {
+//        $implodeColumns = implode(', ', array_keys($field));
+//        $implodePlaceholders = implode(', :', array_keys($field));
+//        $request = "INSERT INTO user($implodeColumns) VALUES (:". $implodePlaceholders .")";
+//
+//        $stmt = $this->database->dbConnect()->prepare($request);
+//
+//        foreach ( $field as $key => $value ){
+//            $stmt->bindValue(':'.$key, $value);
+//        }
+//
+//        if ($stmt->execute()){
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//    /**
+//     * @param int $identifier
+//     * @param array $field
+//     * @return bool
+//     */
+//    public function update(int $identifier, array $field):bool
+//    {
+//        $st = "";
+//        $counter = 1;
+//        $total_fields = count($field);
+//        foreach ($field as $key => $value){
+//            if ($counter == $total_fields){
+//                $set = "$key = :" .$key;
+//                $st = $st . $set;
+//
+//            }else{
+//                $set = "$key = :" .$key . ", ";
+//                $st = $st . $set;
+//                $counter++;
+//            }
+//        }
+//        $stmt ="";
+//        $stmt .="UPDATE user SET " .$st;
+//        $stmt .=" WHERE user_id = " .$identifier;
+//        $req = $this->database->dbConnect()->prepare($stmt);
+//
+//        foreach ($field as $key => $value){
+//            $req->bindValue(':' .$key, $value);
+//        }
+//        if ($req->execute()){
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//    /**
+//     * @param $identifier
+//     * @return bool
+//     */
+//    public function delete($identifier):bool
+//    {
+//        $stmt = "DELETE FROM user WHERE user_id = :user_id";
+//        $request = $this->database->dbConnect()->prepare($stmt);
+//        $request->bindValue(':user_id', $identifier, PDO::PARAM_INT);
+//        if ($request->execute()){
+//            return true;
+//        }
+//        return false;
+//    }
+
 
 ///**
 //     * @return PDO|void

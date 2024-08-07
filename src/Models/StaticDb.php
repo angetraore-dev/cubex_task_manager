@@ -2,24 +2,26 @@
 
 namespace App\Models;
 
+use App\Models\Database;
 use App\Param;
 use Exception;
 use PDO;
+//use App\Models\Database;
 
-class StaticDb
+class StaticDb extends Database
 {
-    private static $db = null;
+    //private static Database $db;
 
-    /**
-     * @return Database|null
-     */
-    public static function getDB():?Database
-    {
-        if (self::$db === null){
-            self::$db = new Database();
-        }
-        return self::$db;
-    }
+    ///**
+    //     * @return Database
+    //     */
+    //    public static function getDB():?Database
+    //    {
+    //        if (self::$db === null){
+    //            self::$db = new Database();
+    //        }
+    //        return self::$db;
+    //    }
 
     //public static function dbConnect()
     //    {
@@ -36,20 +38,11 @@ class StaticDb
     //        return $dbb;
     //    }
 
-    /**
-     * @param $class
-     * @return mixed
-     */
-    public static function getClass($class): mixed
-    {
-        return self::getDB()->query("SELECT * FROM $class", get_called_class());
-    }
 
-    /**
-     * @return false|string
-     */
+
     public static function LastInsert()
     {
+
         return self::getDB()->LastInsertId();
     }
 

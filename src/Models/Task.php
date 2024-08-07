@@ -2,32 +2,31 @@
 
 namespace App\Models;
 
-use PDO;
-//use App\Models\Database;
 //use \AllowDynamicProperties;
 //
 //#[AllowDynamicProperties]
 class Task
 {
-    protected $taskId;
+    protected $task_id;
     protected $title;
     protected $todo;
-    protected $dueDate;
-    protected $createdAt;
+    protected $due_date;
+    protected $created_at;
     protected $isChecked;
     protected $isArchived;
     protected $isCheckedByAdmin;
     protected $userid;
     protected $file;
 
-    private Database $database;
+    //private Database $database;
+    //public function __construct(){$this->database = new Database();}
 
     /**
      * @return mixed
      */
     public function getTaskId()
     {
-        return $this->taskId;
+        return $this->task_id;
     }
 
     /**
@@ -71,34 +70,34 @@ class Task
      */
     public function getDueDate()
     {
-        return $this->dueDate;
+        return $this->due_date;
     }
 
     /**
-     * @param mixed $dueDate
+     * @param mixed $due_date
      * @return Task
      */
-    public function setDueDate($dueDate)
+    public function setDueDate($due_date)
     {
-        $this->dueDate = $dueDate;
+        $this->due_date = $due_date;
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getCreatedAt()
+    public function getCreated_at()
     {
-        return $this->createdAt;
+        return $this->created_at;
     }
 
     /**
-     * @param mixed $createdAt
+     * @param mixed $created_at
      * @return Task
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt($created_at)
     {
-        $this->createdAt = $createdAt;
+        $this->created_at = $created_at;
         return $this;
     }
 
@@ -192,11 +191,6 @@ class Task
         return $this;
     }
 
-    public function __construct()
-    {
-        $this->database = new Database();
-    }
-
     /**
      * @return array|false|mixed
      */
@@ -227,77 +221,8 @@ class Task
     }
 
     /**
-     * @param array $field
-     * @return bool
+     * @return void
      */
-    public function create(array $field): bool
-    {
-        $implodeColumns = implode(', ', array_keys($field));
-        $implodePlaceholders = implode(', :', array_keys($field));
-        $request = "INSERT INTO task($implodeColumns) VALUES (:". $implodePlaceholders .")";
-
-        $stmt = $this->database->dbConnect()->prepare($request);
-
-        foreach ( $field as $key => $value ){
-            $stmt->bindValue(':'.$key, $value);
-        }
-
-        if ($stmt->execute()){
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * @param int $identifier
-     * @param array $field
-     * @return bool
-     */
-    public function edit(int $identifier, array $field): bool
-    {
-        $st = "";
-        $counter = 1;
-        $total_fields = count($field);
-        foreach ($field as $key => $value){
-            if ($counter == $total_fields){
-                $set = "$key = :" .$key;
-                $st = $st . $set;
-
-            }else{
-                $set = "$key = :" .$key . ", ";
-                $st = $st . $set;
-                $counter++;
-            }
-        }
-        $stmt ="";
-        $stmt .="UPDATE task SET " .$st;
-        $stmt .=" WHERE task_id = " .$identifier;
-        $req = $this->database->dbConnect()->prepare($stmt);
-
-        foreach ($field as $key => $value){
-            $req->bindValue(':' .$key, $value);
-        }
-        if ($req->execute()){
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * @param $identifier
-     * @return bool
-     */
-    public function delete($identifier):bool
-    {
-        $stmt = "DELETE FROM task WHERE task_id = :task_id";
-        $request = $this->database->dbConnect()->prepare($stmt);
-        $request->bindValue(':task_id', $identifier, PDO::PARAM_INT);
-        if ($request->execute()){
-            return true;
-        }
-        return false;
-    }
-
     function taskForm():void
     {?>
         <form class="row g-3 my-4 needs-validation taskForm" id="taskForm" enctype="multipart/form-data" novalidate>
