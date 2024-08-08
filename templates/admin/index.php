@@ -4,7 +4,50 @@ use App\Models\Role;
 use App\Models\Task;
 
 ob_start();?>
-<div class="container-fluid">
+<div class="container" id="first-page-admin">
+    <div class="row">
+        <div class="d-flex justify-content-between my-4">
+            <button data-id="project-page" class="pageHref btn btn-lg col-4 h-auto mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important; ">Projects</button>
+            <button data-id="task-page" class="pageHref btn btn-lg col-4 h-auto mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important; ">tasks</button>
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+            <button data-id="meeting-page" class="pageHref btn btn-lg col-4 mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important;">meetings</button>
+            <button data-id="order-page" class="pageHref btn btn-lg col-4 mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important;">orders</button>
+        </div>
+        <div class="d-flex align-items-start justify-content-between mb-4">
+            <button data-id="addMeeting-page" class="pageHref btn btn-lg col-md-4 mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important;">add meetings (Only x)</button>
+        </div>
+    </div>
+</div>
+<!-- Start DIVs for differents menu items -->
+<div class="container-fluid d-none text-center text-uppercase" id="project-page">
+</div>
+<div class="container-fluid d-none" id="task-page">
+    <div class="row">
+        <div class="col-2 h-100">X</div>
+        <div class="col">
+            <div class="navbar navbar-expand-lg">
+                <div class="container-fluid">
+                    <p class="navbar-brand" style="color: gold">
+                        <i class="bi bi-home"></i> Tasks
+                    </p>
+                    <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<div class="container-fluid d-none" id="meeting-page">meeting page</div>
+<div class="container-fluid d-none" id="order-page">order page</div>
+<div class="container-fluid d-none" id="addMeeting-page">crud add meeting</div>
+<!-- End DIVs for differents menu items -->
+
+
+<div class="container-fluid d-none">
 <!-- Department user responsible task Buttond DIV close on click add task-->
     <div id="depUserTaskDiv">
         <!-- Container for first buttons line row mt-4-->

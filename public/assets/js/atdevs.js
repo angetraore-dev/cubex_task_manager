@@ -593,6 +593,21 @@ $(document).ready(function (){
         })
     })
 
+    //first-page-admin Btns and actions
+    //Div Btn Menu
+    let firstPageAdminBtnDiv = $('#first-page-admin')
+    let menus = document.querySelectorAll('.pageHref');
+
+    Array.from(menus).forEach(menu =>{
+        menu.addEventListener('click', event => {
+            let containerPageDisplay = event.currentTarget.getAttribute('data-id')
+            firstPageAdminBtnDiv.addClass('d-none').fadeOut()
+            $("#"+containerPageDisplay).removeClass('d-none').fadeIn()
+        })
+    })
+
+
+
 
 
 
