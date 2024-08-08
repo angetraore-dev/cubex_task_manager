@@ -10,9 +10,9 @@
 
 </head>
 <body>
-<header class="text-uppercase fw-bold fs-6">
-    <nav class="navbar navbar-expand-lg bg-success text-white">
-        <div class="container-fluid text-white">
+<header class="text-uppercase fw-bold fs-6" style="border-bottom: gold 1px solid !important;">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
             <!--<img src="#" width="36" height="30" alt="logo_cubex_sa" class="d-inline-block align-text-top" >-->
             <a class="navbar-brand text-white" href="<?=HTTP?>">
                  <i class="bi bi-home"></i> cubex sa
@@ -67,18 +67,18 @@
     <?= $content ?>
 </div>
 <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-    <p class="col-md-4 mb-0 text-body-secondary fw-bold">© 2024 atdevs.ci +225 0507 333 944</p>
+    <p class="col-md-4 mb-0 fw-bold">© 2024 atdevs.ci +225 0507 333 944</p>
 
     <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
         <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
     </a>
 
     <ul class="nav col-md-4 justify-content-end">
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2">Home</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2">Features</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2">Pricing</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2">FAQs</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2">About</a></li>
     </ul>
 </footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
