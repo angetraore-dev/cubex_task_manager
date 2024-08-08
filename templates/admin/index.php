@@ -127,22 +127,63 @@ ob_start();?>
 
     <!-- Form add Task Div -->
     <div class="col-md-8 mx-auto d-flex justify-content-center align-items-center d-none" id="taskFormDiv"></div>
+   <!-- Tasks(title-tasks-checked) Department Responsible - due date-->
     <div class="row">
-        <div class="table-responsive">
-            <table class="table table-condensed text-uppercase" id="activesTasksTable">
+        <div class="table-responsive" id="activeTaskDiv">
+            <table class="table table-condensed table-hover text-capitalize" id="activesTasksTable">
                 <thead>
                 <tr>
                     <th>#</th>
                     <th>id</th>
                     <th>task</th>
-                    <th>checked</th>
                     <th>department</th>
-                    <th>responsible</th>
                     <th>due date</th>
                 </tr>
                 </thead>
                 <tbody>
-                    <?php $activeTasksList= Task::inWaiting(); var_dump($activeTasksList);?>
+                    <?php $i=1; $activeTasksList= Task::activesTasks(); if ($activeTasksList) : foreach ($activeTasksList as $activeList): var_dump($activeTasksList);?>
+                        <tr data-id="<?=$activeList->getTaskId()?>">
+                            <td><?= $i++?></td>
+                            <td><?=$activeList->getTaskId()?></td>
+                            <td class="d-flex justify-content-between fs-6 fw-lighter">
+                                <ul class="list-unstyled">
+                                    <li class="nav-item"><?= '<p class="text-muted fw-bolder fs-6 text-capitalize mb-1">title: '.$activeList->getTitle() .'<br>To do: '. $activeList->getTodo()
+                                        .'<br>assigned To: "'.$activeList->fullname.'"</p>';
+                                        if ($activeList->getFile()){
+                                            $item = json_decode($activeList->getFile(), true);
+                                            foreach ($item as $file){?>
+                                                <a href="<?= HTTP .'/'.$file ?>" target="_blank"><i class="fa fa-paperclip"></i> </a><br>
+                                                <p class="text-muted text-capitalize fs-6">created at: <?php $f = new DateTime($activeList->getCreatedAt()); echo $f->format('Y-m-d');?> </p>
+                                                <?php
+                                            }
+                                        }
+                                    ?></li>
+
+                                </ul>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <span class="d-inline">
+                                            <input type="checkbox" value="<?=$activeList->getIsChecked()?>" <?php echo ($activeList->getIsChecked()) ? 'checked="checked"' : ''?> name="responsible" id="responsible" data-id="<?=$activeList->getTaskId()?>">
+                                            <label class="text-sm" for="responsible">Responsible</label>
+                                        </span>
+                                    </li>
+                                    <li class="d-inline">
+                                        <input type="checkbox" value="<?=$activeList->getIsCheckedByAdmin()?>" <?php echo ($activeList->getIsCheckedByAdmin()) ? 'checked="checked"' : ''?> name="admin" id="admin" data-id="<?=$activeList->getTaskId()?>">
+                                        <label for="admin" class="text-sm">Admin</label>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td><?=$activeList->libelle .
+                                ' <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="'.$activeList->color.'"></rect></svg>'?>
+                            </td>
+                            <td>
+                                <?php if ($activeList->getDueDate()){
+                                    $f = new DateTime($activeList->getDueDate()); echo '<svg class="bd-placeholder-img rounded me-2" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="green"></rect></svg>'.$f->format('Y-m-d H:i A');
+                                }?>
+                            </td>
+                        </tr>
+
+                    <?php endforeach; else: echo "<p class='text-muted text-center'>No records found ! </p>"; endif;?>
                 </tbody>
             </table>
         </div>
@@ -357,4 +398,3 @@ ob_start();?>
         </div>
     </div>
 </div>
-

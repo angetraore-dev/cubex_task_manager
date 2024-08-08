@@ -39,7 +39,7 @@ $(document).ready(function (){
 
     const Toast = Swal.mixin({
         toast: true,
-        position: 'le',
+        position: 'top-end',
         iconColor: 'white',
         customClass: {
             popup: 'colored-toast',
@@ -57,6 +57,7 @@ $(document).ready(function (){
                 ? i
                 : 0;
     };
+
     //DataTable.moment("DD-MM-YYYY");
 
     let loader = $("#loaderDiv");
@@ -80,11 +81,12 @@ $(document).ready(function (){
             {"data":3}
         ]
     });
+    //Actives tasks Tables
     let globalTable = $("#activesTasksTable").DataTable({
         "RowId": 0,
         "searching": true,
         "paging":true,
-        "pageLength": 2,
+        "pageLength": 10,
         "orderable":true,
         "order": [[1, 'asc']],
         "autoWidth": false,
@@ -94,12 +96,54 @@ $(document).ready(function (){
             {"data":1},
             {"data":2},
             {"data":3},
-            {"data":4},
-            {"data":5},
-            {"data":6}
-
+            {"data":4}
+        ],
+        "columnDefs":[
+            {
+                "target":0,
+                "searchable":true
+            },
+            {
+                "target":1,
+                "visible":false
+            }
         ]
     })
+    //Checkbox process
+    let checkboxAdmins = document.querySelectorAll("#admin");
+    Array.from(checkboxAdmins).forEach(checkboxAdmin => {
+        checkboxAdmin.addEventListener('change', (event) => {
+            let obj = {};
+            let check = event.currentTarget.checked;
+            let taskId = event.currentTarget.getAttribute('data-id');
+            obj['check'] = check
+            obj['taskId'] = taskId
+
+            $.post({
+                url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+                data:{checkAdmin:JSON.stringify(obj)},
+                success:function (response){
+                    if (!response){
+                        toastMixin.fire({
+                            icon:"error",
+                            text:"something went wrong, please contact the admin"
+                        }).then(() => {
+                            window.location.reload()
+                        })
+                    }else {
+                        Toast.fire({
+                            text:"Successfull updated"
+                        }).then(() => {
+                            $('#activesTasksTable').DataTable().draw();
+                            //$("#activeTaskDiv").load(location.href+" #activeTaskDiv>*","")
+                        })
+                    }
+                }
+            })
+
+        })
+    })
+
     //TaskByDepartment in AdminController
     let DepartmentTasksTableVeritable = $(this).closest('#DepartmentTasksTable').DataTable({
         "destroy":true,

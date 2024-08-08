@@ -194,7 +194,7 @@ class AdminController
                                                 if ($task->getFile()){
                                                     $item = json_decode($task->getFile(), true);
                                                     foreach ($item as $file){?>
-                                                    <a href="<?= HTTP .'/'.$file ?>" target="_blank" download><i class="fa fa-paperclip"></i> </a>
+                                                    <a href="<?= HTTP .'/'.$file ?>" target="_blank"><i class="fa fa-paperclip"></i> </a>
                                                     <?php
                                                     }
                                                 }
@@ -209,7 +209,6 @@ class AdminController
                                                         <input type="checkbox" value="<?=$task->getIsCheckedByAdmin()?>" <?php echo ($task->getIsCheckedByAdmin()) ? 'checked="checked"' : ''?> name="admin" id="admin">
                                                         <label for="admin">Admin</label>
                                                     </li>
-
                                                 </ul>
 
                                             </td>
@@ -236,7 +235,14 @@ class AdminController
                     $identifier =$_POST["delTask"];
                     $del = $this->database->delete($identifier, 'task');
                     echo $del;
-
+                    break;
+                case isset($_POST["checkAdmin"]):
+                    $data = json_decode($_POST["checkAdmin"]);
+                    $bit = ($data->check) ? 1 : "0";
+                    $field = ["isCheckedByAdmin" => $bit];
+                    $update = $this->database->update($data->taskId, $field, 'task');
+                    echo $update;
+                    break;
                 default: StaticDb::notFound(); break;
             }
         }

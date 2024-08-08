@@ -87,7 +87,7 @@ class Database
         }
         $stmt ="";
         $stmt .="UPDATE $class_name SET " .$st;
-        $stmt .=" WHERE .$whereClause. = " .$identifier;
+        $stmt .=" WHERE $whereClause = " .$identifier;
         $req = $this->getPDO()->prepare($stmt);
 
         foreach ($field as $key => $value){
