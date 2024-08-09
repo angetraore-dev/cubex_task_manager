@@ -597,14 +597,55 @@ $(document).ready(function (){
     //Div Btn Menu
     let firstPageAdminBtnDiv = $('#first-page-admin')
     let menus = document.querySelectorAll('.pageHref');
+    let backDiv = $('.backDiv');
+    let backToFirstPageAdminBtnDiv = document.querySelectorAll('.back');
 
-    Array.from(menus).forEach(menu =>{
-        menu.addEventListener('click', event => {
-            let containerPageDisplay = event.currentTarget.getAttribute('data-id')
-            firstPageAdminBtnDiv.addClass('d-none').fadeOut()
-            $("#"+containerPageDisplay).removeClass('d-none').fadeIn()
-        })
-    })
+    (() => {
+        'use strict'
+        Array.from(menus).forEach(menu =>{
+            menu.addEventListener('click', event => {
+
+                let containerPageDisplay = event.currentTarget.getAttribute('data-id')
+
+                firstPageAdminBtnDiv.addClass('d-none').fadeOut()
+
+                try {
+                    localStorage.setItem('activePage', containerPageDisplay);
+                } catch (e) {
+                    console.log("localstorage is not allowed in code snippets here test it on jsfiddle");
+                }
+
+                backDiv.removeClass('d-none').fadeIn()
+                $("#"+containerPageDisplay).removeClass('d-none').fadeIn()
+
+            }, false)
+        });
+
+        Array.from(backToFirstPageAdminBtnDiv).forEach(back =>{
+            back.addEventListener('click', e =>{
+                let quitPage = localStorage.getItem('activePage');
+                $("#"+quitPage).addClass('d-none').fadeOut();
+                localStorage.setItem('activePage', '')
+                backDiv.addClass('d-none').fadeOut()
+                firstPageAdminBtnDiv.removeClass('d-none').fadeIn()
+            }, false)
+        });
+
+    })()
+
+    //Display active Page on reload Page
+    try {
+        var activePage = localStorage.getItem('activePage');
+    } catch (e) {
+        console.log("localstorage is not allowed in code snippets here test it on jsfiddle");
+    }
+    if (activePage) {
+        loader.removeClass('d-none').fadeIn()
+        firstPageAdminBtnDiv.addClass('d-none').fadeOut()
+        backDiv.removeClass('d-none').fadeIn()
+        $("#"+activePage).removeClass('d-none').fadeIn()
+        loader.addClass('d-none').fadeOut()
+    }
 
 
 

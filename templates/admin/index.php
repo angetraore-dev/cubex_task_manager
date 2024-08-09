@@ -7,43 +7,202 @@ ob_start();?>
 <div class="container" id="first-page-admin">
     <div class="row">
         <div class="d-flex justify-content-between my-4">
-            <button data-id="project-page" class="pageHref btn btn-lg col-4 h-auto mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important; ">Projects</button>
-            <button data-id="task-page" class="pageHref btn btn-lg col-4 h-auto mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important; ">tasks</button>
+            <button data-bs-toggle="tab" data-id="project-page" class="pageHref btn btn-lg col-4 h-auto mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important; ">Projects</button>
+            <button data-bs-toggle="tab" data-id="task-page" class="pageHref btn btn-lg col-4 h-auto mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important; ">tasks</button>
         </div>
         <div class="d-flex justify-content-between mb-2">
-            <button data-id="meeting-page" class="pageHref btn btn-lg col-4 mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important;">meetings</button>
-            <button data-id="order-page" class="pageHref btn btn-lg col-4 mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important;">orders</button>
+            <button data-bs-toggle="tab" data-id="meeting-page" class="pageHref btn btn-lg col-4 mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important;">meetings</button>
+            <button data-bs-toggle="tab" data-id="order-page" class="pageHref btn btn-lg col-4 mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important;">orders</button>
         </div>
         <div class="d-flex align-items-start justify-content-between mb-4">
-            <button data-id="addMeeting-page" class="pageHref btn btn-lg col-md-4 mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important;">add meetings (Only x)</button>
+            <button data-bs-toggle="tab" data-id="addMeeting-page" class="pageHref btn btn-lg col-md-4 mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important;">add meetings (Only x)</button>
         </div>
     </div>
 </div>
 <!-- Start DIVs for differents menu items -->
-<div class="container-fluid d-none text-center text-uppercase" id="project-page">
-</div>
-<div class="container-fluid d-none" id="task-page">
-    <div class="row">
-        <div class="col-2 h-100">X</div>
-        <div class="col">
-            <div class="navbar navbar-expand-lg">
-                <div class="container-fluid">
-                    <p class="navbar-brand" style="color: gold">
-                        <i class="bi bi-home"></i> Tasks
-                    </p>
-                    <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+
+<div class="container-fluid p-0" id="BigContainer">
+
+    <div class="d-flex align-items-stretch py-1" style="height: 100%">
+
+        <!-- left Bar contain Logo and go back button -->
+        <div class="col-lg-1 p-1 backDiv d-none" style="height: 100%">
+
+            <!-- Logo -->
+            <div class="text-center mb-3">
+                <h3 class="fs-2 fw-bolder">X</h3>
+            </div>
+
+            <!--Back Button -->
+            <button class="btn btn-link-hover text-white back" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5"></path>
+                </svg>
+                Back
+            </button>
+        </div>
+
+        <!-- Menu Main container -->
+
+        <!-- TASK-page -->
+        <div class="col-lg-11 p-1 d-none" id="task-page">
+            <!-- Header -->
+            <div class="d-flex flex-row">
+                <div class="align-self-start">
+                    <div class="navbar navbar-expand-lg">
+                        <div class="container-fluid">
+                            <p class="navbar-brand fs-3 fw-smaller" style="color: gold">
+                                <i class="fa fa-home"></i> Tasks
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ms-auto me-0">
+                    <div class="d-flex flex-column justify-content-between p-1">
+                        <button class="btn btn-sm mb-2" style="background-color: gold; text-decoration: none !important; color: #FFFFFF;" type="button">Checked</button>
+                        <button class="btn btn-sm" style="border: gold 1px solid; text-decoration: none !important; color: #FFFFFF;" type="button">not Checked</button>
+
+                        <!--
+                        <div class="container-fluid">
+                            <h3 class="text-center fs-4">X</h3>
+                        </div>
+                        -->
+                    </div>
+
                 </div>
             </div>
+            <!--container -->
+            <div class="row g-0"><h3 class="text-center my-4">Task Page</h3> </div>
 
         </div>
 
+        <!--PROJECT Page -->
+        <div class="col-lg-11 p-1 d-none" id="project-page">
+            <!--Header -->
+            <div class="d-flex flex-row">
+
+                <!-- Menu Page title -->
+                <div class="align-self-start">
+                    <div class="navbar navbar-expand-lg">
+                        <div class="container-fluid">
+                            <p class="navbar-brand fs-3 fw-smaller" style="color: gold">
+                                <i class="fa fa-home"></i> Tasks
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lexik checked not checked -->
+                <div class="ms-auto me-0">
+                    <div class="d-flex flex-column justify-content-between p-1">
+                        <button class="btn btn-sm mb-2" style="background-color: gold; text-decoration: none !important; color: #FFFFFF;" type="button">Checked</button>
+                        <button class="btn btn-sm" style="border: gold 1px solid; text-decoration: none !important; color: #FFFFFF;" type="button">not Checked</button>
+
+                        <!--
+                        <div class="container-fluid">
+                            <h3 class="text-center fs-4">X</h3>
+                        </div>
+                        -->
+                    </div>
+
+                </div>
+            </div>
+            <!--container -->
+            <div class="row g-0"><h3 class="text-center my-4">Project Page</h3> </div>
+
+        </div>
+
+        <!--MEETING Page -->
+        <div class="col-lg-11 p-1 d-none" id="meeting-page">
+            <!--Header -->
+            <div class="d-flex flex-row">
+                <div class="align-self-start">
+                    <div class="navbar navbar-expand-lg">
+                        <div class="container-fluid">
+                            <p class="navbar-brand fs-3 fw-smaller" style="color: gold">
+                                <i class="fa fa-home"></i> Tasks
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="ms-auto me-0">
+                    <div class="d-flex flex-column justify-content-between p-1">
+                        <button class="btn btn-sm mb-2" style="background-color: gold; text-decoration: none !important; color: #FFFFFF;" type="button">Checked</button>
+                        <button class="btn btn-sm" style="border: gold 1px solid; text-decoration: none !important; color: #FFFFFF;" type="button">not Checked</button>
+
+                        <!--
+                        <div class="container-fluid">
+                            <h3 class="text-center fs-4">X</h3>
+                        </div>
+                        -->
+                    </div>
+
+                </div>
+            </div>
+            <!--container -->
+            <div class="row g-0"><h3 class="text-center my-4">Meeting Page</h3> </div>
+        </div>
+
+        <!--ORDER Page -->
+        <div class="col-lg-11 p-1 d-none" id="order-page">
+            <!-- Header -->
+            <div class="d-flex flex-row">
+                <div class="align-self-start">
+                    <div class="navbar navbar-expand-lg">
+                        <div class="container-fluid">
+                            <p class="navbar-brand fs-3 fw-smaller" style="color: gold">
+                                <i class="fa fa-home"></i> Tasks
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="ms-auto me-0">
+                    <div class="d-flex flex-column justify-content-between p-1">
+                        <button class="btn btn-sm mb-2" style="background-color: gold; text-decoration: none !important; color: #FFFFFF;" type="button">Checked</button>
+                        <button class="btn btn-sm" style="border: gold 1px solid; text-decoration: none !important; color: #FFFFFF;" type="button">not Checked</button>
+                    </div>
+                </div>
+            </div>
+            <!--container -->
+            <div class="row g-0"><h3 class="text-center my-4">Order Page</h3> </div>
+        </div>
+
+        <!--ADD MEETING PAGE Page -->
+        <div class="col-lg-11 p-1 d-none" id="addMeeting-page">
+            <!-- Header -->
+            <div class="d-flex flex-row">
+                <div class="align-self-start">
+                    <div class="navbar navbar-expand-lg">
+                        <div class="container-fluid">
+                            <p class="navbar-brand fs-3 fw-smaller" style="color: gold">
+                                <i class="fa fa-home"></i> Tasks
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="ms-auto me-0">
+                    <div class="d-flex flex-column justify-content-between p-1">
+                        <button class="btn btn-sm mb-2" style="background-color: gold; text-decoration: none !important; color: #FFFFFF;" type="button">Checked</button>
+                        <button class="btn btn-sm" style="border: gold 1px solid; text-decoration: none !important; color: #FFFFFF;" type="button">not Checked</button>
+
+                        <!--
+                        <div class="container-fluid">
+                            <h3 class="text-center fs-4">X</h3>
+                        </div>
+                        -->
+                    </div>
+
+                </div>
+            </div>
+            <!--container -->
+            <div class="row g-0"><h3 class="text-center my-4">Add Meeting Page</h3> </div>
+        </div>
+        <!-- Col Container Page -->
     </div>
+    <!-- End BigContainer -->
 </div>
-<div class="container-fluid d-none" id="meeting-page">meeting page</div>
-<div class="container-fluid d-none" id="order-page">order page</div>
-<div class="container-fluid d-none" id="addMeeting-page">crud add meeting</div>
+
 <!-- End DIVs for differents menu items -->
 
 

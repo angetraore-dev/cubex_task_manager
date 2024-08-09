@@ -11,8 +11,10 @@ body{
     color: #FFFFFF !important;
     background-color: #121825 !important;
 }
-
-
+.back{
+    color: #FFFFFF;
+    text-decoration: none !important;
+}
 input{
     background-color: #121825 !important;
     color: gold !important;
@@ -39,7 +41,7 @@ ul#nav-tab>li>a:hover{
     aspect-ratio: 1;
     border-radius: 50%;
     border: 8px solid;
-    border-color: #000 #0000;
+    border-color: #FFFFFF #0000;
     animation: l1 1s infinite;
 }
 @keyframes l1 {to{transform: rotate(.5turn)}}
@@ -48,6 +50,7 @@ ul#nav-tab>li>a:hover{
     float: right;
 }
 
+/**
 .w3-light-grey,.w3-hover-light-grey:hover,.w3-light-gray,.w3-hover-light-gray:hover{
     color:#000!important;
     background-color:#f1f1f1!important;
@@ -86,8 +89,6 @@ ul#nav-tab>li>a:hover{
     background-color:#616161!important;
 }
 
-
-
 .w3-bar{
     min-width: 100%;
     width: 100%;
@@ -96,6 +97,16 @@ ul#nav-tab>li>a:hover{
 .w3-btn,.w3-button{border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap}
 .w3-btn:hover{box-shadow:0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)}
 .w3-btn,.w3-button{-webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+
+
+
+
+
+ */
+
+
+
+
 
 
 .dataTables_wrapper {
