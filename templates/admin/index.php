@@ -6,17 +6,25 @@ use App\Models\Task;
 ob_start();?>
 <div class="container" id="first-page-admin">
     <div class="row">
-        <div class="d-flex justify-content-between my-4">
+        <div class="d-flex justify-content-between mt-4 mb-2">
             <button data-bs-toggle="tab" data-id="project-page" class="pageHref btn btn-lg col-4 h-auto mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important; ">Projects</button>
             <button data-bs-toggle="tab" data-id="task-page" class="pageHref btn btn-lg col-4 h-auto mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important; ">tasks</button>
         </div>
+        <div class="d-flex justify-content-end mb-4">
+        <?php $role= $_SESSION['role']; if ($role == 1) : ?>
+                <button data-bs-toggle="tab" data-id="addTask-page" class="pageHref btn btn-lg col-4 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important;">add tasks</button>
+        <?php endif;?>
+        </div>
+
         <div class="d-flex justify-content-between mb-2">
             <button data-bs-toggle="tab" data-id="meeting-page" class="pageHref btn btn-lg col-4 mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important;">meetings</button>
             <button data-bs-toggle="tab" data-id="order-page" class="pageHref btn btn-lg col-4 mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important;">orders</button>
         </div>
-        <div class="d-flex align-items-start justify-content-between mb-4">
-            <button data-bs-toggle="tab" data-id="addMeeting-page" class="pageHref btn btn-lg col-md-4 mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important;">add meetings (Only x)</button>
+        <?php $role= $_SESSION['role']; if ($role == 1) : ?>
+        <div class="d-flex align-items-start justify-content-between mb-4"><!--col-md-4-->
+            <button data-bs-toggle="tab" data-id="addMeeting-page" class="pageHref btn btn-lg col-4 mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important;">add meetings (Only x)</button>
         </div>
+        <?php endif;?>
     </div>
 </div>
 <!-- Start DIVs for differents menu items -->
@@ -45,7 +53,7 @@ ob_start();?>
         <!-- Menu Main container -->
 
         <!-- TASK-page -->
-        <div class="col-lg-11 p-1 d-none" id="task-page">
+        <div class="col-lg-11 col-10 p-1 d-none" id="task-page">
             <!-- Header -->
             <div class="d-flex flex-row">
                 <div class="align-self-start">
@@ -59,26 +67,25 @@ ob_start();?>
                 </div>
 
                 <div class="ms-auto me-0">
-                    <div class="d-flex flex-column justify-content-between p-1">
+                    <div class="d-flex flex-column flex-grow-1 justify-content-between p-1">
                         <button class="btn btn-sm mb-2" style="background-color: gold; text-decoration: none !important; color: #FFFFFF;" type="button">Checked</button>
                         <button class="btn btn-sm" style="border: gold 1px solid; text-decoration: none !important; color: #FFFFFF;" type="button">not Checked</button>
-
-                        <!--
-                        <div class="container-fluid">
-                            <h3 class="text-center fs-4">X</h3>
-                        </div>
-                        -->
                     </div>
 
                 </div>
             </div>
+
+            <!-- Departments View -->
+            <div class="row g-0 p-2 border border-1 border-primary">
+                <button data-id="taskMenu" class="taskMenu btn btn-lg row g-0 p-1 text-center text-uppercase rounded rounded-0 border border-1 border-tertiary" type="button" style="font-weight: lighter !important; text-decoration: none; color: #FFFFFF;">ceo</button>
+            </div>
             <!--container -->
-            <div class="row g-0"><h3 class="text-center my-4">Task Page</h3> </div>
+            <div class="row g-0 mt-4"><h3 class="text-center my-4">Task Page</h3> </div>
 
         </div>
 
         <!--PROJECT Page -->
-        <div class="col-lg-11 p-1 d-none" id="project-page">
+        <div class="col-lg-11 col-10 p-1 d-none" id="project-page">
             <!--Header -->
             <div class="d-flex flex-row">
 
@@ -87,7 +94,7 @@ ob_start();?>
                     <div class="navbar navbar-expand-lg">
                         <div class="container-fluid">
                             <p class="navbar-brand fs-3 fw-smaller" style="color: gold">
-                                <i class="fa fa-home"></i> Tasks
+                                <i class="fa fa-home"></i> Projects
                             </p>
                         </div>
                     </div>
@@ -114,14 +121,14 @@ ob_start();?>
         </div>
 
         <!--MEETING Page -->
-        <div class="col-lg-11 p-1 d-none" id="meeting-page">
+        <div class="col-lg-11 col-10 p-1 d-none" id="meeting-page">
             <!--Header -->
             <div class="d-flex flex-row">
                 <div class="align-self-start">
                     <div class="navbar navbar-expand-lg">
                         <div class="container-fluid">
                             <p class="navbar-brand fs-3 fw-smaller" style="color: gold">
-                                <i class="fa fa-home"></i> Tasks
+                                <i class="fa fa-home"></i> Meetings
                             </p>
                         </div>
                     </div>
@@ -145,14 +152,14 @@ ob_start();?>
         </div>
 
         <!--ORDER Page -->
-        <div class="col-lg-11 p-1 d-none" id="order-page">
+        <div class="col-lg-11 col-10 p-1 d-none" id="order-page">
             <!-- Header -->
             <div class="d-flex flex-row">
                 <div class="align-self-start">
                     <div class="navbar navbar-expand-lg">
                         <div class="container-fluid">
                             <p class="navbar-brand fs-3 fw-smaller" style="color: gold">
-                                <i class="fa fa-home"></i> Tasks
+                                <i class="fa fa-home"></i> Orders
                             </p>
                         </div>
                     </div>
@@ -169,14 +176,14 @@ ob_start();?>
         </div>
 
         <!--ADD MEETING PAGE Page -->
-        <div class="col-lg-11 p-1 d-none" id="addMeeting-page">
+        <div class="col-lg-11 col-10 p-1 d-none" id="addMeeting-page">
             <!-- Header -->
             <div class="d-flex flex-row">
                 <div class="align-self-start">
                     <div class="navbar navbar-expand-lg">
                         <div class="container-fluid">
                             <p class="navbar-brand fs-3 fw-smaller" style="color: gold">
-                                <i class="fa fa-home"></i> Tasks
+                                <i class="fa fa-home"></i> Meeting Form
                             </p>
                         </div>
                     </div>
@@ -196,7 +203,7 @@ ob_start();?>
                 </div>
             </div>
             <!--container -->
-            <div class="row g-0"><h3 class="text-center my-4">Add Meeting Page</h3> </div>
+            <div class="row g-0"><h3 class="text-center my-4">Add Meeting Form</h3> </div>
         </div>
         <!-- Col Container Page -->
     </div>
