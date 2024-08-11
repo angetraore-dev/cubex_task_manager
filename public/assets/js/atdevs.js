@@ -593,18 +593,20 @@ $(document).ready(function (){
         })
     })
 
-    //first-page-admin Btns and actions
+    //first-page-admin Btn and actions
     //Div Btn Menu
     let firstPageAdminBtnDiv = $('#first-page-admin')
     let menus = document.querySelectorAll('.pageHref');
     let backDiv = $('.backDiv');
     let backToFirstPageAdminBtnDiv = document.querySelectorAll('.back');
 
-    (() => {
+    //Menu Button to Display Page and Back to menu button
+    const menuBtnAction = () => {
         'use strict'
         Array.from(menus).forEach(menu =>{
             menu.addEventListener('click', event => {
 
+                loader.removeClass('d-none').fadeIn()
                 let containerPageDisplay = event.currentTarget.getAttribute('data-id')
 
                 firstPageAdminBtnDiv.addClass('d-none').fadeOut()
@@ -618,20 +620,25 @@ $(document).ready(function (){
                 backDiv.removeClass('d-none').fadeIn()
                 $("#"+containerPageDisplay).removeClass('d-none').fadeIn()
 
+                loader.addClass('d-none').fadeOut()
+
             }, false)
         });
 
         Array.from(backToFirstPageAdminBtnDiv).forEach(back =>{
             back.addEventListener('click', e =>{
+                loader.removeClass('d-none').fadeIn()
                 let quitPage = localStorage.getItem('activePage');
                 $("#"+quitPage).addClass('d-none').fadeOut();
                 localStorage.setItem('activePage', '')
                 backDiv.addClass('d-none').fadeOut()
                 firstPageAdminBtnDiv.removeClass('d-none').fadeIn()
+                loader.addClass('d-none').fadeOut()
             }, false)
         });
 
-    })()
+    }
+    menuBtnAction()
 
     //Display active Page on reload Page
     try {
@@ -640,12 +647,26 @@ $(document).ready(function (){
         console.log("localstorage is not allowed in code snippets here test it on jsfiddle");
     }
     if (activePage) {
-        loader.removeClass('d-none').fadeIn()
         firstPageAdminBtnDiv.addClass('d-none').fadeOut()
+        loader.removeClass('d-none').fadeIn()
         backDiv.removeClass('d-none').fadeIn()
         $("#"+activePage).removeClass('d-none').fadeIn()
         loader.addClass('d-none').fadeOut()
     }
+
+    //Display Department list in Task-page for CEO - ADMIN ROLE
+    const loadDepartments = () => {
+        let departmentListDiv = $("#departmentListInTaskPage");
+        $.post({
+            url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+            data:{departmentList:1},
+            success:function (response) {
+                departmentListDiv.html(response);
+            }
+        })
+
+    }
+    loadDepartments();
 
 
 

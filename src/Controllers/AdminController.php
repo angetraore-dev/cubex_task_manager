@@ -242,9 +242,15 @@ class AdminController
                     $field = ["isCheckedByAdmin" => $bit];
                     $update = $this->database->update($data->taskId, $field, 'task');
                     echo $update;
+
+                    break;
+                case isset($_POST["departmentList"]):
+                    $list = Department::departmentJoinHeader();
+                    $this->department->displayDepartmentslist($list);
                     break;
                 default: StaticDb::notFound(); break;
             }
+            //end if $_POST
         }
     }
 

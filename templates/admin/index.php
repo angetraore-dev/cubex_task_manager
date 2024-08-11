@@ -4,25 +4,28 @@ use App\Models\Role;
 use App\Models\Task;
 
 ob_start();?>
+<div class="d-flex align-items-center justify-content-center col-12 col-lg-12 d-none">
+    <div class="loader my-4"></div>
+</div>
 <div class="container" id="first-page-admin">
     <div class="row">
         <div class="d-flex justify-content-between mt-4 mb-2">
-            <button data-bs-toggle="tab" data-id="project-page" class="pageHref btn btn-lg col-4 h-auto mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important; ">Projects</button>
-            <button data-bs-toggle="tab" data-id="task-page" class="pageHref btn btn-lg col-4 h-auto mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important; ">tasks</button>
+            <button data-id="project-page" class="pageHref btn btn-lg col-4 h-auto mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important; ">Projects</button>
+            <button data-id="task-page" class="pageHref btn btn-lg col-4 h-auto mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important; ">tasks</button>
         </div>
         <div class="d-flex justify-content-end mb-4">
         <?php $role= $_SESSION['role']; if ($role == 1) : ?>
-                <button data-bs-toggle="tab" data-id="addTask-page" class="pageHref btn btn-lg col-4 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important;">add tasks</button>
+                <button data-id="addTask-page" class="pageHref btn btn-lg col-4 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important;">add tasks</button>
         <?php endif;?>
         </div>
 
         <div class="d-flex justify-content-between mb-2">
-            <button data-bs-toggle="tab" data-id="meeting-page" class="pageHref btn btn-lg col-4 mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important;">meetings</button>
-            <button data-bs-toggle="tab" data-id="order-page" class="pageHref btn btn-lg col-4 mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important;">orders</button>
+            <button data-id="meeting-page" class="pageHref btn btn-lg col-4 mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important;">meetings</button>
+            <button data-id="order-page" class="pageHref btn btn-lg col-4 mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important;">orders</button>
         </div>
         <?php $role= $_SESSION['role']; if ($role == 1) : ?>
         <div class="d-flex align-items-start justify-content-between mb-4"><!--col-md-4-->
-            <button data-bs-toggle="tab" data-id="addMeeting-page" class="pageHref btn btn-lg col-4 mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important;">add meetings (Only x)</button>
+            <button data-id="addMeeting-page" class="pageHref btn btn-lg col-4 mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important;">add meetings (Only x)</button>
         </div>
         <?php endif;?>
     </div>
@@ -31,18 +34,17 @@ ob_start();?>
 
 <div class="container-fluid p-0" id="BigContainer">
 
-    <div class="d-flex align-items-stretch py-1" style="height: 100%">
+    <div class="d-flex align-items-stretch py-1 h-100 min-vh-100 vh-100 mh-100" style="height: 100%">
 
         <!-- left Bar contain Logo and go back button -->
-        <div class="col-lg-1 p-1 backDiv d-none" style="height: 100%">
-
+        <div class="col-lg-1 p-1 mh-100 backDiv d-none" style="height: 100vh;">
             <!-- Logo -->
-            <div class="text-center mb-3">
+            <div class="text-center justify-content-start align-self-start mb-3">
                 <h3 class="fs-2 fw-bolder">X</h3>
             </div>
 
             <!--Back Button -->
-            <button class="btn btn-link-hover text-white back" type="button">
+            <button class="btn btn-link-hover text-white align-self-end justify-content-end back" type="button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5"></path>
                 </svg>
@@ -76,12 +78,39 @@ ob_start();?>
             </div>
 
             <!-- Departments View -->
-            <div class="row g-0 p-2 border border-1 border-primary">
-                <button data-id="taskMenu" class="taskMenu btn btn-lg row g-0 p-1 text-center text-uppercase rounded rounded-0 border border-1 border-tertiary" type="button" style="font-weight: lighter !important; text-decoration: none; color: #FFFFFF;">ceo</button>
+            <div class="row g-0 p-0" id="departmentListInTaskPage">
+
             </div>
             <!--container -->
             <div class="row g-0 mt-4"><h3 class="text-center my-4">Task Page</h3> </div>
 
+        </div>
+
+        <!-- AddTask - page -->
+        <div class="col-lg-11 col-10 p-1 d-none" id="addTask-page">
+            <!-- Header -->
+            <div class="d-flex flex-row">
+                <div class="align-self-start">
+                    <div class="navbar navbar-expand-lg">
+                        <div class="container-fluid">
+                            <p class="navbar-brand fs-3 fw-smaller" style="color: gold">
+                                <i class="fa fa-home"></i> Tasks
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ms-auto me-0">
+                    <div class="d-flex flex-column flex-grow-1 justify-content-between p-1">
+                        <button class="btn btn-sm mb-2" style="background-color: gold; text-decoration: none !important; color: #FFFFFF;" type="button">Checked</button>
+                        <button class="btn btn-sm" style="border: gold 1px solid; text-decoration: none !important; color: #FFFFFF;" type="button">not Checked</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <!--container -->
+            <div class="row g-0 mt-4"><h3 class="text-center my-4"> Add Task Page</h3> </div>
         </div>
 
         <!--PROJECT Page -->

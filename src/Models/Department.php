@@ -72,9 +72,40 @@ class Department
     }
 
     /**
+     * @return mixed
+     */
+    public static function departmentJoinHeader():mixed
+    {
+        $stmt = "SELECT * FROM department";
+        return StaticDb::getDb()->query($stmt, get_called_class());
+    }
+
+    public function displayDepartmentslist($department):void
+    {
+        if ($department): ?>
+            <?php foreach ($department as $item): if ($item->getLibelle() == 'CEO' || $item->getLibelle() =='ceo'):?>
+                <!-- CEO DEPARTMENT -->
+                <button id="<?=$item->getDepartmentId()?>" data-id="taskMenu" class="btn btn-lg taskMenu row p-0 g-0 mb-2 text-center text-uppercase rounded rounded-0" type="button" style="border: <?=$item->getColor()?> 1px solid !important; font-weight: lighter !important; text-decoration: none; color: #FFFFFF;">
+                    <?=$item->getLibelle()?>
+                </button>
+            <?php endif;endforeach; ?>
+
+            <!-- OTHERS DEPARTMENTS -->
+            <div class="d-flex flex-wrap justify-content-between g-0 p-0">
+                <?php foreach ($department as $item2): if ($item2->getLibelle() != 'ceo'): ?>
+                    <div id="<?=$item2->getDepartmentId()?>" class="col-sm-3 col-3 col-lg-3 m-1 mb-2 text-center text-uppercase" style="border: <?=$item2->getColor()?> 1px solid !important;">
+                        <?=$item2->getLibelle()?>
+                    </div>
+                <?php endif; endforeach;?>
+            </div>
+
+        <?php else: echo "<p class='text-muted text-center'>nothing to display- Tell to admin for create department</p>"; endif;
+    }
+
+    /**
      * @return void
      */
-    function delGrpedForm():void
+    public function delGrpedForm():void
     {
         $list = self::readAll(); if ($list):
         ?>
