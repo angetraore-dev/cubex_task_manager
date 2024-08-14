@@ -72,6 +72,7 @@ class AdminController
 
                     break;
                 case isset($_POST["deleteUser"]):
+
                     $data = json_decode($_POST["deleteUser"]);
                     foreach ($data as $key => $value){
                         $del = $this->database->delete($value, 'user');
@@ -80,10 +81,12 @@ class AdminController
 
                     break;
                 case isset($_POST["delDepForm"]):
+
                     $this->department->delGrpedForm();
 
                     break;
                 case isset($_POST["deleteDepartment"]):
+
                     $data = json_decode($_POST["deleteDepartment"]);
                     $del = 0;
                     foreach ($data as $value){
@@ -110,6 +113,7 @@ class AdminController
 
                     break;
                 case isset($_POST["depTask"]):
+
                     $departmentId = $_POST["depTask"];
                     $departmentTasks = Task::findTaskByJoinDepartment($departmentId);
                     //var_dump($departmentTasks);
@@ -163,12 +167,13 @@ class AdminController
                         //display no task exist for thiis department
                         echo "<p class='text-muted text-center'>No records found for this department </p>";
                     }
+
                     break;
                 case isset($_POST["userTask"]):
 
                     $userid = $_POST["userTask"];
                     $userTasks = Task::findByUserId($userid);
-                    //var_dump($userTasks);
+
                     if ($userTasks){?>
                         <div class="table-responsive" id="userTaskTableDiv">
                             <table class="table text-uppercase text-center caption-top" id="userTaskTable">
@@ -226,17 +231,22 @@ class AdminController
                     }else{
                         echo "<p class='text-muted text-center'>No user tasks found </p>";
                     }
-                    break;
 
+                    break;
                 case isset($_POST["taskBtn"]):
+
                     $this->task->taskForm();
+
                     break;
                 case isset($_POST["delTask"]):
+
                     $identifier =$_POST["delTask"];
                     $del = $this->database->delete($identifier, 'task');
                     echo $del;
+
                     break;
                 case isset($_POST["checkAdmin"]):
+
                     $data = json_decode($_POST["checkAdmin"]);
                     $bit = ($data->check) ? 1 : "0";
                     $field = ["isCheckedByAdmin" => $bit];
@@ -245,8 +255,13 @@ class AdminController
 
                     break;
                 case isset($_POST["departmentList"]):
+
                     $list = Department::departmentJoinHeader();
                     $this->department->displayDepartmentslist($list);
+
+                    break;
+                case isset($_POST["activeTasksList"]):
+
                     break;
                 default: StaticDb::notFound(); break;
             }

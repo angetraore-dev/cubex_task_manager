@@ -542,6 +542,9 @@ $(document).ready(function (){
         }
     })
 
+    let jip = (document).querySelector('#delTask');
+    console.log(jip)
+
     //Delete Task
     $(document).on('click', 'tr button#delTask', function (){
         let tr = $(this).closest('tr');
@@ -655,8 +658,8 @@ $(document).ready(function (){
     }
 
     //Display Department list in Task-page for CEO - ADMIN ROLE
+    let departmentListDiv = $("#departmentListInTaskPage");
     const loadDepartments = () => {
-        let departmentListDiv = $("#departmentListInTaskPage");
         $.post({
             url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
             data:{departmentList:1},
@@ -664,9 +667,20 @@ $(document).ready(function (){
                 departmentListDiv.html(response);
             }
         })
-
     }
     loadDepartments();
+
+    //Load Active task to Display in common admin Ceo View
+    let activeTasksInTaskPage = $("#activeTasksInTaskPage");
+    const loadActiveTasks = () => {
+        $.post({
+            url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+            data:{activeTasksList:1},
+            success:function (response) {
+                //activeTasksInTaskPage.html(response);
+            }
+        })
+    }
 
 
 
@@ -675,29 +689,3 @@ $(document).ready(function (){
 
 
 })
-//$(document).on('click', 'li', function(){
-//
-//         $('#client').val($(this).text());
-//
-//         $('#clientList').fadeOut();
-//         //$("#detail_facture_div").fadeOut();
-//
-//     });
-
-
-
-
-//var object = {};
-//             formdata.forEach((value, key) => {
-//                 // Reflect.has in favor of: object.hasOwnProperty(key)
-//                 if(!Reflect.has(object, key)){
-//                     object[key] = value;
-//                     return;
-//                 }
-//                 if(!Array.isArray(object[key])){
-//                     object[key] = [object[key]];
-//                 }
-//                 object[key].push(value);
-//             });
-//             var json = JSON.stringify(object);
-//             console.log(json)

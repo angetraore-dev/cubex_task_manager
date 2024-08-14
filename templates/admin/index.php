@@ -4,6 +4,9 @@ use App\Models\Role;
 use App\Models\Task;
 
 ob_start();?>
+
+
+
 <div class="d-flex align-items-center justify-content-center col-12 col-lg-12 d-none">
     <div class="loader my-4"></div>
 </div>
@@ -14,9 +17,9 @@ ob_start();?>
             <button data-id="task-page" class="pageHref btn btn-lg col-4 h-auto mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important; ">tasks</button>
         </div>
         <div class="d-flex justify-content-end mb-4">
-        <?php $role= $_SESSION['role']; if ($role == 1) : ?>
+            <?php $role= $_SESSION['role']; if ($role == 1) : ?>
                 <button data-id="addTask-page" class="pageHref btn btn-lg col-4 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important;">add tasks</button>
-        <?php endif;?>
+            <?php endif;?>
         </div>
 
         <div class="d-flex justify-content-between mb-2">
@@ -24,17 +27,17 @@ ob_start();?>
             <button data-id="order-page" class="pageHref btn btn-lg col-4 mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important;">orders</button>
         </div>
         <?php $role= $_SESSION['role']; if ($role == 1) : ?>
-        <div class="d-flex align-items-start justify-content-between mb-4"><!--col-md-4-->
-            <button data-id="addMeeting-page" class="pageHref btn btn-lg col-4 mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important;">add meetings (Only x)</button>
-        </div>
+            <div class="d-flex align-items-start justify-content-between mb-4"><!--col-md-4-->
+                <button data-id="addMeeting-page" class="pageHref btn btn-lg col-4 mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important;">add meetings (Only x)</button>
+            </div>
         <?php endif;?>
     </div>
 </div>
-<!-- Start DIVs for differents menu items -->
 
-<div class="container-fluid p-0" id="BigContainer">
+ <!-- NEW NEW MENU Start DIVs for differents menu items -->
+    <div class="container-fluid p-0" id="BigContainer">
 
-    <div class="d-flex align-items-stretch py-1 h-100 min-vh-100 vh-100 mh-100" style="height: 100%">
+        <div class="d-flex align-items-stretch py-1 h-100 min-vh-100 vh-100 mh-100" style="height: 100%">
 
         <!-- left Bar contain Logo and go back button -->
         <div class="col-lg-1 p-1 mh-100 backDiv d-none" style="height: 100vh;">
@@ -76,14 +79,146 @@ ob_start();?>
 
                 </div>
             </div>
+            <!-- Header -->
 
             <!-- Departments View -->
-            <div class="row g-0 p-0" id="departmentListInTaskPage">
+            <div class="row g-0 p-0" id="departmentListInTaskPage"></div>
+
+            <!--
+            Active Task List view
+            <svg class="bd-placeholder-img rounded-0 border-success col-md-1 col-xs-1" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#007aff"></rect></svg>
+             -->
+            <div class="d-flex align-items-start justify-content-between mt-4 p-1 border border-1" id="activeTasksInTaskPage">
+
+                <div class="container-fluid d-flex flex-wrap">
+                    <div class="container-fluid m-1">
+                        <div class="row d-flex flex-wrap">
+                            <div class="col-sm-1 col-1 col-lg-1 col-md-1 col-xs-1 p-2 border border-success bg-body-tertiary">
+                            </div>
+                            <div class="col col-lg-10 col-md-10 ms-1 flex-grow-1 border border-success bg-body-success text-white">
+                                One of three two columns
+                            </div>
+                        </div>
+                        <hr class="my-2 border-0">
+
+                        <div class="row d-flex flex-wrap">
+                            <div class="col-sm-1 col-1 col-lg-1 col-md-1 col-xs-1 p-2 border border-success bg-body-tertiary">
+                            </div>
+                            <div class="col col-lg-10 col-md-10 ms-1 flex-grow-1 border border-success bg-body-success text-white">
+                                One of three two columns
+                            </div>
+                        </div>
+
+                        <hr class="my-2 border-0">
+
+                        <div class="row d-flex flex-wrap">
+                            <div class="col-sm-1 col-1 col-lg-1 col-md-1 col-xs-1 p-2 border border-success bg-body-tertiary">
+                            </div>
+                            <div class="col col-lg-10 col-md-10 ms-1 flex-grow-1 border border-success bg-body-success text-white">
+                                One of three two columns
+                            </div>
+                        </div>
+                        <hr class="my-2 border-0">
+
+                    </div>
+                    <div class="container-fluid m-1">
+                        <div class="row d-flex flex-wrap">
+                            <div class="col-sm-1 col-1 col-lg-1 col-md-1 col-xs-1 p-2 border border-success bg-body-tertiary">
+                            </div>
+                            <div class="col col-lg-10 col-md-10 ms-1 flex-grow-1 border border-success bg-body-success text-white">
+                                One of three two columns
+                            </div>
+                        </div>
+                        <hr class="my-2 border-0">
+
+                        <div class="row d-flex flex-wrap">
+                            <div class="col-sm-1 col-1 col-lg-1 col-md-1 col-xs-1 p-2 border border-success bg-body-tertiary">
+                            </div>
+                            <div class="col col-lg-10 col-md-10 ms-1 flex-grow-1 border border-success bg-body-success text-white">
+                                One of three two columns
+                            </div>
+                        </div>
+
+                        <hr class="my-2 border-0">
+
+                        <div class="row d-flex flex-wrap">
+                            <div class="col-sm-1 col-1 col-lg-1 col-md-1 col-xs-1 p-2 border border-success bg-body-tertiary">
+                            </div>
+                            <div class="col col-lg-10 col-md-10 ms-1 flex-grow-1 border border-success bg-body-success text-white">
+                                One of three two columns
+                            </div>
+                        </div>
+                        <hr class="my-2 border-0">
+
+                    </div>
+                    <div class="container-fluid m-1">
+                        <div class="row d-flex flex-wrap">
+                            <div class="col-sm-1 col-1 col-lg-1 col-md-1 col-xs-1 p-2 border border-success bg-body-tertiary">
+                            </div>
+                            <div class="col col-lg-10 col-md-10 ms-1 flex-grow-1 border border-success bg-body-success text-white">
+                                One of three two columns
+                            </div>
+                        </div>
+                        <hr class="my-2 border-0">
+
+                        <div class="row d-flex flex-wrap">
+                            <div class="col-sm-1 col-1 col-lg-1 col-md-1 col-xs-1 p-2 border border-success bg-body-tertiary">
+                            </div>
+                            <div class="col col-lg-10 col-md-10 ms-1 flex-grow-1 border border-success bg-body-success text-white">
+                                One of three two columns
+                            </div>
+                        </div>
+
+                        <hr class="my-2 border-0">
+
+                        <div class="row d-flex flex-wrap">
+                            <div class="col-sm-1 col-1 col-lg-1 col-md-1 col-xs-1 p-2 border border-success bg-body-tertiary">
+                            </div>
+                            <div class="col col-lg-10 col-md-10 ms-1 flex-grow-1 border border-success bg-body-success text-white">
+                                One of three two columns
+                            </div>
+                        </div>
+                        <hr class="my-2 border-0">
+
+                    </div>
+                    <div class="d-flex flex-wrap" style="height: 200px;">
+                        <div class="vr bg-primary fw-bolder"></div>
+                    </div>
+                </div>
+
+                <div class="container-fluid m-1">
+                    <div class="row d-flex flex-wrap">
+                        <div class="col-sm-1 col-1 col-lg-1 col-md-1 col-xs-1 p-2 border border-success bg-body-tertiary">
+                        </div>
+                        <div class="col col-lg-10 col-md-10 ms-1 flex-grow-1 border border-success bg-body-success text-white">
+                            One of three two columns
+                        </div>
+                    </div>
+                    <hr class="my-2 border-0">
+
+                    <div class="row d-flex flex-wrap">
+                        <div class="col-sm-1 col-1 col-lg-1 col-md-1 col-xs-1 p-2 border border-success bg-body-tertiary">
+                        </div>
+                        <div class="col col-lg-10 col-md-10 ms-1 flex-grow-1 border border-success bg-body-success text-white">
+                            One of three two columns
+                        </div>
+                    </div>
+
+                    <hr class="my-2 border-0">
+
+                    <div class="row d-flex flex-wrap">
+                        <div class="col-sm-1 col-1 col-lg-1 col-md-1 col-xs-1 p-2 border border-success bg-body-tertiary">
+                        </div>
+                        <div class="col col-lg-10 col-md-10 ms-1 flex-grow-1 border border-success bg-body-success text-white">
+                            One of three two columns
+                        </div>
+                    </div>
+                    <hr class="my-2 border-0">
+
+                </div>
+
 
             </div>
-            <!--container -->
-            <div class="row g-0 mt-4"><h3 class="text-center my-4">Task Page</h3> </div>
-
         </div>
 
         <!-- AddTask - page -->
@@ -238,17 +373,16 @@ ob_start();?>
     </div>
     <!-- End BigContainer -->
 </div>
-
-<!-- End DIVs for differents menu items -->
+ <!-- End DIVs for differents menu items -->
 
 
 <div class="container-fluid d-none">
-<!-- Department user responsible task Buttond DIV close on click add task-->
+    <!-- Department user responsible task Buttond DIV close on click add task-->
     <div id="depUserTaskDiv">
         <!-- Container for first buttons line row mt-4-->
         <div class="row justify-content-between mt-4">
             <!-- Left Buttons div -->
-            <div class="col-sm-4  ">
+            <div class="col-sm-4">
                 <!-- add department delete department
                 justify-content-around
                 -->
@@ -365,7 +499,7 @@ ob_start();?>
 
     <!-- Form add Task Div -->
     <div class="col-md-8 mx-auto d-flex justify-content-center align-items-center d-none" id="taskFormDiv"></div>
-   <!-- Tasks(title-tasks-checked) Department Responsible - due date-->
+    <!-- Tasks(title-tasks-checked) Department Responsible - due date-->
     <div class="row">
         <div class="table-responsive" id="activeTaskDiv">
             <table class="table table-condensed table-hover text-capitalize" id="activesTasksTable">
@@ -379,49 +513,49 @@ ob_start();?>
                 </tr>
                 </thead>
                 <tbody>
-                    <?php $i=1; $activeTasksList= Task::activesTasks(); if ($activeTasksList) : foreach ($activeTasksList as $activeList): var_dump($activeTasksList);?>
-                        <tr data-id="<?=$activeList->getTaskId()?>">
-                            <td><?= $i++?></td>
-                            <td><?=$activeList->getTaskId()?></td>
-                            <td class="d-flex justify-content-between fs-6 fw-lighter">
-                                <ul class="list-unstyled">
-                                    <li class="nav-item"><?= '<p class="text-muted fw-bolder fs-6 text-capitalize mb-1">title: '.$activeList->getTitle() .'<br>To do: '. $activeList->getTodo()
-                                        .'<br>assigned To: "'.$activeList->fullname.'"</p>';
-                                        if ($activeList->getFile()){
-                                            $item = json_decode($activeList->getFile(), true);
-                                            foreach ($item as $file){?>
-                                                <a href="<?= HTTP .'/'.$file ?>" target="_blank"><i class="fa fa-paperclip"></i> </a><br>
-                                                <p class="text-muted text-capitalize fs-6">created at: <?php $f = new DateTime($activeList->getCreatedAt()); echo $f->format('Y-m-d');?> </p>
-                                                <?php
-                                            }
+                <?php $i=1; $activeTasksList= Task::activesTasks(); if ($activeTasksList) : foreach ($activeTasksList as $activeList): var_dump($activeTasksList);?>
+                    <tr data-id="<?=$activeList->getTaskId()?>">
+                        <td><?= $i++?></td>
+                        <td><?=$activeList->getTaskId()?></td>
+                        <td class="d-flex justify-content-between fs-6 fw-lighter">
+                            <ul class="list-unstyled">
+                                <li class="nav-item"><?= '<p class="text-muted fw-bolder fs-6 text-capitalize mb-1">title: '.$activeList->getTitle() .'<br>To do: '. $activeList->getTodo()
+                                    .'<br>assigned To: "'.$activeList->fullname.'"</p>';
+                                    if ($activeList->getFile()){
+                                        $item = json_decode($activeList->getFile(), true);
+                                        foreach ($item as $file){?>
+                                            <a href="<?= HTTP .'/'.$file ?>" target="_blank"><i class="fa fa-paperclip"></i> </a><br>
+                                            <p class="text-muted text-capitalize fs-6">created at: <?php $f = new DateTime($activeList->getCreatedAt()); echo $f->format('Y-m-d');?> </p>
+                                            <?php
                                         }
+                                    }
                                     ?></li>
 
-                                </ul>
-                                <ul class="list-unstyled">
-                                    <li>
+                            </ul>
+                            <ul class="list-unstyled">
+                                <li>
                                         <span class="d-inline">
                                             <input type="checkbox" value="<?=$activeList->getIsChecked()?>" <?php echo ($activeList->getIsChecked()) ? 'checked="checked"' : ''?> name="responsible" id="responsible" data-id="<?=$activeList->getTaskId()?>">
                                             <label class="text-sm" for="responsible">Responsible</label>
                                         </span>
-                                    </li>
-                                    <li class="d-inline">
-                                        <input type="checkbox" value="<?=$activeList->getIsCheckedByAdmin()?>" <?php echo ($activeList->getIsCheckedByAdmin()) ? 'checked="checked"' : ''?> name="admin" id="admin" data-id="<?=$activeList->getTaskId()?>">
-                                        <label for="admin" class="text-sm">Admin</label>
-                                    </li>
-                                </ul>
-                            </td>
-                            <td><?=$activeList->libelle .
-                                ' <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="'.$activeList->color.'"></rect></svg>'?>
-                            </td>
-                            <td>
-                                <?php if ($activeList->getDueDate()){
-                                    $f = new DateTime($activeList->getDueDate()); echo '<svg class="bd-placeholder-img rounded me-2" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="green"></rect></svg>'.$f->format('Y-m-d H:i A');
-                                }?>
-                            </td>
-                        </tr>
+                                </li>
+                                <li class="d-inline">
+                                    <input type="checkbox" value="<?=$activeList->getIsCheckedByAdmin()?>" <?php echo ($activeList->getIsCheckedByAdmin()) ? 'checked="checked"' : ''?> name="admin" id="admin" data-id="<?=$activeList->getTaskId()?>">
+                                    <label for="admin" class="text-sm">Admin</label>
+                                </li>
+                            </ul>
+                        </td>
+                        <td><?=$activeList->libelle .
+                            ' <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="'.$activeList->color.'"></rect></svg>'?>
+                        </td>
+                        <td>
+                            <?php if ($activeList->getDueDate()){
+                                $f = new DateTime($activeList->getDueDate()); echo '<svg class="bd-placeholder-img rounded me-2" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="green"></rect></svg>'.$f->format('Y-m-d H:i A');
+                            }?>
+                        </td>
+                    </tr>
 
-                    <?php endforeach; else: echo "<p class='text-muted text-center'>No records found ! </p>"; endif;?>
+                <?php endforeach; else: echo "<p class='text-muted text-center'>No records found ! </p>"; endif;?>
                 </tbody>
             </table>
         </div>
@@ -503,9 +637,7 @@ ob_start();?>
     </div>
 
 </div>
-<?php $content = ob_get_clean(); ?>
 
-<?php require_once DOCROOT .'/templates/layout.php';?>
 
 <!-- Modal add Department-->
 <div class="modal fade" id="addDepartment" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -636,3 +768,6 @@ ob_start();?>
         </div>
     </div>
 </div>
+
+<?php $content = ob_get_clean(); ?>
+<?php require_once DOCROOT .'/templates/layout.php';?>
