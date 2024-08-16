@@ -88,137 +88,82 @@ ob_start();?>
             Active Task List view
             <svg class="bd-placeholder-img rounded-0 border-success col-md-1 col-xs-1" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#007aff"></rect></svg>
              -->
-            <div class="d-flex align-items-start justify-content-between mt-4 p-1 border border-1" id="activeTasksInTaskPage">
 
-                <div class="container-fluid d-flex flex-wrap">
-                    <div class="container-fluid m-1">
-                        <div class="row d-flex flex-wrap">
-                            <div class="col-sm-1 col-1 col-lg-1 col-md-1 col-xs-1 p-2 border border-success bg-body-tertiary">
-                            </div>
-                            <div class="col col-lg-10 col-md-10 ms-1 flex-grow-1 border border-success bg-body-success text-white">
-                                One of three two columns
-                            </div>
+            <!-- col-md-4 col-lg-4  -->
+            <div class="container-fluid d-flex flex-wrap justify-content-between">
+
+                <div class="col-lg-4 p-1" style="border-right: gold 1px solid">
+
+                    <div class="col d-flex mb-1">
+
+                        <span class="p-2 border border-success bg-body-tertiary"></span>
+                        <div class="form-inline col-lg col-md col p-1 border  border-success">
+                            <input type="radio" name="inputRadio" id="inputRadio" class="form-inline">
+                            <label for="inputRadio">TaskNameTaskNameTaskName</label>
+                            <p class="fw-smaller text-muted text-end" style="color: white !important;">15/08/2024</p>
                         </div>
-                        <hr class="my-2 border-0">
-
-                        <div class="row d-flex flex-wrap">
-                            <div class="col-sm-1 col-1 col-lg-1 col-md-1 col-xs-1 p-2 border border-success bg-body-tertiary">
-                            </div>
-                            <div class="col col-lg-10 col-md-10 ms-1 flex-grow-1 border border-success bg-body-success text-white">
-                                One of three two columns
-                            </div>
-                        </div>
-
-                        <hr class="my-2 border-0">
-
-                        <div class="row d-flex flex-wrap">
-                            <div class="col-sm-1 col-1 col-lg-1 col-md-1 col-xs-1 p-2 border border-success bg-body-tertiary">
-                            </div>
-                            <div class="col col-lg-10 col-md-10 ms-1 flex-grow-1 border border-success bg-body-success text-white">
-                                One of three two columns
-                            </div>
-                        </div>
-                        <hr class="my-2 border-0">
-
-                    </div>
-                    <div class="container-fluid m-1">
-                        <div class="row d-flex flex-wrap">
-                            <div class="col-sm-1 col-1 col-lg-1 col-md-1 col-xs-1 p-2 border border-success bg-body-tertiary">
-                            </div>
-                            <div class="col col-lg-10 col-md-10 ms-1 flex-grow-1 border border-success bg-body-success text-white">
-                                One of three two columns
-                            </div>
-                        </div>
-                        <hr class="my-2 border-0">
-
-                        <div class="row d-flex flex-wrap">
-                            <div class="col-sm-1 col-1 col-lg-1 col-md-1 col-xs-1 p-2 border border-success bg-body-tertiary">
-                            </div>
-                            <div class="col col-lg-10 col-md-10 ms-1 flex-grow-1 border border-success bg-body-success text-white">
-                                One of three two columns
-                            </div>
-                        </div>
-
-                        <hr class="my-2 border-0">
-
-                        <div class="row d-flex flex-wrap">
-                            <div class="col-sm-1 col-1 col-lg-1 col-md-1 col-xs-1 p-2 border border-success bg-body-tertiary">
-                            </div>
-                            <div class="col col-lg-10 col-md-10 ms-1 flex-grow-1 border border-success bg-body-success text-white">
-                                One of three two columns
-                            </div>
-                        </div>
-                        <hr class="my-2 border-0">
-
-                    </div>
-                    <div class="container-fluid m-1">
-                        <div class="row d-flex flex-wrap">
-                            <div class="col-sm-1 col-1 col-lg-1 col-md-1 col-xs-1 p-2 border border-success bg-body-tertiary">
-                            </div>
-                            <div class="col col-lg-10 col-md-10 ms-1 flex-grow-1 border border-success bg-body-success text-white">
-                                One of three two columns
-                            </div>
-                        </div>
-                        <hr class="my-2 border-0">
-
-                        <div class="row d-flex flex-wrap">
-                            <div class="col-sm-1 col-1 col-lg-1 col-md-1 col-xs-1 p-2 border border-success bg-body-tertiary">
-                            </div>
-                            <div class="col col-lg-10 col-md-10 ms-1 flex-grow-1 border border-success bg-body-success text-white">
-                                One of three two columns
-                            </div>
-                        </div>
-
-                        <hr class="my-2 border-0">
-
-                        <div class="row d-flex flex-wrap">
-                            <div class="col-sm-1 col-1 col-lg-1 col-md-1 col-xs-1 p-2 border border-success bg-body-tertiary">
-                            </div>
-                            <div class="col col-lg-10 col-md-10 ms-1 flex-grow-1 border border-success bg-body-success text-white">
-                                One of three two columns
-                            </div>
-                        </div>
-                        <hr class="my-2 border-0">
-
-                    </div>
-                    <div class="d-flex flex-wrap" style="height: 200px;">
-                        <div class="vr bg-primary fw-bolder"></div>
                     </div>
                 </div>
 
-                <div class="container-fluid m-1">
-                    <div class="row d-flex flex-wrap">
-                        <div class="col-sm-1 col-1 col-lg-1 col-md-1 col-xs-1 p-2 border border-success bg-body-tertiary">
-                        </div>
-                        <div class="col col-lg-10 col-md-10 ms-1 flex-grow-1 border border-success bg-body-success text-white">
-                            One of three two columns
+                <div class="col-lg-4 p-1" style="border-right: gold 1px solid">
+
+                    <!--ITEM -->
+                    <div class="col d-flex mb-1">
+                        <span class="p-2 border border-success bg-body-tertiary"></span>
+                        <div class="form-inline col-lg col-md col p-1 border  border-success">
+                            <input type="radio" name="inputRadio" id="inputRadio" class="form-inline">
+                            <label for="inputRadio">TaskNameTaskNameTaskName</label>
+                            <p class="fw-smaller text-muted text-end" style="color: white !important;">15/08/2024</p>
                         </div>
                     </div>
-                    <hr class="my-2 border-0">
-
-                    <div class="row d-flex flex-wrap">
-                        <div class="col-sm-1 col-1 col-lg-1 col-md-1 col-xs-1 p-2 border border-success bg-body-tertiary">
-                        </div>
-                        <div class="col col-lg-10 col-md-10 ms-1 flex-grow-1 border border-success bg-body-success text-white">
-                            One of three two columns
-                        </div>
-                    </div>
-
-                    <hr class="my-2 border-0">
-
-                    <div class="row d-flex flex-wrap">
-                        <div class="col-sm-1 col-1 col-lg-1 col-md-1 col-xs-1 p-2 border border-success bg-body-tertiary">
-                        </div>
-                        <div class="col col-lg-10 col-md-10 ms-1 flex-grow-1 border border-success bg-body-success text-white">
-                            One of three two columns
+                    <div class="col d-flex mb-1">
+                        <span class="p-2 border border-success bg-body-tertiary"></span>
+                        <div class="form-inline col-lg col-md col p-1 border  border-success">
+                            <input type="radio" name="inputRadio" id="inputRadio" class="form-inline">
+                            <label for="inputRadio">TaskNameTaskNameTaskName</label>
+                            <p class="fw-smaller text-muted text-end" style="color: white !important;">15/08/2024</p>
                         </div>
                     </div>
-                    <hr class="my-2 border-0">
-
                 </div>
 
+                <div class="col-lg-4 p-1" style="border-right: gold 1px solid">
+
+                    <div class="col d-flex mb-1">
+
+                        <span class="p-2 border border-success bg-body-tertiary"></span>
+                        <div class="form-inline col-lg col-md col p-1 border  border-success">
+                            <input type="radio" name="inputRadio" id="inputRadio" class="form-inline">
+                            <label for="inputRadio">TaskNameTaskNameTaskName</label>
+                            <p class="fw-smaller text-muted text-end" style="color: white !important;">15/08/2024</p>
+                        </div>
+                    </div>
+                    <div class="col d-flex mb-1">
+
+                        <span class="p-2 border border-success bg-body-tertiary"></span>
+                        <div class="form-inline col-lg col-md col p-1 border  border-success">
+                            <input type="radio" name="inputRadio" id="inputRadio" class="form-inline">
+                            <label for="inputRadio">TaskNameTaskNameTaskName</label>
+                            <p class="fw-smaller text-muted text-end" style="color: white !important;">15/08/2024</p>
+                        </div>
+                    </div>
+                    <div class="col d-flex mb-1">
+
+                        <span class="p-2 border border-success bg-body-tertiary"></span>
+                        <div class="form-inline col-lg col-md col p-1 border  border-success">
+                            <input type="radio" name="inputRadio" id="inputRadio" class="form-inline">
+                            <label for="inputRadio">TaskNameTaskNameTaskName</label>
+                            <p class="fw-smaller text-muted text-end" style="color: white !important;">15/08/2024</p>
+                        </div>
+                    </div>
+                </div>
 
             </div>
+
+
+            <div class="d-flex align-items-start mt-4 p-1 border border-1" id="activeTasksInTaskPage">
+                <p>heyyyy</p>
+            </div>
+
         </div>
 
         <!-- AddTask - page -->
