@@ -85,66 +85,9 @@ ob_start();?>
             <div class="row g-0 p-0" id="departmentListInTaskPage"></div>
 
             <!-- Active Task List view -->
-            <div class="container-fluid p-0 d-flex flex-wrap justify-content-between">
+            <div class="container-fluid p-0 d-flex flex-wrap justify-content-between activeTasksInTaskPage" id="activeTasksInTaskPage">
 
-                <!-- Box-->
-                <div class="col-lg-4 p-1" style="border-right: gold 1px solid">
 
-                    <!-- Item -->
-                    <div class="col d-flex mb-1">
-                        <span class="p-2" style="border: white 1px solid; background-color: wheat !important;"></span>
-
-                        <div class="form-inline col-lg col-md col p-1 border  border-success">
-
-                            <!-- Box add by click -->
-                            <div class="d-flex flex-wrap">
-                                <button type="button" class="btn border-0 align-self-start" style="color: white !important;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"></path>
-                                    </svg>
-                                </button>
-
-                                <div class="align-self-center justify-content-between">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#FFFFFF" class="bi bi-square me-1" viewBox="0 0 16 16">
-                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                                    </svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#FF0000" class="bi bi-square me-1" viewBox="0 0 16 16">
-                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                                    </svg>
-                                    <svg style="background-color: #DA7843" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#DA7843" class="bi bi-square me-1" viewBox="0 0 16 16">
-                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                                    </svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#4FAD5B" class="bi bi-square me-1" viewBox="0 0 16 16">
-                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                                    </svg>
-                                    <svg style="background-color: #4FADEA" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#4FADEA" class="bi bi-square me-1" viewBox="0 0 16 16">
-                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                                    </svg>
-                                    <svg style="background-color: #FFFF55" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#FFFF55" class="bi bi-square me-1" viewBox="0 0 16 16">
-                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                                    </svg>
-                                    <svg style="background-color: #1431F5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#1431F5" class="bi bi-square me-1" viewBox="0 0 16 16">
-                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                                    </svg>
-                                    <svg style="background-color: #68349A" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#68349A" class="bi bi-square me-1" viewBox="0 0 16 16">
-                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                                    </svg>
-                                    <svg style="background-color: #8E2966" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#8E2966" class="bi bi-square me-1" viewBox="0 0 16 16">
-                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                                    </svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#AEAEAE" class="bi bi-square me-1" viewBox="0 0 16 16">
-                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                                    </svg>
-                                </div>
-
-                            </div>
-                            <!-- Task Name and date -->
-                            <input type="radio" name="inputRadio" id="inputRadio" class="form-inline">
-                            <label for="inputRadio">TaskName</label>
-                            <p class="text-end" style="color: darkgray !important; font-size: smaller !important; font-style: italic !important;">Sun 20 Jul (2024) 00:00 PM</p>
-                        </div>
-                    </div>
-                </div>
             </div>
 
 

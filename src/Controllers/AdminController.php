@@ -262,6 +262,8 @@ class AdminController
                     break;
                 case isset($_POST["activeTasksList"]):
 
+                    $this->task->activeTaskInTaskPage();
+
                     break;
                 default: StaticDb::notFound(); break;
             }
