@@ -68,21 +68,6 @@
 <div class="container-fluid" style="height: 100%; min-height: 100%; max-height: 100%">
     <?= $content; ?>
 </div>
-<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border border-top-1">
-    <p class="col-md-4 mb-0 fw-bold">© 2024 atdevs.ci +225 0507 333 944</p>
-
-    <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-    </a>
-
-    <ul class="nav col-md-4 justify-content-end">
-        <li class="nav-item"><a href="#" class="nav-link px-2">Home</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2">Features</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2">Pricing</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2">FAQs</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2">About</a></li>
-    </ul>
-</footer>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="<?= HTTP.'/assets/jquery/jquery.js'?>"></script>
@@ -105,3 +90,22 @@
 
 </body>
 </html>
+
+<!--
+<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border border-top-1">
+    <p class="col-md-4 mb-0 fw-bold">© 2024 atdevs.ci +225 0507 333 944</p>
+
+    <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+    </a>
+
+    <ul class="nav col-md-4 justify-content-end">
+        <li class="nav-item"><a href="#" class="nav-link px-2">Home</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2">Features</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2">Pricing</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2">FAQs</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2">About</a></li>
+    </ul>
+</footer>
+
+-->

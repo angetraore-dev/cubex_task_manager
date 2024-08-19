@@ -677,10 +677,13 @@ $(document).ready(function (){
             url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
             data:{activeTasksList:1},
             success:function (response) {
-                //activeTasksInTaskPage.html(response);
+                activeTasksInTaskPage.html(response);
             }
         })
     }
+    loadActiveTasks();
+
+
 
 
 

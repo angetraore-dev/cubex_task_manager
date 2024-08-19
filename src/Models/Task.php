@@ -280,7 +280,7 @@ class Task
 
              <!-- Item -->
              <div class="col d-flex mb-1">
-                 <span class="p-2" style="border: white 1px solid !important;"></span>
+                 <span class="p-2 me-1" style="border: white 1px solid !important;"></span>
 
                  <div data-id="<?= $tasksActive[$i]->getTaskId()?>" class="form-inline col-lg col-md col p-1 border  border-success">
 
