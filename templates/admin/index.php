@@ -92,7 +92,7 @@ ob_start();?>
         <!-- AddTask - page -->
         <div class="col-lg-11 col-10 p-1 d-none" id="addTask-page">
             <!-- Header -->
-            <div class="d-flex flex-row">
+            <div class="col d-flex flex-row">
                 <div class="align-self-start">
                     <div class="navbar navbar-expand-lg">
                         <div class="container-fluid">
@@ -114,183 +114,132 @@ ob_start();?>
             <!--container -->
             <div class="row g-0 mt-4">
                 <h3 class="text-center my-4"> Add Task Page **</h3>
+                <!-- Btn Department - Task - User and dropdown department-responsibles -->
                 <div class="container-fluid">
                     <!-- Department user responsible task Buttond DIV close on click add task-->
                     <div id="depUserTaskDiv">
                         <!-- Container for first buttons line row mt-4-->
                         <div class="row">
+                            <!-- DEPARTMENT Btn -->
                             <div class="d-flex align-self-start col-sm-4 justify-content-between p-2">
                                 <fieldset class="gap-2">
                                     <legend  class="float-none w-auto fw-smaller fs-6 text-uppercase">Department</legend>
                                     <button data-bs-toggle="modal" data-bs-target="#addDepartment" id="add-dep" class="btn btn-sm btn-outline-success text-uppercase" style="border: white 1px solid !important; text-decoration: none !important; color: #FFFFFF;" type="button">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill mx-4" viewBox="0 0 16 16">
                                             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
                                         </svg>
                                     </button>
 
-                                    <button data-bs-toggle="modal" data-bs-target="#delDep" class="btn btn-sm text-uppercase btn-outline-danger" style="border: white 1px solid !important; text-decoration: none !important; color: #FFFFFF;" type="button">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                    <button data-bs-toggle="modal" data-bs-target="#delDep" class="btn btn-sm col text-uppercase btn-outline-danger" style="border: white 1px solid !important; text-decoration: none !important; color: #FFFFFF;" type="button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill mx-4" viewBox="0 0 16 16">
                                             <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
                                         </svg>
                                     </button>
                                 </fieldset>
                             </div>
 
+                            <!-- ADD TASK Btn -->
                             <div class="d-flex align-self-center col-sm-4 justify-content-center align-items-center p-2">
                                 <fieldset class="gap-2">
                                     <legend  class="float-none w-auto fw-smaller fs-6 text-uppercase text-center">add task</legend>
                                     <button type="button" id="addTaskBtn" class="add-user btn btn-sm btn-success btn-outline-light text-uppercase border-success mb-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill mx-4" viewBox="0 0 16 16">
                                             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
                                         </svg>
                                     </button>
                                 </fieldset>
                             </div>
+                            <!-- USER - LATE - TODAY - FUTURE  Btn and DROPDOWN DEPARTMENT-USER FILTER -->
                             <div class="row">
-                                <div class="d-flex flex-wrap align-self-start col-sm-4 justify-content-between p-2">
-                                    <fieldset class="gap-2">
-                                        <legend  class="float-none w-auto fw-smaller fs-6 text-uppercase">User</legend>
-                                        <button data-bs-toggle="modal" data-bs-target="#addUser" id="add-user" class="addUser btn btn-sm btn-outline-success text-uppercase" style="border: white 1px solid !important; text-decoration: none !important; color: #FFFFFF;" type="button">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                                            </svg>
-                                        </button>
-                                        <button data-bs-toggle="modal" data-bs-target="#delUser" class="delUser btn btn-sm text-uppercase btn-outline-danger" style="border: white 1px solid !important; text-decoration: none !important; color: #FFFFFF;" type="button">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
-                                            </svg>
-                                        </button>
-                                    </fieldset>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row justify-content-between mt-4">
-                            <!-- Left Buttons div -->
-                            <div class="col-sm-4">
-                                <!-- add department delete department
-                                justify-content-around
+                                <div class="col-12 d-flex flex-wrap justify-content-between p-2">
+                                    <!-- USER Btn -->
+                                    <div class="col-3 align-self-start">
+                                        <fieldset class="">
+                                            <legend  class="float-none w-auto fw-smaller fs-6 text-uppercase">User</legend>
+                                            <button data-bs-toggle="modal" data-bs-target="#addUser" id="add-user" class="addUser btn btn-sm btn-outline-success text-uppercase border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill mx-4" viewBox="0 0 16 16">
+                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                                </svg>
+                                            </button>
+                                            <button data-bs-toggle="modal" data-bs-target="#delUser" class="delUser btn btn-sm text-uppercase btn-outline-danger border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill mx-4" viewBox="0 0 16 16">
+                                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+                                                </svg>
+                                            </button>
+                                        </fieldset>
+                                    </div>
+                                    <!-- END USER Btn -->
 
-                                <div class="bg-body-tertiary shadow-lg rounded rounded-2 mb-3 p-1">
-                                    <fieldset class="border border-2 p-1 fw-bolder text-uppercase">
-                                        <legend  class="float-none w-auto text-wrap">Department</legend>
-                                        <div class="d-flex col justify-content-between">
+                                    <!-- LATE - TODAY - FUTURE Btn -->
+                                    <div class="align-self-center">
+                                        <fieldset class="justify-content-between my-4">
+                                            <legend  class="float-none w-auto fw-smaller fs-6 text-uppercase">tasks Btn</legend>
 
-                                            <div class="me-2">
-                                                <button data-bs-toggle="modal" data-bs-target="#addDepartment" type="button" id="add-dep" class="add-dep col btn btn-success btn-outline-light text-uppercase border-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                                                    </svg>
+                                            <button class="btn btn-sm text-uppercase border border-1 text-center" style="text-decoration: none !important; color: #FFFFFF;" type="button">Late</button>
+
+                                            <button class="btn btn-sm text-uppercase border border-1 text-center" style="text-decoration: none !important; color: #FFFFFF;" type="button">Today</button>
+
+                                            <button class="btn btn-sm text-uppercase border border-1 text-center" style="text-decoration: none !important; color: #FFFFFF;" type="button">Future</button>
+
+                                        </fieldset>
+                                    </div>
+                                    <!-- END LATE - TODAY - FUTURE Btn -->
+
+                                    <!-- DEPARTMENT - USER FILTER Btn -->
+                                    <div class="align-self-end">
+                                        <fieldset class="flex-wrap justify-content-between">
+                                            <legend  class="float-none w-auto fw-smaller fs-6 text-uppercase">filter</legend>
+
+                                            <!-- List of all departments mx-2-->
+                                            <div class="dropdown departmentlist" id="departmentlist">
+                                                <button class="btn btn-sm border border-1 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                                        style="text-decoration: none; color: white !important;">
+                                                    departments
                                                 </button>
-                                            </div>
-
-                                            <div class="">
-                                                <button type="button" data-bs-toggle="modal" data-bs-target="#delDep" class="delDep col btn btn-danger btn-outline-light text-uppercase border-danger">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                                </div>
--->
-                                <!-- add User delete delete user
-                                <div class="justify-content-around bg-body-tertiary shadow-lg rounded rounded-2 mx-2 mb-3 p-2">
-                                    <fieldset class="border border-2 p-2 fw-bold text-end text-uppercase">
-                                        <legend  class="float-none w-auto">User</legend>
-                                        <div class="d-flex col justify-content-between">
-
-                                            <div class="me-2">
-                                                <button data-bs-toggle="modal" data-bs-target="#addUser" type="button" id="add-user" class="add-user col btn btn-success btn-outline-light text-uppercase border-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                                                    </svg>
-                                                </button>
-                                            </div>
-
-                                            <div class="">
-                                                <button data-bs-toggle="modal" data-bs-target="#delUser"  type="button" class="delUser col btn btn-danger btn-outline-light text-uppercase border-danger">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                                </div>
-                                -->
-                            </div>
-
-                            <!-- Right Buttons div -->
-                            <div class="col-sm-4">
-                                <!--filter for departments and responsibles-->
-                                <div class="d-flex shadow-lg justify-content-between rounded rounded-2 mb-5 p-1">
-
-                                    <!-- List of all departments -->
-                                    <div class="dropdown mx-2 departmentlist" id="departmentlist">
-                                        <button class="btn btn-outline-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            departments
-                                        </button>
-                                        <ul class="dropdown-menu depList">
-                                            <?php $dropdown_department = Department::readAll(); if($dropdown_department): foreach ($dropdown_department as $item): ?>
-                                                <li class="list-unstyled deptarment" data-id="<?= $item->getDepartmentId()?>">
-                                                    <a class="dropdown-item" href="#">
+                                                <ul class="dropdown-menu depList">
+                                                    <?php $dropdown_department = Department::readAll(); if($dropdown_department): foreach ($dropdown_department as $item): ?>
+                                                        <li class="list-unstyled deptarment" data-id="<?= $item->getDepartmentId()?>">
+                                                            <a class="dropdown-item" href="#">
                                     <span class="d-block">
                                     <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="<?=$item->getColor()?>"></rect></svg>
                                     <?= $item->getLibelle()?>
                                     </span>
-                                                    </a>
+                                                            </a>
 
-                                                </li>
-                                            <?php endforeach; else:?>
-                                                <li class="text-center text-muted"><span> No records found</span></li>
-                                            <?php endif;?>
-                                        </ul>
+                                                        </li>
+                                                    <?php endforeach; else:?>
+                                                        <li class="text-center text-muted"><span> No records found</span></li>
+                                                    <?php endif;?>
+                                                </ul>
+                                            </div>
+
+                                            <!-- List of all responsible -->
+                                            <div class="dropdown mx-2">
+                                                <button class="btn btn-sm border border-1 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                                        style="text-decoration: none; color: white !important;">
+                                                    users
+                                                </button>
+                                                <ul class="dropdown-menu" id="userbydepartment-1"></ul>
+                                            </div>
+                                        </fieldset>
                                     </div>
-
-                                    <!-- List of all responsible -->
-                                    <div class="dropdown mx-2">
-                                        <button class="btn btn-outline-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            responsibles
-                                        </button>
-                                        <ul class="dropdown-menu" id="userbydepartment-1">
-
-                                        </ul>
-
-                                    </div>
+                                    <!-- END DEPARTMENT - USER FILTER Btn -->
                                 </div>
+
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Centered Button ADD TASK
-                        <div class="d-flex justify-content-center align-items-center my-2">
-                            <fieldset class="border border-2 fw-bold text-center text-uppercase">
-                                <legend  class="float-none w-auto">add task</legend>
-                                <button type="button" id="addTaskBtn" class="add-user btn btn-success btn-outline-light text-uppercase border-success mb-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                                    </svg>
-                                </button>
-                            </fieldset>
-                        </div>
-                        -->
-                    </div>
-                    <!-- loader -->
-                    <div class="d-flex justify-content-center align-items-center d-none" id="loaderDiv">
-                        <div class="loader"></div>
-                    </div>
 
                     <!-- Form add Task Div -->
                     <div class="col-md-8 mx-auto d-flex justify-content-center align-items-center d-none" id="taskFormDiv"></div>
                     <!-- Tasks(title-tasks-checked) Department Responsible - due date-->
                     <div class="row">
-                        <div class="table-responsive" id="activeTaskDiv">
+                        <!-- All Active Tasks Div -->
+                        <div class="table-responsive activeTaskDiv d-none" id="activeTaskDiv">
                             <table class="table table-condensed table-hover text-capitalize" id="activesTasksTable">
                                 <thead>
                                 <tr>
@@ -349,8 +298,10 @@ ob_start();?>
                             </table>
                         </div>
 
+                        <!-- Div for Filter Department-User selected -->
                         <div class="row my-2 d-none" id="user-task-table"></div>
                         <div class="row my-2 d-none" id="department-task-table"></div>
+                        <!-- End Div Filter Department-User selected-->
                         <div class="text-end">
                             <button type="button" class="btn btn-success btn-outline-secondary text-white text-center" onclick="return window.location.reload();">REFRESH</button>
                         </div>

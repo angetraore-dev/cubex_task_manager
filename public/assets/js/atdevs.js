@@ -116,6 +116,7 @@ $(document).ready(function (){
             let obj = {};
             let check = event.currentTarget.checked;
             let taskId = event.currentTarget.getAttribute('data-id');
+            //console.log(taskId)
             obj['check'] = check
             obj['taskId'] = taskId
 
@@ -128,7 +129,8 @@ $(document).ready(function (){
                             icon:"error",
                             text:"something went wrong, please contact the admin"
                         }).then(() => {
-                            window.location.reload()
+                            $('#activesTasksTable').DataTable().draw();
+                            //window.location.reload()
                         })
                     }else {
                         Toast.fire({
@@ -682,6 +684,9 @@ $(document).ready(function (){
         })
     }
     loadActiveTasks();
+
+    //Div who display all active Tasks
+    let activeTasksDiv = $('.activeTaskDiv');
 
 
 
