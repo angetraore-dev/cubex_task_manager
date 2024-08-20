@@ -685,7 +685,7 @@ $(document).ready(function (){
     }
     loadActiveTasks();
 
-    //Div who display all active Tasks
+    //Div who display all active Taskss
     let activeTasksDiv = $('.activeTaskDiv');
 
 

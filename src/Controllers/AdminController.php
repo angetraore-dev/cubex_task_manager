@@ -116,7 +116,7 @@ class AdminController
 
                     $departmentId = $_POST["depTask"];
                     $departmentTasks = Task::findTaskByJoinDepartment($departmentId);
-                    //var_dump($departmentTasks);
+
                     if ($departmentTasks){?>
                         <div class="table-responsive" id="DepartmentTasksTableDiv">
                             <table class="table text-uppercase text-center caption-top" id="DepartmentTasksTable">

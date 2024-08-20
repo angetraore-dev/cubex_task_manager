@@ -120,63 +120,79 @@ ob_start();?>
                     <div id="depUserTaskDiv">
                         <!-- Container for first buttons line row mt-4-->
                         <div class="row">
-                            <!-- DEPARTMENT Btn -->
-                            <div class="d-flex align-self-start col-sm-4 justify-content-between p-2">
-                                <fieldset class="gap-2">
-                                    <legend  class="float-none w-auto fw-smaller fs-6 text-uppercase">Department</legend>
-                                    <button data-bs-toggle="modal" data-bs-target="#addDepartment" id="add-dep" class="btn btn-sm btn-outline-success text-uppercase" style="border: white 1px solid !important; text-decoration: none !important; color: #FFFFFF;" type="button">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill mx-4" viewBox="0 0 16 16">
-                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                                        </svg>
-                                    </button>
 
-                                    <button data-bs-toggle="modal" data-bs-target="#delDep" class="btn btn-sm col text-uppercase btn-outline-danger" style="border: white 1px solid !important; text-decoration: none !important; color: #FFFFFF;" type="button">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill mx-4" viewBox="0 0 16 16">
-                                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
-                                        </svg>
-                                    </button>
-                                </fieldset>
-                            </div>
-
-                            <!-- ADD TASK Btn -->
-                            <div class="d-flex align-self-center col-sm-4 justify-content-center align-items-center p-2">
-                                <fieldset class="gap-2">
-                                    <legend  class="float-none w-auto fw-smaller fs-6 text-uppercase text-center">add task</legend>
-                                    <button type="button" id="addTaskBtn" class="add-user btn btn-sm btn-success btn-outline-light text-uppercase border-success mb-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill mx-4" viewBox="0 0 16 16">
-                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                                        </svg>
-                                    </button>
-                                </fieldset>
-                            </div>
-                            <!-- USER - LATE - TODAY - FUTURE  Btn and DROPDOWN DEPARTMENT-USER FILTER -->
                             <div class="row">
-                                <div class="col-12 d-flex flex-wrap justify-content-between p-2">
-                                    <!-- USER Btn -->
-                                    <div class="col-3 align-self-start">
-                                        <fieldset class="">
-                                            <legend  class="float-none w-auto fw-smaller fs-6 text-uppercase">User</legend>
-                                            <button data-bs-toggle="modal" data-bs-target="#addUser" id="add-user" class="addUser btn btn-sm btn-outline-success text-uppercase border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
+                                <div class="row justify-content-around">
+
+                                    <!-- DEPARTMENT BTN -->
+                                    <div class="col-sm-3">
+                                        <fieldset class="d-flex flex-wrap align-self-start justify-content-around border border-1 pb-2">
+                                            <legend  class="float-none w-auto fw-small fs-6 text-uppercase">Department</legend>
+
+                                            <button data-bs-toggle="modal" data-bs-target="#addDepartment" id="add-dep" class="addDepartment btn btn-sm btn-outline-success text-uppercase border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill mx-4" viewBox="0 0 16 16">
                                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
                                                 </svg>
                                             </button>
-                                            <button data-bs-toggle="modal" data-bs-target="#delUser" class="delUser btn btn-sm text-uppercase btn-outline-danger border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
+                                            <button data-bs-toggle="modal" data-bs-target="#delDep" class="delDep btn btn-sm text-uppercase btn-outline-danger border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill mx-4" viewBox="0 0 16 16">
                                                     <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
                                                 </svg>
                                             </button>
                                         </fieldset>
                                     </div>
-                                    <!-- END USER Btn -->
+
+                                    <!-- CENTERED TASK BTN -->
+                                    <div class="col-sm-3">
+                                        <fieldset class="d-flex flex-wrap align-self-center justify-content-around pb-2">
+                                            <legend  class="float-none w-auto fw-small fs-6 text-uppercase mx-auto">add task</legend>
+                                            <button type="button" id="addTaskBtn" class="add-user btn btn-sm btn-outline-success text-uppercase border-success mb-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill mx-4" viewBox="0 0 16 16">
+                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                                </svg>
+                                            </button>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-sm-3"></div>
+
+                                </div>
+                                <!-- VIEW ALL TASK BTN -->
+                                <div class="row justify-content-around">
+                                    <div class="col-sm-3 mb-4">
+                                        <div class="d-flex flex-wrap align-self-center justify-content-around pb-2">
+                                            <button id="viewalltasks" class="btn btn-sm btn-outline-success text-uppercase border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
+                                                View all tasks
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row justify-content-around">
+                                    <!-- USER Btn -->
+                                    <div class="col-sm-3 mb-4">
+                                            <fieldset class="d-flex flex-wrap align-self-center justify-content-around border border-1 pb-2">
+                                                <legend  class="float-none w-auto fw-small fs-6 text-uppercase">User</legend>
+                                                <button data-bs-toggle="modal" data-bs-target="#addUser" id="add-user" class="addUser btn btn-sm btn-outline-success text-uppercase border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill mx-4" viewBox="0 0 16 16">
+                                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                                    </svg>
+                                                </button>
+                                                <button data-bs-toggle="modal" data-bs-target="#delUser" class="delUser btn btn-sm text-uppercase btn-outline-danger border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill mx-4" viewBox="0 0 16 16">
+                                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+                                                    </svg>
+                                                </button>
+                                            </fieldset>
+                                    </div>
 
                                     <!-- LATE - TODAY - FUTURE Btn -->
-                                    <div class="align-self-center">
-                                        <fieldset class="justify-content-between my-4">
-                                            <legend  class="float-none w-auto fw-smaller fs-6 text-uppercase">tasks Btn</legend>
+                                    <div class="col-sm-4 mb-4">
+                                        <fieldset class="d-flex flex-wrap justify-content-around align-content-around border border-1 pb-2">
+                                            <legend  class="float-none w-auto fw-small fs-6 text-uppercase">tasks Btn</legend>
 
                                             <button class="btn btn-sm text-uppercase border border-1 text-center" style="text-decoration: none !important; color: #FFFFFF;" type="button">Late</button>
 
@@ -186,11 +202,10 @@ ob_start();?>
 
                                         </fieldset>
                                     </div>
-                                    <!-- END LATE - TODAY - FUTURE Btn -->
 
                                     <!-- DEPARTMENT - USER FILTER Btn -->
-                                    <div class="align-self-end">
-                                        <fieldset class="flex-wrap justify-content-between">
+                                    <div class="col-sm-3 mb-4">
+                                        <fieldset class="d-flex flex-wrap justify-content-around align-content-around border border-1 pb-2">
                                             <legend  class="float-none w-auto fw-smaller fs-6 text-uppercase">filter</legend>
 
                                             <!-- List of all departments mx-2-->
@@ -226,8 +241,10 @@ ob_start();?>
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <!-- END DEPARTMENT - USER FILTER Btn -->
+
                                 </div>
+
+
 
                             </div>
                         </div>
