@@ -5,6 +5,8 @@ namespace App\Models;
 //use \AllowDynamicProperties;
 //
 //#[AllowDynamicProperties]
+use DateTime;
+
 class Task
 {
     protected $task_id;
@@ -268,7 +270,7 @@ class Task
     }
 
     /**
-     * Get active task
+     * Get active task in Task Page
      * @return void
      */
     public function activeTaskInTaskPage():void
@@ -333,8 +335,123 @@ class Task
                  </div>
              </div>
          </div>
-
      <?php endfor;
+    }
+
+    /**
+     * Active tasks in add Task Page
+     * @return void
+     */
+    public function activeTasksInAddTaskPage():void
+    {
+        $activeTasks = self::activesTasks();
+        ?>
+        <table class="table table-condensed table-hover text-capitalize activesTasksTable" id="activesTasksTable" style="color: white !important;">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>id</th>
+                <th>task</th>
+                <th>department</th>
+                <th>due date</th>
+            </tr>
+            </thead>
+            <tbody>
+                <?php
+                    $i=1;
+                    foreach ($activeTasks as $activeList):
+                    ?>
+                    <tr data-id="<?=$activeList->getTaskId()?>">
+                        <td><?= $i++ .'<br>';
+                            if ($activeList->getFile()){
+                                $item = json_decode($activeList->getFile(), true);
+                                foreach ($item as $file){?>
+                                    <a href="<?= HTTP .'/'.$file ?>" target="_blank"><i class="fa fa-paperclip"></i> </a><br>
+                                    <?php
+                                }
+                            }
+                            echo '<br>';
+                            ?>
+                            <button class="btn btn-sm btn-danger border border-0 delTask" id="delTask" type="button" data-id="<?=$activeList->getTaskId()?>"><i class="fa fa-trash"></i> </button>
+                        </td>
+                        <td><?=$activeList->getTaskId()?></td>
+                        <td class="d-flex justify-content-between fs-6 fw-lighter">
+                            <ul class="list-unstyled">
+                                <li class="nav-item"><?= '<p class="text-muted fw-bolder fs-6 text-capitalize mb-1">title: '.$activeList->getTitle() .'<br>To do: '. $activeList->getTodo()
+                                    .'<br>assigned To: "'.$activeList->fullname.'"</p>';
+                                    if ($activeList->getFile()){
+                                        $item = json_decode($activeList->getFile(), true);
+                                        foreach ($item as $file){?>
+                                            <p class="text-muted fw-small fs-8">created at: <?php $f = new DateTime($activeList->getCreatedAt()); echo $f->format('Y-m-d');?> </p>
+                                            <?php
+                                        }
+                                    }
+                                    ?></li>
+
+                            </ul>
+                            <ul class="list-unstyled">
+                                <li>
+                                                <span class="d-inline">
+                                                    <input type="checkbox" value="<?=$activeList->getIsChecked()?>" <?php echo ($activeList->getIsChecked()) ? 'checked="checked"' : ''?> name="responsible" id="responsible" data-id="<?=$activeList->getTaskId()?>">
+                                                    <label class="text-sm" for="responsible">Responsible</label>
+                                                </span>
+                                </li>
+                                <li class="d-inline">
+                                    <input type="checkbox" value="<?=$activeList->getIsCheckedByAdmin()?>" <?php echo ($activeList->getIsCheckedByAdmin()) ? 'checked="checked"' : ''?> name="admin" id="admin" data-id="<?=$activeList->getTaskId()?>">
+                                    <label for="admin" class="text-sm">Admin</label>
+                                </li>
+                            </ul>
+                        </td>
+                        <td><?=$activeList->libelle .
+                            ' <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="'.$activeList->color.'"></rect></svg>'?>
+                        </td>
+                        <td>
+                            <?php if ($activeList->getDueDate()){
+                                $f = new DateTime($activeList->getDueDate()); echo '<svg class="bd-placeholder-img rounded me-2" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="green"></rect></svg>'.$f->format('Y-m-d H:i A');
+                            }?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                let theTableActiveTasks = $("#activesTasksTable").DataTable({
+                    "RowId": 0,
+                    "searching": true,
+                    "paging":true,
+                    "pageLength": 10,
+                    "orderable":true,
+                    "order": [[1, 'asc']],
+                    "autoWidth": false,
+                    "selected": true,
+                    "columns":[
+                        {"data":0},
+                        {"data":1},
+                        {"data":2},
+                        {"data":3},
+                        {"data":4}
+                    ],
+                    "columnDefs":[
+                        {
+                            "target":0,
+                            "searchable":true
+                        },
+                        {
+                            "target":1,
+                            "visible":false
+                        }
+                    ]
+                })
+                theTableActiveTasks.on('click', function () {
+                    $(this).toggleClass('selected');
+                    let $button = $(this);
+                    console.log($button)
+                })
+            })
+        </script>
+
+    <?php
     }
 
     /**

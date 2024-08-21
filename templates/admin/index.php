@@ -111,289 +111,220 @@ ob_start();?>
                 </div>
             </div>
 
-            <!--container -->
-            <div class="row g-0 mt-4">
-                <h3 class="text-center my-4"> Add Task Page **</h3>
-                <!-- Btn Department - Task - User and dropdown department-responsibles -->
-                <div class="container-fluid">
-                    <!-- Department user responsible task Buttond DIV close on click add task-->
-                    <div id="depUserTaskDiv">
-                        <!-- Container for first buttons line row mt-4-->
-                        <div class="row">
+            <!--container <h3 class="text-center my-4"> Add Task Page **</h3>-->
+            <!-- Btn Department - Task - User and dropdown department-responsibles -->
+            <div class="container-fluid border border-1">
 
-                            <div class="row">
-                                <div class="row justify-content-around">
+                <!-- Btn DIV-->
+                <div class="row" id="depUserTaskDiv">
 
-                                    <!-- DEPARTMENT BTN -->
-                                    <div class="col-sm-3">
-                                        <fieldset class="d-flex flex-wrap align-self-start justify-content-around border border-1 pb-2">
-                                            <legend  class="float-none w-auto fw-small fs-6 text-uppercase">Department</legend>
+                    <!-- DIV FOR DEPARTMENT TASK BTN ROW -->
+                    <div class="row justify-content-around departmentTaskDiv">
+                        <div class="col-sm-3">
+                            <fieldset class="d-flex flex-wrap align-self-start justify-content-around border border-1 pb-2">
+                                <legend  class="float-none w-auto fw-small fs-6 text-uppercase">Department</legend>
 
-                                            <button data-bs-toggle="modal" data-bs-target="#addDepartment" id="add-dep" class="addDepartment btn btn-sm btn-outline-success text-uppercase border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill mx-4" viewBox="0 0 16 16">
-                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                                                </svg>
-                                            </button>
-                                            <button data-bs-toggle="modal" data-bs-target="#delDep" class="delDep btn btn-sm text-uppercase btn-outline-danger border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill mx-4" viewBox="0 0 16 16">
-                                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
-                                                </svg>
-                                            </button>
-                                        </fieldset>
-                                    </div>
+                                <button data-bs-toggle="modal" data-bs-target="#addDepartment" id="add-dep" class="addDepartment btn btn-sm btn-outline-success text-uppercase border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill mx-4" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                    </svg>
+                                </button>
+                                <button data-bs-toggle="modal" data-bs-target="#delDep" class="delDep btn btn-sm text-uppercase btn-outline-danger border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill mx-4" viewBox="0 0 16 16">
+                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+                                    </svg>
+                                </button>
+                            </fieldset>
+                        </div>
+                        <div class="col-sm-3">
+                            <fieldset class="d-flex flex-wrap align-self-center justify-content-around pb-2">
+                                <legend  class="float-none w-auto fw-small fs-6 text-uppercase mx-auto">add task</legend>
+                                <button type="button" id="addTaskBtn" class="add-user btn btn-sm btn-outline-success text-uppercase border-success mb-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill mx-4" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                    </svg>
+                                </button>
+                            </fieldset>
+                        </div>
+                        <div class="col-sm-3"></div>
+                    </div>
 
-                                    <!-- CENTERED TASK BTN -->
-                                    <div class="col-sm-3">
-                                        <fieldset class="d-flex flex-wrap align-self-center justify-content-around pb-2">
-                                            <legend  class="float-none w-auto fw-small fs-6 text-uppercase mx-auto">add task</legend>
-                                            <button type="button" id="addTaskBtn" class="add-user btn btn-sm btn-outline-success text-uppercase border-success mb-1">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill mx-4" viewBox="0 0 16 16">
-                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                                                </svg>
-                                            </button>
-                                        </fieldset>
-                                    </div>
+                    <!-- VIEW ALL TASK BTN -->
+                    <div class="row justify-content-around">
+                        <div class="col-sm-3 mb-4">
+                            <div class="d-flex flex-wrap align-self-center justify-content-around pb-2">
+                                <button id="viewAllTasksBtn" class="viewAllTasksBtn btn btn-sm btn-outline-success text-uppercase border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
+                                    View all tasks
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
-                                    <div class="col-sm-3"></div>
+                    <!-- DIV FOR USER LATE TODAY FUTURE DROPDOWN DEPARTMENT-RESPONSIBLE -->
+                    <div class="row justify-content-around">
+                        <!-- USER Btn -->
+                        <div class="col-sm-3 mb-4">
+                            <fieldset class="d-flex flex-wrap align-self-center justify-content-around border border-1 pb-2">
+                                <legend  class="float-none w-auto fw-small fs-6 text-uppercase">User</legend>
+                                <button data-bs-toggle="modal" data-bs-target="#addUser" id="add-user" class="addUser btn btn-sm btn-outline-success text-uppercase border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill mx-4" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                    </svg>
+                                </button>
+                                <button data-bs-toggle="modal" data-bs-target="#delUser" class="delUser btn btn-sm text-uppercase btn-outline-danger border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill mx-4" viewBox="0 0 16 16">
+                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+                                    </svg>
+                                </button>
+                            </fieldset>
+                        </div>
 
-                                </div>
-                                <!-- VIEW ALL TASK BTN -->
-                                <div class="row justify-content-around">
-                                    <div class="col-sm-3 mb-4">
-                                        <div class="d-flex flex-wrap align-self-center justify-content-around pb-2">
-                                            <button id="viewalltasks" class="btn btn-sm btn-outline-success text-uppercase border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
-                                                View all tasks
-                                            </button>
-                                        </div>
+                        <!-- LATE - TODAY - FUTURE Btn -->
+                        <div class="col-sm-4 mb-4">
+                            <fieldset class="d-flex flex-wrap justify-content-around align-content-around border border-1 pb-2">
+                                <legend  class="float-none w-auto fw-small fs-6 text-uppercase">tasks Btn</legend>
 
-                                    </div>
-                                </div>
-                                <div class="row justify-content-around">
-                                    <!-- USER Btn -->
-                                    <div class="col-sm-3 mb-4">
-                                            <fieldset class="d-flex flex-wrap align-self-center justify-content-around border border-1 pb-2">
-                                                <legend  class="float-none w-auto fw-small fs-6 text-uppercase">User</legend>
-                                                <button data-bs-toggle="modal" data-bs-target="#addUser" id="add-user" class="addUser btn btn-sm btn-outline-success text-uppercase border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill mx-4" viewBox="0 0 16 16">
-                                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                                                    </svg>
-                                                </button>
-                                                <button data-bs-toggle="modal" data-bs-target="#delUser" class="delUser btn btn-sm text-uppercase btn-outline-danger border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill mx-4" viewBox="0 0 16 16">
-                                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
-                                                    </svg>
-                                                </button>
-                                            </fieldset>
-                                    </div>
+                                <button class="btn btn-sm text-uppercase border border-1 text-center" style="text-decoration: none !important; color: #FFFFFF;" type="button">Late</button>
 
-                                    <!-- LATE - TODAY - FUTURE Btn -->
-                                    <div class="col-sm-4 mb-4">
-                                        <fieldset class="d-flex flex-wrap justify-content-around align-content-around border border-1 pb-2">
-                                            <legend  class="float-none w-auto fw-small fs-6 text-uppercase">tasks Btn</legend>
+                                <button class="btn btn-sm text-uppercase border border-1 text-center" style="text-decoration: none !important; color: #FFFFFF;" type="button">Today</button>
 
-                                            <button class="btn btn-sm text-uppercase border border-1 text-center" style="text-decoration: none !important; color: #FFFFFF;" type="button">Late</button>
+                                <button class="btn btn-sm text-uppercase border border-1 text-center" style="text-decoration: none !important; color: #FFFFFF;" type="button">Future</button>
 
-                                            <button class="btn btn-sm text-uppercase border border-1 text-center" style="text-decoration: none !important; color: #FFFFFF;" type="button">Today</button>
+                            </fieldset>
+                        </div>
 
-                                            <button class="btn btn-sm text-uppercase border border-1 text-center" style="text-decoration: none !important; color: #FFFFFF;" type="button">Future</button>
+                        <!-- DEPARTMENT - USER FILTER Btn -->
+                        <div class="col-sm-3 mb-4">
+                            <fieldset class="d-flex flex-wrap justify-content-around align-content-around border border-1 pb-2">
+                                <legend  class="float-none w-auto fw-smaller fs-6 text-uppercase">filter</legend>
 
-                                        </fieldset>
-                                    </div>
-
-                                    <!-- DEPARTMENT - USER FILTER Btn -->
-                                    <div class="col-sm-3 mb-4">
-                                        <fieldset class="d-flex flex-wrap justify-content-around align-content-around border border-1 pb-2">
-                                            <legend  class="float-none w-auto fw-smaller fs-6 text-uppercase">filter</legend>
-
-                                            <!-- List of all departments mx-2-->
-                                            <div class="dropdown departmentlist" id="departmentlist">
-                                                <button class="btn btn-sm border border-1 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
-                                                        style="text-decoration: none; color: white !important;">
-                                                    departments
-                                                </button>
-                                                <ul class="dropdown-menu depList">
-                                                    <?php $dropdown_department = Department::readAll(); if($dropdown_department): foreach ($dropdown_department as $item): ?>
-                                                        <li class="list-unstyled deptarment" data-id="<?= $item->getDepartmentId()?>">
-                                                            <a class="dropdown-item" href="#">
+                                <!-- List of all departments mx-2-->
+                                <div class="dropdown departmentlist" id="departmentlist">
+                                    <button class="btn btn-sm border border-1 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                            style="text-decoration: none; color: white !important;">
+                                        departments
+                                    </button>
+                                    <ul class="dropdown-menu depList">
+                                        <?php $dropdown_department = Department::readAll(); if($dropdown_department): foreach ($dropdown_department as $item): ?>
+                                            <li class="list-unstyled deptarment" data-id="<?= $item->getDepartmentId()?>">
+                                                <a class="dropdown-item" href="#">
                                     <span class="d-block">
                                     <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="<?=$item->getColor()?>"></rect></svg>
                                     <?= $item->getLibelle()?>
                                     </span>
-                                                            </a>
+                                                </a>
 
-                                                        </li>
-                                                    <?php endforeach; else:?>
-                                                        <li class="text-center text-muted"><span> No records found</span></li>
-                                                    <?php endif;?>
-                                                </ul>
-                                            </div>
-
-                                            <!-- List of all responsible -->
-                                            <div class="dropdown mx-2">
-                                                <button class="btn btn-sm border border-1 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
-                                                        style="text-decoration: none; color: white !important;">
-                                                    users
-                                                </button>
-                                                <ul class="dropdown-menu" id="userbydepartment-1"></ul>
-                                            </div>
-                                        </fieldset>
-                                    </div>
-
+                                            </li>
+                                        <?php endforeach; else:?>
+                                            <li class="text-center text-muted"><span> No records found</span></li>
+                                        <?php endif;?>
+                                    </ul>
                                 </div>
 
-
-
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <!-- Form add Task Div -->
-                    <div class="col-md-8 mx-auto d-flex justify-content-center align-items-center d-none" id="taskFormDiv"></div>
-                    <!-- Tasks(title-tasks-checked) Department Responsible - due date-->
-                    <div class="row">
-                        <!-- All Active Tasks Div -->
-                        <div class="table-responsive activeTaskDiv d-none" id="activeTaskDiv">
-                            <table class="table table-condensed table-hover text-capitalize" id="activesTasksTable">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>id</th>
-                                    <th>task</th>
-                                    <th>department</th>
-                                    <th>due date</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php $i=1; $activeTasksList= Task::activesTasks(); if ($activeTasksList) : foreach ($activeTasksList as $activeList): ?>
-                                    <tr data-id="<?=$activeList->getTaskId()?>">
-                                        <td><?= $i++?></td>
-                                        <td><?=$activeList->getTaskId()?></td>
-                                        <td class="d-flex justify-content-between fs-6 fw-lighter">
-                                            <ul class="list-unstyled">
-                                                <li class="nav-item"><?= '<p class="text-muted fw-bolder fs-6 text-capitalize mb-1">title: '.$activeList->getTitle() .'<br>To do: '. $activeList->getTodo()
-                                                    .'<br>assigned To: "'.$activeList->fullname.'"</p>';
-                                                    if ($activeList->getFile()){
-                                                        $item = json_decode($activeList->getFile(), true);
-                                                        foreach ($item as $file){?>
-                                                            <a href="<?= HTTP .'/'.$file ?>" target="_blank"><i class="fa fa-paperclip"></i> </a><br>
-                                                            <p class="text-muted text-capitalize fs-6">created at: <?php $f = new DateTime($activeList->getCreatedAt()); echo $f->format('Y-m-d');?> </p>
-                                                            <?php
-                                                        }
-                                                    }
-                                                    ?></li>
-
-                                            </ul>
-                                            <ul class="list-unstyled">
-                                                <li>
-                                        <span class="d-inline">
-                                            <input type="checkbox" value="<?=$activeList->getIsChecked()?>" <?php echo ($activeList->getIsChecked()) ? 'checked="checked"' : ''?> name="responsible" id="responsible" data-id="<?=$activeList->getTaskId()?>">
-                                            <label class="text-sm" for="responsible">Responsible</label>
-                                        </span>
-                                                </li>
-                                                <li class="d-inline">
-                                                    <input type="checkbox" value="<?=$activeList->getIsCheckedByAdmin()?>" <?php echo ($activeList->getIsCheckedByAdmin()) ? 'checked="checked"' : ''?> name="admin" id="admin" data-id="<?=$activeList->getTaskId()?>">
-                                                    <label for="admin" class="text-sm">Admin</label>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                        <td><?=$activeList->libelle .
-                                            ' <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="'.$activeList->color.'"></rect></svg>'?>
-                                        </td>
-                                        <td>
-                                            <?php if ($activeList->getDueDate()){
-                                                $f = new DateTime($activeList->getDueDate()); echo '<svg class="bd-placeholder-img rounded me-2" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="green"></rect></svg>'.$f->format('Y-m-d H:i A');
-                                            }?>
-                                        </td>
-                                    </tr>
-
-                                <?php endforeach; else: echo "<p class='text-muted text-center'>No records found ! </p>"; endif;?>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Div for Filter Department-User selected -->
-                        <div class="row my-2 d-none" id="user-task-table"></div>
-                        <div class="row my-2 d-none" id="department-task-table"></div>
-                        <!-- End Div Filter Department-User selected-->
-                        <div class="text-end">
-                            <button type="button" class="btn btn-success btn-outline-secondary text-white text-center" onclick="return window.location.reload();">REFRESH</button>
-                        </div>
-                    </div>
-                    <!-- Tabs d-non -->
-                    <div class="row d-none">
-                        <ul class="nav nav-fill nav-tabs btn" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link active" id="activesTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-activesTasks" role="tab" aria-controls="nav-activesTasks" aria-selected="true"> Actives Tasks </a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="archivedTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-archivedTasks" role="tab" aria-controls="nav-archivedTasks" aria-selected="false"> Archived Tasks </a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="futuresTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-futuresTasks" role="tab" aria-controls="nav-futuresTasks" aria-selected="false"> Today Tasks </a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="inWaitingTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-inWaitingTasks" role="tab" aria-controls="nav-inWaitingTasks" aria-selected="false"> Tasks in Waiting </a>
-                            </li>
-                        </ul>
-                        <div class="tab-content pt-5" id="tab-content">
-                            <!-- Actives Tasks -->
-                            <div class="tab-pane active" id="nav-activesTasks" role="tabpanel" aria-labelledby="nav-activesTasks">
-
-                                <div class="row my-2" id="activesTasksTableDiv">
-                                    <div class="table-responsive">
-                                        <!--
-                                        <table class="table table-condensed text-uppercase" id="activesTasksTable">
-                                            <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>id</th>
-                                                <th>task</th>
-                                                <th>checked</th>
-                                                <th>department</th>
-                                                <th>responsible</th>
-                                                <th>due date</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody></tbody>
-                                        </table>
-                                        -->
-                                    </div>
+                                <!-- List of all responsible -->
+                                <div class="dropdown mx-2">
+                                    <button class="btn btn-sm border border-1 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                            style="text-decoration: none; color: white !important;">
+                                        users
+                                    </button>
+                                    <ul class="dropdown-menu" id="userbydepartment-1"></ul>
                                 </div>
-                            </div>
-                            <!--ArchivedTasks -->
-                            <div class="tab-pane" id="nav-archivedTasks" role="tabpanel" aria-labelledby="nav-archivedTasks">
-                                <div class="row my-2" id="archivedTableDiv">
-                                    <div class="table-responsive">
-                                        <table class="table table-condensed text-uppercase" id="archivedTasksTable">
-                                            <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>id</th>
-                                                <th>task</th>
-                                                <th>due date</th>
-                                                <th>checked</th>
-                                                <th>archived</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody></tbody>
-                                        </table>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <!--Future Tasks -->
-                            <div class="tab-pane" id="nav-futuresTasks" role="tabpanel" aria-labelledby="nav-futuresTasks">Today and future tasks</div>
-                            <!-- In waiting To check Tasks -->
-                            <div class="tab-pane" id="nav-inWaitingTasks" role="tabpanel" aria-labelledby="nav-inWaitingTasks">In waiting task</div>
-
+                            </fieldset>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
+                <!-- END Btn DIV-->
+
+                <!-- Form add Task Div -->
+                <div class="col-md-8 mx-auto d-flex justify-content-center align-items-center d-none" id="taskFormDiv"></div>
+
+                <!-- Tasks(title-tasks-checked) Department Responsible - due date-->
+                <div class="row">
+                    <!-- All Active Tasks Div -->
+                    <div class="table-responsive activeTaskDiv d-none" id="activeTaskDiv"></div>
+
+                    <!-- Div for Filter Department-User selected -->
+                    <div class="row my-2 d-none" id="user-task-table"></div>
+                    <div class="row my-2 d-none" id="department-task-table"></div>
+                    <!-- End Div Filter Department-User selected-->
+                    <div class="text-end my-4">
+                        <button type="button" class="btn btn-success btn-outline-secondary text-white text-center" onclick="return window.location.reload();">REFRESH</button>
+                    </div>
+                </div>
+                <!-- Tabs d-none -->
+                <div class="row d-none">
+                    <ul class="nav nav-fill nav-tabs btn" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="activesTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-activesTasks" role="tab" aria-controls="nav-activesTasks" aria-selected="true"> Actives Tasks </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="archivedTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-archivedTasks" role="tab" aria-controls="nav-archivedTasks" aria-selected="false"> Archived Tasks </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="futuresTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-futuresTasks" role="tab" aria-controls="nav-futuresTasks" aria-selected="false"> Today Tasks </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="inWaitingTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-inWaitingTasks" role="tab" aria-controls="nav-inWaitingTasks" aria-selected="false"> Tasks in Waiting </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content pt-5" id="tab-content">
+                        <!-- Actives Tasks -->
+                        <div class="tab-pane active" id="nav-activesTasks" role="tabpanel" aria-labelledby="nav-activesTasks">
+
+                            <div class="row my-2" id="activesTasksTableDiv">
+                                <div class="table-responsive">
+                                    <!--
+                                    <table class="table table-condensed text-uppercase" id="activesTasksTable">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>id</th>
+                                            <th>task</th>
+                                            <th>checked</th>
+                                            <th>department</th>
+                                            <th>responsible</th>
+                                            <th>due date</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                    -->
+                                </div>
+                            </div>
+                        </div>
+                        <!--ArchivedTasks -->
+                        <div class="tab-pane" id="nav-archivedTasks" role="tabpanel" aria-labelledby="nav-archivedTasks">
+                            <div class="row my-2" id="archivedTableDiv">
+                                <div class="table-responsive">
+                                    <table class="table table-condensed text-uppercase" id="archivedTasksTable">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>id</th>
+                                            <th>task</th>
+                                            <th>due date</th>
+                                            <th>checked</th>
+                                            <th>archived</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--Future Tasks -->
+                        <div class="tab-pane" id="nav-futuresTasks" role="tabpanel" aria-labelledby="nav-futuresTasks">Today and future tasks</div>
+                        <!-- In waiting To check Tasks -->
+                        <div class="tab-pane" id="nav-inWaitingTasks" role="tabpanel" aria-labelledby="nav-inWaitingTasks">In waiting task</div>
+
+                    </div>
+                </div>
+
 
             </div>
         </div>

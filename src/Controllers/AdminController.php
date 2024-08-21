@@ -138,7 +138,7 @@ class AdminController
                                         <td><?=$task->getTitle() .'<br>' .$task->getTodo()?></td>
                                         <td>
                                             <ul class="list-unstyled">
-                                                <li class="list-unstyled">
+                                                <li>
                                                     <input type="checkbox" value="<?=$task->getIsChecked()?>" <?php echo ($task->getIsChecked()) ? 'checked="checked"' : ''?> name="responsible" id="responsible">
                                                     <label for="responsible">responsible</label>
                                                 </li>
@@ -265,7 +265,10 @@ class AdminController
                     $this->task->activeTaskInTaskPage();
 
                     break;
-                default: StaticDb::notFound(); break;
+                case isset($_POST['activeTasksInAddTaskPage2']):
+                    $this->task->activeTasksInAddTaskPage();
+                    break;
+                //default: StaticDb::notFound(); break;
             }
             //end if $_POST
         }

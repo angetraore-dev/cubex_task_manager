@@ -81,70 +81,6 @@ $(document).ready(function (){
             {"data":3}
         ]
     });
-    //Actives tasks Tables
-    let globalTable = $("#activesTasksTable").DataTable({
-        "RowId": 0,
-        "searching": true,
-        "paging":true,
-        "pageLength": 10,
-        "orderable":true,
-        "order": [[1, 'asc']],
-        "autoWidth": false,
-        "selected": false,
-        "columns":[
-            {"data":0},
-            {"data":1},
-            {"data":2},
-            {"data":3},
-            {"data":4}
-        ],
-        "columnDefs":[
-            {
-                "target":0,
-                "searchable":true
-            },
-            {
-                "target":1,
-                "visible":false
-            }
-        ]
-    })
-    //Checkbox process
-    let checkboxAdmins = document.querySelectorAll("#admin");
-    Array.from(checkboxAdmins).forEach(checkboxAdmin => {
-        checkboxAdmin.addEventListener('change', (event) => {
-            let obj = {};
-            let check = event.currentTarget.checked;
-            let taskId = event.currentTarget.getAttribute('data-id');
-            //console.log(taskId)
-            obj['check'] = check
-            obj['taskId'] = taskId
-
-            $.post({
-                url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
-                data:{checkAdmin:JSON.stringify(obj)},
-                success:function (response){
-                    if (!response){
-                        toastMixin.fire({
-                            icon:"error",
-                            text:"something went wrong, please contact the admin"
-                        }).then(() => {
-                            $('#activesTasksTable').DataTable().draw();
-                            //window.location.reload()
-                        })
-                    }else {
-                        Toast.fire({
-                            text:"Successfull updated"
-                        }).then(() => {
-                            $('#activesTasksTable').DataTable().draw();
-                            //$("#activeTaskDiv").load(location.href+" #activeTaskDiv>*","")
-                        })
-                    }
-                }
-            })
-
-        })
-    })
 
     //TaskByDepartment in AdminController
     let DepartmentTasksTableVeritable = $(this).closest('#DepartmentTasksTable').DataTable({
@@ -200,8 +136,6 @@ $(document).ready(function (){
     let userTaskTableDivInDashboard = $('#user-task-table');
     //department-task-table-div
     let departmentTaskTableDivInDashboard = $('#department-task-table');
-
-
 
     if (DepartmentTasksTableVeritable instanceof $.fn.dataTable.Api) {
         console.log("is initialized")
@@ -544,8 +478,8 @@ $(document).ready(function (){
         }
     })
 
-    let jip = (document).querySelector('#delTask');
-    console.log(jip)
+    //let jip = (document).querySelector('#delTask');
+    //console.log(jip)
 
     //Delete Task
     $(document).on('click', 'tr button#delTask', function (){
@@ -580,6 +514,8 @@ $(document).ready(function (){
                                 iconColor: "succes",
                                 text:"Successfull delete"
                             }).then(() => {
+                                //IMPORTANT TO REVIEW
+                                theTableActiveTasks.data().draw()
                                 $.post({
                                     url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
                                     data:{userTask:userid},
@@ -684,9 +620,26 @@ $(document).ready(function (){
         })
     }
     loadActiveTasks();
+    /*
+    ADD TASK PAGE PROCESS
+     */
 
-    //Div who display all active Taskss
-    let activeTasksDiv = $('.activeTaskDiv');
+    //Active Tasks Process
+    //table
+    let btnViewAllTasks = $('.viewAllTasksBtn');
+    let activeTasksDivInAddTaskPage = $('.activeTaskDiv');
+
+    btnViewAllTasks.click( () => {
+        $.post({
+            url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+            data:{activeTasksInAddTaskPage2:1},
+            success:function (response) {
+                activeTasksDivInAddTaskPage.removeClass('d-none').fadeIn();
+                activeTasksDivInAddTaskPage.html(response)
+            }
+        })
+        //activeTasksDivInAddTaskPage.removeClass('d-none').fadeIn();
+    });
 
 
 
@@ -694,6 +647,48 @@ $(document).ready(function (){
 
 
 
+
+
+    //Checkbox process
+    let checkboxAdmins = document.querySelectorAll("#admin");
+    Array.from(checkboxAdmins).forEach(checkboxAdmin => {
+        checkboxAdmin.addEventListener('change', (event) => {
+            let obj = {};
+            let check = event.currentTarget.checked;
+            let taskId = event.currentTarget.getAttribute('data-id');
+            obj['check'] = check
+            obj['taskId'] = taskId
+
+            $.post({
+                url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+                data:{checkAdmin:JSON.stringify(obj)},
+                success:function (response){
+                    if (!response){
+                        toastMixin.fire({
+                            icon:"error",
+                            text:"something went wrong, please contact the admin"
+
+                        }).then(() => {
+                            //theTableActiveTasks.DataTable().remove().draw(false)
+                            theTableActiveTasks.rows().draw();
+
+                        })
+
+                    }else {
+                        Toast.fire({
+                            text:"Successfull updated"
+                        }).then(() => {
+                            theTableActiveTasks.rows().draw();
+                            //table.row( $button.parents('tr') ).remove().draw(false);
+                            //$('#activesTasksTable').DataTable().draw();
+                            //$("#activeTaskDiv").load(location.href+" #activeTaskDiv>*","")
+                        })
+                    }
+                }
+            })
+
+        })
+    })
 
 
 })
