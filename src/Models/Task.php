@@ -6,6 +6,7 @@ namespace App\Models;
 //
 //#[AllowDynamicProperties]
 use DateTime;
+use DateTimeImmutable;
 
 class Task
 {
@@ -203,15 +204,30 @@ class Task
         return StaticDb::getDB()->query($sql, get_called_class());
     }
 
+    public static function allTasks():mixed
+    {
+        $sql = "SELECT task_id, title, todo, due_date, created_at, isChecked, isArchived, userid, isCheckedByAdmin, file, u.fullname, d.color, d.libelle, d.department_id FROM task INNER JOIN user u on u.user_id = task.userid INNER JOIN department d on d.department_id = u.department WHERE task.isArchived is false";
+        return StaticDb::getDb()->query($sql, get_called_class());
+    }
+
     /**
-     * Tasks still actives and not checked
+     * Future Tasks
      * Due_date >= CURRENT DATE
      * And CURRENT DATE +3 < Due date
      * @return mixed
      */
-    public static function activesTasks():mixed
+    public static function futureTasks():mixed
     {
-        $sql = "SELECT task_id, title, todo, due_date, created_at, isChecked, isArchived, userid, isCheckedByAdmin, file, u.fullname, d.color, d.libelle, d.department_id FROM task INNER JOIN user u on u.user_id = task.userid INNER JOIN department d on d.department_id = u.department WHERE due_date >= CAST(CURRENT_DATE AS DATE ) && task.isChecked is false && task.isArchived is false";
+        $sql = "SELECT task_id, title, todo, due_date, created_at, isChecked, isArchived, userid, isCheckedByAdmin, file, u.fullname, d.color, d.libelle, d.department_id FROM task INNER JOIN user u on u.user_id = task.userid INNER JOIN department d on d.department_id = u.department WHERE CAST(due_date as date) > CAST(CURRENT_DATE AS DATE ) && task.isChecked is false && task.isArchived is false";
+        return StaticDb::getDb()->query($sql, get_called_class());
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function todayTasks():mixed
+    {
+        $sql = "SELECT task_id, title, todo, due_date, created_at, isChecked, isArchived, userid, isCheckedByAdmin, file, u.fullname, d.color, d.libelle, d.department_id FROM task INNER JOIN user u on u.user_id = task.userid INNER JOIN department d on d.department_id = u.department WHERE CAST(due_date as date) = CAST(CURRENT_DATE AS DATE ) && task.isChecked is false && task.isArchived is false";
         return StaticDb::getDb()->query($sql, get_called_class());
     }
 
@@ -227,12 +243,11 @@ class Task
 
     /**
      * Late On delivery
-     * CURRENT_DATE + 2 DAYS >= DUE_DATE
      * @return mixed
      */
     public static function lateOnDelivery():mixed
-    {
-        $sql = "SELECT task_id, title, todo, due_date, created_at, isChecked, isArchived, userid, isCheckedByAdmin, file, u.fullname, d.color, d.libelle, d.department_id FROM task INNER JOIN user u on u.user_id = task.userid INNER JOIN department d on d.department_id = u.department WHERE DATE_ADD(CAST(CURRENT_DATE AS DATE ), INTERVAL 3 DAY ) >= due_date && task.isChecked is false && task.isArchived is false";
+    {//DATE_ADD(CAST(CURRENT_DATE AS DATE ), INTERVAL 3 DAY ) >= due_date
+        $sql = "SELECT task_id, title, todo, due_date, created_at, isChecked, isArchived, userid, isCheckedByAdmin, file, u.fullname, d.color, d.libelle, d.department_id FROM task INNER JOIN user u on u.user_id = task.userid INNER JOIN department d on d.department_id = u.department WHERE CAST(due_date as date) < CAST(CURRENT_TIMESTAMP as DATE ) && task.isChecked is false && task.isArchived is false";
         return StaticDb::getDb()->query($sql, get_called_class());
     }
 
@@ -273,11 +288,12 @@ class Task
      * Get active task in Task Page
      * @return void
      */
-    public function activeTaskInTaskPage():void
-    { $tasksActive = self::activesTasks();
+    function futureTaskInTaskPage():void
+    {
+        $tasksActive = self::futureTasks();
         $total = count($tasksActive);
-        //var_dump($tasksActive);
-     for ($i = 0; $i < $total; $i++):   ?>
+
+        for ($i = 0; $i < $total; $i++):   ?>
          <div class="col-lg-4 p-1" style="border-right: gold 1px solid">
 
              <!-- Item -->
@@ -342,11 +358,12 @@ class Task
      * Active tasks in add Task Page
      * @return void
      */
-    public function activeTasksInAddTaskPage():void
+    function viewAllTasksInAddTaskPage():void
     {
-        $activeTasks = self::activesTasks();
+        $allTasks = self::allTasks();
         ?>
-        <table class="table table-condensed table-hover text-capitalize activesTasksTable" id="activesTasksTable" style="color: white !important;">
+
+        <table class="table table-condensed table-dark text-light text-capitalize viewAllTasksTable" id="viewAllTasksTable">
             <thead>
             <tr>
                 <th>#</th>
@@ -359,64 +376,185 @@ class Task
             <tbody>
                 <?php
                     $i=1;
-                    foreach ($activeTasks as $activeList):
+                    foreach ($allTasks as $activeList):
                     ?>
-                    <tr data-id="<?=$activeList->getTaskId()?>">
-                        <td><?= $i++ .'<br>';
-                            if ($activeList->getFile()){
-                                $item = json_decode($activeList->getFile(), true);
-                                foreach ($item as $file){?>
-                                    <a href="<?= HTTP .'/'.$file ?>" target="_blank"><i class="fa fa-paperclip"></i> </a><br>
-                                    <?php
-                                }
-                            }
-                            echo '<br>';
-                            ?>
-                            <button class="btn btn-sm btn-danger border border-0 delTask" id="delTask" type="button" data-id="<?=$activeList->getTaskId()?>"><i class="fa fa-trash"></i> </button>
-                        </td>
-                        <td><?=$activeList->getTaskId()?></td>
-                        <td class="d-flex justify-content-between fs-6 fw-lighter">
-                            <ul class="list-unstyled">
-                                <li class="nav-item"><?= '<p class="text-muted fw-bolder fs-6 text-capitalize mb-1">title: '.$activeList->getTitle() .'<br>To do: '. $activeList->getTodo()
-                                    .'<br>assigned To: "'.$activeList->fullname.'"</p>';
-                                    if ($activeList->getFile()){
-                                        $item = json_decode($activeList->getFile(), true);
-                                        foreach ($item as $file){?>
-                                            <p class="text-muted fw-small fs-8">created at: <?php $f = new DateTime($activeList->getCreatedAt()); echo $f->format('Y-m-d');?> </p>
-                                            <?php
-                                        }
+                        <tr data-id="viewAllTasksTable">
+                            <td><?= $i++ .'<br>';
+                                if ($activeList->getFile()){
+                                    $item = json_decode($activeList->getFile(), true);
+                                    foreach ($item as $file){?>
+                                        <a href="<?= HTTP .'/'.$file ?>" target="_blank"><i class="fa fa-paperclip"></i> </a><br>
+                                        <?php
                                     }
-                                    ?></li>
-
-                            </ul>
-                            <ul class="list-unstyled">
-                                <li>
-                                                <span class="d-inline">
-                                                    <input type="checkbox" value="<?=$activeList->getIsChecked()?>" <?php echo ($activeList->getIsChecked()) ? 'checked="checked"' : ''?> name="responsible" id="responsible" data-id="<?=$activeList->getTaskId()?>">
-                                                    <label class="text-sm" for="responsible">Responsible</label>
-                                                </span>
-                                </li>
-                                <li class="d-inline">
-                                    <input type="checkbox" value="<?=$activeList->getIsCheckedByAdmin()?>" <?php echo ($activeList->getIsCheckedByAdmin()) ? 'checked="checked"' : ''?> name="admin" id="admin" data-id="<?=$activeList->getTaskId()?>">
-                                    <label for="admin" class="text-sm">Admin</label>
-                                </li>
-                            </ul>
-                        </td>
-                        <td><?=$activeList->libelle .
-                            ' <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="'.$activeList->color.'"></rect></svg>'?>
-                        </td>
-                        <td>
-                            <?php if ($activeList->getDueDate()){
-                                $f = new DateTime($activeList->getDueDate()); echo '<svg class="bd-placeholder-img rounded me-2" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="green"></rect></svg>'.$f->format('Y-m-d H:i A');
-                            }?>
-                        </td>
-                    </tr>
+                                }
+                                echo '<br>';
+                                ?>
+                                <button class="btn btn-sm btn-default border border-0 delItem" type="button" data-id="<?=$activeList->getTaskId()?>" style="text-decoration: none !important; background-color: white !important;"><i class="fa fa-trash"></i> </button>
+                            </td>
+                            <td><?=$activeList->getTaskId()?></td>
+                            <td class="d-flex justify-content-between fs-6 fw-lighter">
+                                <ul class="list-unstyled">
+                                    <li class="nav-item">
+                                        <?php $f = ($activeList->getCreatedAt()) ? new DateTime($activeList->getCreatedAt()) : date('Y-m-d H:i:s');
+                                        echo '<p class="fw-small fs-6 text-capitalize mb-1">
+                                title: '.$activeList->getTitle() .
+                                            '<br>To do: '. $activeList->getTodo()
+                                            .'<br>assigned To: "'.$activeList->fullname.
+                                            '<br>Created At: ' .$f->format('Y-m-d') .'"</p>';
+                                        ?>
+                                    </li>
+                                </ul>
+                                <ul class="list-unstyled">
+                                    <li>
+                                <span class="d-inline">
+                                    <input type="checkbox" value="<?=$activeList->getIsChecked()?>" <?php echo ($activeList->getIsChecked()) ? 'checked="checked"' : ''?> name="usercheckbox" id="usercheckbox" data-id="<?=$activeList->getTaskId()?>">
+                                    <label class="text-sm" for="usercheckbox">Responsible</label>
+                                </span>
+                                    </li>
+                                    <li class="d-inline">
+                                        <input type="checkbox" name="admincheckbox" id="admincheckbox"  class="admincheckbox" value="<?=$activeList->getIsCheckedByAdmin()?>" <?php echo ($activeList->getIsCheckedByAdmin()) ? 'checked="checked"' : ''?> data-id="<?=$activeList->getTaskId()?>">
+                                        <label for="admincheckbox" class="text-sm">Admin</label>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class='list-unstyled text-center'>
+                                    <li><?=$activeList->libelle?></li>
+                                    <li>
+                                        <svg class="bd-placeholder-img me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="<?=$activeList->color?>"></rect></svg>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td>
+                                <?php if ($activeList->getDueDate()){
+                                    $f = new DateTime($activeList->getDueDate()); echo '<svg class="bd-placeholder-img rounded me-2" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="white"></rect></svg>'.$f->format('d-m-Y H:i A');
+                                }?>
+                            </td>
+                        </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
         <script type="text/javascript">
             $(document).ready(function(){
-                let theTableActiveTasks = $("#activesTasksTable").DataTable({
+                $("#viewAllTasksTable").DataTable({
+                        "RowId": 0,
+                        "searching": true,
+                        "paging":true,
+                        "pageLength": 10,
+                        "orderable":true,
+                        "order": [[1, 'asc']],
+                        "autoWidth": false,
+                        "selected": true,
+                        "columns":[
+                            {"data":0},
+                            {"data":1},
+                            {"data":2},
+                            {"data":3},
+                            {"data":4}
+                        ],
+                        "columnDefs":[
+                            {
+                                "target":0,
+                                "searchable":true
+                            },
+                            {
+                                "target":1,
+                                "visible":false
+                            }
+                        ]
+                    })
+            })
+        </script>
+
+    <?php
+    }
+
+    /**
+     * Today Tasks in Add Task Page
+     * @return void
+     */
+    function viewTodayTasksInAddTaskPage():void
+    { $todayTasks = self::todayTasks();
+        $date = new DateTimeImmutable("now");
+        // Prints something like: Wednesday 19th of October 2022 08:40:48 AM
+        //echo $date->format('l jS \o\f F Y h:i A'), "\n";
+        $f = $date->format('d F Y');
+        echo "<h3 class='text-center fw-small'>$f</h3>";
+        ?>
+        <table class="table table-condensed table-dark text-light text-capitalize viewTodayTasksTable" id="viewTodayTasksTable">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>id</th>
+                <th>task</th>
+                <th>department</th>
+                <th>due date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            $i=1;
+            foreach ($todayTasks as $activeList):
+                ?>
+                <tr data-id="viewTodayTasksTable">
+                    <td><?= $i++ .'<br>';
+                        if ($activeList->getFile()){
+                            $item = json_decode($activeList->getFile(), true);
+                            foreach ($item as $file){?>
+                                <a href="<?= HTTP .'/'.$file ?>" target="_blank"><i class="fa fa-paperclip"></i> </a><br>
+                                <?php
+                            }
+                        }
+                        echo '<br>';
+                        ?>
+                        <button class="btn btn-sm btn-default border border-0 delItem" type="button" data-id="<?=$activeList->getTaskId()?>" style="text-decoration: none !important; background-color: white !important;"><i class="fa fa-trash"></i> </button>
+                    </td>
+                    <td><?=$activeList->getTaskId()?></td>
+                    <td class="d-flex justify-content-between fs-6 fw-lighter">
+                        <ul class="list-unstyled">
+                            <li class="nav-item">
+                                <?php $f = ($activeList->getCreatedAt()) ? new DateTime($activeList->getCreatedAt()) : date('Y-m-d H:i:s');
+                                echo '<p class="fw-small fs-6 text-capitalize mb-1">
+                                title: '.$activeList->getTitle() .
+                                '<br>To do: '. $activeList->getTodo()
+                                .'<br>assigned To: "'.$activeList->fullname.
+                                '<br>Created At: ' .$f->format('Y-m-d') .'"</p>';
+                                ?>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li>
+                                <span class="d-inline">
+                                    <input type="checkbox" value="<?=$activeList->getIsChecked()?>" <?php echo ($activeList->getIsChecked()) ? 'checked="checked"' : ''?> name="usercheckbox" id="usercheckbox" data-id="<?=$activeList->getTaskId()?>">
+                                    <label class="text-sm" for="usercheckbox">Responsible</label>
+                                </span>
+                            </li>
+                            <li class="d-inline">
+                                <input type="checkbox" name="admincheckbox" id="admincheckbox"  class="admincheckbox" value="<?=$activeList->getIsCheckedByAdmin()?>" <?php echo ($activeList->getIsCheckedByAdmin()) ? 'checked="checked"' : ''?> data-id="<?=$activeList->getTaskId()?>">
+                                <label for="admincheckbox" class="text-sm">Admin</label>
+                            </li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul class='list-unstyled text-center'>
+                            <li><?=$activeList->libelle?></li>
+                            <li>
+                                <svg class="bd-placeholder-img me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="<?=$activeList->color?>"></rect></svg>
+                            </li>
+                        </ul>
+                    </td>
+                    <td>
+                        <?php if ($activeList->getDueDate()){
+                            $f = new DateTime($activeList->getDueDate()); echo '<svg class="bd-placeholder-img rounded me-2" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="orange"></rect></svg>'.$f->format('d-m-Y H:i A');
+                        }?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#viewTodayTasksTable').DataTable({
                     "RowId": 0,
                     "searching": true,
                     "paging":true,
@@ -443,18 +581,32 @@ class Task
                         }
                     ]
                 })
-                theTableActiveTasks.on('click', function () {
-                    $(this).toggleClass('selected');
-                    let $button = $(this);
-                    console.log($button)
-                })
             })
         </script>
 
-    <?php
+        <?php
     }
 
     /**
+     * Late Task in Add Task Page
+     * @return void
+     */
+    function viewLateTasksInAddTaskPage():void
+    {
+
+    }
+
+    /**
+     * Future Tasks in Add Task Page
+     * @return void
+     */
+    function viewFutureTasksInAddTaskPage():void
+    {
+
+    }
+
+    /**
+     * add Task Form
      * @return void
      */
     function taskForm():void

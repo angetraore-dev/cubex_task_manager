@@ -119,7 +119,7 @@ ob_start();?>
                 <div class="row" id="depUserTaskDiv">
 
                     <!-- DIV FOR DEPARTMENT TASK BTN ROW -->
-                    <div class="row justify-content-around departmentTaskDiv">
+                    <div class="row ps-0 justify-content-around departmentTaskDiv">
                         <div class="col-sm-3">
                             <fieldset class="d-flex flex-wrap align-self-start justify-content-around border border-1 pb-2">
                                 <legend  class="float-none w-auto fw-small fs-6 text-uppercase">Department</legend>
@@ -189,9 +189,9 @@ ob_start();?>
 
                                 <button class="btn btn-sm text-uppercase border border-1 text-center" style="text-decoration: none !important; color: #FFFFFF;" type="button">Late</button>
 
-                                <button class="btn btn-sm text-uppercase border border-1 text-center" style="text-decoration: none !important; color: #FFFFFF;" type="button">Today</button>
+                                <button class="btn btn-sm text-uppercase border border-1 text-center" style="text-decoration: none !important; color: #FFFFFF;" type="button" id="viewTodayTasksBtn">Today</button>
 
-                                <button class="btn btn-sm text-uppercase border border-1 text-center" style="text-decoration: none !important; color: #FFFFFF;" type="button">Future</button>
+                                <button type="button" id="futuresTasks-tab" class="btn btn-sm text-uppercase border border-1 text-center" style="text-decoration: none !important; color: #FFFFFF;">Future</button>
 
                             </fieldset>
                         </div>
@@ -239,13 +239,10 @@ ob_start();?>
                 </div>
                 <!-- END Btn DIV-->
 
-                <!-- Form add Task Div -->
-                <div class="col-md-8 mx-auto d-flex justify-content-center align-items-center d-none" id="taskFormDiv"></div>
-
                 <!-- Tasks(title-tasks-checked) Department Responsible - due date-->
                 <div class="row">
                     <!-- All Active Tasks Div -->
-                    <div class="table-responsive activeTaskDiv d-none" id="activeTaskDiv"></div>
+                    <div class="table-responsive allTasksDiv d-none" id="allTasksDiv"></div>
 
                     <!-- Div for Filter Department-User selected -->
                     <div class="row my-2 d-none" id="user-task-table"></div>
@@ -255,75 +252,13 @@ ob_start();?>
                         <button type="button" class="btn btn-success btn-outline-secondary text-white text-center" onclick="return window.location.reload();">REFRESH</button>
                     </div>
                 </div>
-                <!-- Tabs d-none -->
-                <div class="row d-none">
-                    <ul class="nav nav-fill nav-tabs btn" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link active" id="activesTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-activesTasks" role="tab" aria-controls="nav-activesTasks" aria-selected="true"> Actives Tasks </a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="archivedTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-archivedTasks" role="tab" aria-controls="nav-archivedTasks" aria-selected="false"> Archived Tasks </a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="futuresTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-futuresTasks" role="tab" aria-controls="nav-futuresTasks" aria-selected="false"> Today Tasks </a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="inWaitingTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-inWaitingTasks" role="tab" aria-controls="nav-inWaitingTasks" aria-selected="false"> Tasks in Waiting </a>
-                        </li>
-                    </ul>
-                    <div class="tab-content pt-5" id="tab-content">
-                        <!-- Actives Tasks -->
-                        <div class="tab-pane active" id="nav-activesTasks" role="tabpanel" aria-labelledby="nav-activesTasks">
 
-                            <div class="row my-2" id="activesTasksTableDiv">
-                                <div class="table-responsive">
-                                    <!--
-                                    <table class="table table-condensed text-uppercase" id="activesTasksTable">
-                                        <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>id</th>
-                                            <th>task</th>
-                                            <th>checked</th>
-                                            <th>department</th>
-                                            <th>responsible</th>
-                                            <th>due date</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
-                                    -->
-                                </div>
-                            </div>
-                        </div>
-                        <!--ArchivedTasks -->
-                        <div class="tab-pane" id="nav-archivedTasks" role="tabpanel" aria-labelledby="nav-archivedTasks">
-                            <div class="row my-2" id="archivedTableDiv">
-                                <div class="table-responsive">
-                                    <table class="table table-condensed text-uppercase" id="archivedTasksTable">
-                                        <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>id</th>
-                                            <th>task</th>
-                                            <th>due date</th>
-                                            <th>checked</th>
-                                            <th>archived</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
-                                </div>
-                            </div>
+                <!-- Today Tasks Div -->
+                <div class="table-responsive todayTasksDiv d-none" id="todayTasksDiv"></div>
+                <!-- Form add Task Div -->
+                <div class="col-md-8 mx-auto d-flex justify-content-center align-items-center d-none" id="taskFormDiv"></div>
 
-                        </div>
-                        <!--Future Tasks -->
-                        <div class="tab-pane" id="nav-futuresTasks" role="tabpanel" aria-labelledby="nav-futuresTasks">Today and future tasks</div>
-                        <!-- In waiting To check Tasks -->
-                        <div class="tab-pane" id="nav-inWaitingTasks" role="tabpanel" aria-labelledby="nav-inWaitingTasks">In waiting task</div>
 
-                    </div>
-                </div>
 
 
             </div>
@@ -590,3 +525,55 @@ ob_start();?>
 
 <?php $content = ob_get_clean(); ?>
 <?php require_once DOCROOT .'/templates/layout.php';?>
+
+<!--
+<div class="row text-white">
+                    <ul class="nav nav-fill nav-tabs btn" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="activesTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-activesTasks" role="tab" aria-controls="nav-activesTasks" aria-selected="true"> Actives Tasks </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="archivedTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-archivedTasks" role="tab" aria-controls="nav-archivedTasks" aria-selected="false"> Archived Tasks </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="futuresTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-futuresTasks" role="tab" aria-controls="nav-futuresTasks" aria-selected="false"> Today Tasks </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="inWaitingTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-inWaitingTasks" role="tab" aria-controls="nav-inWaitingTasks" aria-selected="false"> Tasks in Waiting </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content pt-5" id="tab-content">
+<div class="tab-pane" id="nav-viewAllTasksBtn" role="tabpanel" aria-labelledby="nav-viewAllTasksBtn">
+
+    <div class="row my-2" id="activesTasksTableDiv">
+        <div class="table-responsive">
+
+            <table class="table table-condensed text-uppercase" id="activesTasksTable">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>id</th>
+                    <th>task</th>
+                    <th>checked</th>
+                    <th>department</th>
+                    <th>responsible</th>
+                    <th>due date</th>
+                </tr>
+                </thead>
+                <tbody><p class="text-center">Yep</p> </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+<div class="tab-pane" id="nav-archivedTasks" role="tabpanel" aria-labelledby="nav-archivedTasks">
+
+
+</div>
+<div class="tab-pane" id="nav-futuresTasks" role="tabpanel" aria-labelledby="nav-futuresTasks">Today and future tasks</div>
+<div class="tab-pane" id="nav-inWaitingTasks" role="tabpanel" aria-labelledby="nav-inWaitingTasks">In waiting task</div>
+
+</div>
+</div>
+-->
+

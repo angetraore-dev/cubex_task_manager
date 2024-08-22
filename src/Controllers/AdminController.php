@@ -262,11 +262,18 @@ class AdminController
                     break;
                 case isset($_POST["activeTasksList"]):
 
-                    $this->task->activeTaskInTaskPage();
+                    $this->task->futureTaskInTaskPage();
 
                     break;
-                case isset($_POST['activeTasksInAddTaskPage2']):
-                    $this->task->activeTasksInAddTaskPage();
+                case isset($_POST['viewAllTasksInAddTaskPage']):
+                    $this->task->viewAllTasksInAddTaskPage();
+
+                    break;
+                case isset($_POST["viewTodayTasksTable"]):
+                    $this->task->viewTodayTasksInAddTaskPage();
+
+                    break;
+                case isset($_POST[""]):
                     break;
                 //default: StaticDb::notFound(); break;
             }
