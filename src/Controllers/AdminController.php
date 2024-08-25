@@ -47,7 +47,6 @@ class AdminController
                     $field = ['libelle' => $item->department_libelle, 'color'=> $item->department_color];
                     $class_name = 'department';
                     $save = $this->database->insert($field, $class_name);
-                    //$save = $this->department->create($field);
                     echo $save;
 
                     break;
@@ -103,9 +102,9 @@ class AdminController
                         $output = "";
                         foreach ($data as $datum){
 
-                            $output .="<li class='dropdown-item list-unstyled' data-id='".$datum->getUserId()."'><p>".$datum->getFullname()."</p></li>";
+                            $output .="<li class='dropdown-item' data-id='".$datum->getUserId()."'><p>".$datum->getFullname()."</p></li>";
                         }
-                        $output .="<li class='dropdown-item list-unstyled alldep' data-id='".$id."'>all department's tasks</li>";
+                        $output .="<li class='dropdown-item alldep' data-id='".$id."'>all department's tasks</li>";
                         echo $output;
                     }else{
                         echo "<li>No records found</li>";
@@ -254,6 +253,14 @@ class AdminController
                     echo $update;
 
                     break;
+                case isset($_POST["checkUser"]):
+                    $data = json_decode($_POST["checkUser"]);
+                    $bit = ($data->check) ? 1 : "0";
+                    $field = ["isChecked" => $bit];
+                    $update = $this->database->update($data->taskId, $field, 'task');
+                    echo $update;
+
+                    break;
                 case isset($_POST["departmentList"]):
 
                     $list = Department::departmentJoinHeader();
@@ -273,8 +280,7 @@ class AdminController
                     $this->task->viewTodayTasksInAddTaskPage();
 
                     break;
-                case isset($_POST[""]):
-                    break;
+
                 //default: StaticDb::notFound(); break;
             }
             //end if $_POST

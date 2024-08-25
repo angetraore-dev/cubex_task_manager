@@ -2,6 +2,10 @@ $(document).ready(function (){
     console.log("angetraore-dev: +225 0507 333 944");
     //refresh div $("#departmentlist").load(location.href+" #departmentlist>*","")
 
+    //Dynamic displayed allTables DIV -->
+    let allTablesDiv = $('#allTables');
+
+
     //stay on tab active on refresh
     $(document).on('click', 'a[data-bs-toggle="tab"]', function (e) {
         try {
@@ -270,46 +274,46 @@ $(document).ready(function (){
         }
     })
 
-    //display task by USER
+    //Dropdown user Filter
+    let userDropdownFilter = $('#userbydepartment-1')
     $(document).on("click", 'li[data-id] a', function (){
         const id = $(this).closest('li').data('id');
-        //display user of the department concerned
+
         $.post({
             url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
             data:{userByDep:id},
             success:function (response) {
-                //console.log(response)
-                $("#userbydepartment-1").html(response);
+                userDropdownFilter.html(response);
             }
         })
-
     })
 
-    //display task table by USER
+    //result of Click On User List in Dropdown user Filter
     $(document).on("click", 'li[data-id] p', function (){
         const userid = $(this).closest('li').data('id');
-        //console.log(userid)
         $.post({
             url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
             data:{userTask:userid},
             success:function (response) {
                 //display table of user's task
-                departmentTaskTableDivInDashboard.load(location.href+" #department-task-table>*","");
-                userTaskTableDivInDashboard.removeClass('d-none').fadeIn().html(response);
+                //departmentTaskTableDivInDashboard.load(location.href+" #department-task-table>*","");
+                //userTaskTableDivInDashboard.removeClass('d-none').fadeIn().html(response);
+                allTablesDiv.removeClass('d-none').fadeIn().html(response)
             }
         })
     })
 
-    //display task table by DEPARTMENT
+    //Result of Click On display task all Department in User Dropdown Filter
     $(document).on('click', 'li.alldep', function (){
         const departmentId = $(this).closest('li').data('id');
         $.post({
             url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
             data:{depTask:departmentId},
             success:function (response){
+                //userTaskTableDivInDashboard.load(location.href+" #user-task-table>*","");
+                //departmentTaskTableDivInDashboard.removeClass('d-none').fadeIn().html(response);
 
-                userTaskTableDivInDashboard.load(location.href+" #user-task-table>*","");
-                departmentTaskTableDivInDashboard.removeClass('d-none').fadeIn().html(response);
+               allTablesDiv.removeClass('d-none').fadeIn().html(response)
                new DataTable(DepartmentTasksTableVeritable);
             }
         })
@@ -470,67 +474,9 @@ $(document).ready(function (){
         }
     })
 
-    //let jip = (document).querySelector('#delTask');
-    //console.log(jip)
 
 
-    //Delete Task
-    $(document).on('click', 'tr button#delTask', function (){
-        //table.row( $button.parents('tr') ).remove().draw(false);
-        let tr = $(this).closest('tr');
-        const taskid = tr.find('#delTask').data('id');
-        toastMixin.fire({
-            icon:"warning",
-            title:"warning",
-            text:"Do you want to delete this task?",
-            showConfirmButton:true,
-            confirmButtonText: "Yes",
-            showCancelButton: true,
-            timer:false,
-            timerProgressBar:false
-        }).then((response)=>{
-            if (response.isConfirmed){
-                let userid = tr.find("#userid").val();
-
-                $.post({
-                    url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
-                    data:{delTask:taskid},
-                    success:function (response) {
-                        if (!response){
-                            toastMixin.fire({
-                                icon:"error",
-                                title:"error",
-                                text:"Something went wrong, please contact the admin"
-                            })
-                        }else {
-                            Toast.fire({
-                                icon:"success",
-                                iconColor: "succes",
-                                text:"Successfull delete"
-                            }).then(() => {
-                                //IMPORTANT TO REVIEW
-                                //table.row( $button.parents('tr') ).remove().draw(false);
-                                $('#activesTasksTable').DataTable().row(tr.parents('tr')).remove().draw(false);
-                                $.post({
-                                    url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
-                                    data:{userTask:userid},
-                                    success:function (response){
-                                        //loader.removeClass('d-none').fadeIn()
-                                        departmentTaskTableDivInDashboard.load(location.href+" #department-task-table>*","");
-                                        //userTaskTableDivInDashboard.load(location.href+ "#user-ask-table>*","")
-                                        userTaskTableDivInDashboard.removeClass('d-none').fadeIn().html(response);
-                                    }
-                                })
-                            })
-                        }
-                    }
-                })
-            }
-        })
-    })
-
-    //first-page-admin Btn and actions
-    //Div Btn Menu
+    //first-page-admin Btn and actions Div Btn Menu
     let firstPageAdminBtnDiv = $('#first-page-admin')
     let menus = document.querySelectorAll('.pageHref');
     let backDiv = $('.backDiv');
@@ -619,45 +565,50 @@ $(document).ready(function (){
     ADD TASK PAGE PROCESS
      */
 
+
     //Active Tasks Process
     //table
     let btnViewAllTasks = $('.viewAllTasksBtn');
-    let activeTasksDivInAddTaskPage = $('.allTasksDiv');
-
-    btnViewAllTasks.click( () => {
+    //let activeTasksDivInAddTaskPage = $('.allTasksDiv');
+    const loadAllTasks = () => {
         $.post({
             url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
             data:{viewAllTasksInAddTaskPage:1},
             success:function (response) {
-                activeTasksDivInAddTaskPage.removeClass('d-none').fadeIn();
-                activeTasksDivInAddTaskPage.html(response)
+                //refresh div before display table requested
+                //$("#allTables").load(location.href +" #allTables >*","")
+                allTablesDiv.removeClass('d-none').fadeIn();
+                allTablesDiv.html(response)
             }
         })
+    }
+    btnViewAllTasks.click( () => {
+        loadAllTasks()
     });
 
-    //Today Tasks Displayed Process
+    //Today Tasks Displayed Process In Add Task Page
     let btnViewTodayTasks = $('#viewTodayTasksBtn');
-    let todayTaskDiv = $('#todayTasksDiv');
-    btnViewTodayTasks.click( () => {
+
+    const loadTodayTasks = () => {
         $.post({
             url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
             data:{viewTodayTasksTable:1},
             success:function (response) {
-                todayTaskDiv.removeClass('d-none').html(response).fadeIn()
+                //$("#allTables").load(location.href +" #allTables >*","")
+                allTablesDiv.removeClass('d-none').fadeIn();
+                allTablesDiv.html(response)
             }
         })
+    }
+    btnViewTodayTasks.click( () => {
+        loadTodayTasks()
     })
-
-
-
-
-
-
 
 
     //Checked by Admin Process
     $(document).on('click', 'tr input[name="admincheckbox"]', function (event) {
         let displayedTable = $(this).closest('tr').data('id');
+        //let work = $(this).closest('tr').attr("class").Object
 
         let obj = {};
         let check = event.currentTarget.checked;
@@ -674,14 +625,18 @@ $(document).ready(function (){
                         text:"something went wrong, please contact the admin"
 
                     }).then( () => {
-                        $("#"+displayedTable).DataTable().draw()
+                        //$("#"+displayedTable).DataTable().draw()
+                       // $("#"+displayedTable).load(location.href +" #"+displayedTable +">*","")
+                        if ($("#"+displayedTable).load(location.href +" #"+displayedTable +">*","")){
+                            console.log("refreshed")
+                        }
                     })
-
                 }else {
                     Toast.fire({
                         text:"Successfull updated"
                     }).then(() => {
-                        $("#"+displayedTable).DataTable().draw()
+                        $("#"+displayedTable).load(location.href +" #"+displayedTable +">*","")
+
                     })
                 }
             }
@@ -689,12 +644,51 @@ $(document).ready(function (){
 
     })
 
-    //Delete Item in All Table Proce
+    //Checked by User Process
+    $(document).on('click', 'tr input[name="usercheckbox"]', function (event) {
+        let displayedTable = $(this).closest('tr').data('id')
+
+        //let work = $(this).closest('tr').attr("class")
+        //console.log(work)
+        let put = {};
+        let check = event.currentTarget.checked;
+        let taskId = event.currentTarget.getAttribute('data-id');
+        put['check'] = check
+        put['taskId'] = taskId
+        $.post({
+            url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+            data:{checkUser:JSON.stringify(put)},
+            success:function (result){
+                if (!result){
+                    toastMixin.fire({
+                        icon:"error",
+                        text:"something went wrong, please contact the admin"
+
+                    }).then( () => {
+                        if ($("#"+displayedTable).load(location.href +" #"+displayedTable +">*","")){
+                            console.log("refreshed")
+                        }
+                    })
+
+                }else {
+                    Toast.fire({
+                        text:"Successfull updated"
+                    }).then(() => {
+                        if ($("#"+displayedTable).load(location.href +" #"+displayedTable +">*","")){
+                            console.log("refreshed")
+                        }
+                    })
+                }
+            }
+        })
+
+    })
+
+    //Delete Task Item in All Table Process
     $(document).on('click', 'tr button.delItem', function (e){
         let displayedtable = $(this).closest('tr').data('id');
         let $button = $(this);
         let taskIdItem = $(this).data('id');
-        //console.log(taskIdItem)
         Toast.fire({
             icon:"warning",
             text:"Do you want to delete this item?",
@@ -735,47 +729,7 @@ $(document).ready(function (){
         })
     })
 
-    //Checkbox process
-    let checkboxAdmins = document.querySelectorAll("#admin");
 
-    Array.from(checkboxAdmins).forEach(checkboxAdmin => {
-        checkboxAdmin.addEventListener('change', (event) => {
-            let obj = {};
-            let check = event.currentTarget.checked;
-            let taskId = event.currentTarget.getAttribute('data-id');
-            obj['check'] = check
-            obj['taskId'] = taskId
-
-            $.post({
-                url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
-                data:{checkAdmin:JSON.stringify(obj)},
-                success:function (response){
-                    if (!response){
-                        toastMixin.fire({
-                            icon:"error",
-                            text:"something went wrong, please contact the admin"
-
-                        }).then(() => {
-                            //theTableActiveTasks.DataTable().remove().draw(false)
-                            $('#viewAllTasksTable').DataTable().draw();
-
-                        })
-
-                    }else {
-                        Toast.fire({
-                            text:"Successfull updated"
-                        }).then(() => {
-                            $('#viewAllTasksTable').DataTable().draw();
-                            //table.row( $button.parents('tr') ).remove().draw(false);
-                            //$('#activesTasksTable').DataTable().draw();
-                            //$("#activeTaskDiv").load(location.href+" #activeTaskDiv>*","")
-                        })
-                    }
-                }
-            })
-
-        })
-    })
 
 
 })

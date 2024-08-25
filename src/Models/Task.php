@@ -378,7 +378,7 @@ class Task
                     $i=1;
                     foreach ($allTasks as $activeList):
                     ?>
-                        <tr data-id="viewAllTasksTable">
+                        <tr class="loadAllTasks" data-id="viewAllTasksTable">
                             <td><?= $i++ .'<br>';
                                 if ($activeList->getFile()){
                                     $item = json_decode($activeList->getFile(), true);
@@ -397,7 +397,7 @@ class Task
                                     <li class="nav-item">
                                         <?php $f = ($activeList->getCreatedAt()) ? new DateTime($activeList->getCreatedAt()) : date('Y-m-d H:i:s');
                                         echo '<p class="fw-small fs-6 text-capitalize mb-1">
-                                title: '.$activeList->getTitle() .
+                                                title: '.$activeList->getTitle() .
                                             '<br>To do: '. $activeList->getTodo()
                                             .'<br>assigned To: "'.$activeList->fullname.
                                             '<br>Created At: ' .$f->format('Y-m-d') .'"</p>';
@@ -406,10 +406,10 @@ class Task
                                 </ul>
                                 <ul class="list-unstyled">
                                     <li>
-                                <span class="d-inline">
-                                    <input type="checkbox" value="<?=$activeList->getIsChecked()?>" <?php echo ($activeList->getIsChecked()) ? 'checked="checked"' : ''?> name="usercheckbox" id="usercheckbox" data-id="<?=$activeList->getTaskId()?>">
-                                    <label class="text-sm" for="usercheckbox">Responsible</label>
-                                </span>
+                                        <span class="d-inline">
+                                            <input type="checkbox" name="usercheckbox" id="usercheckbox" class="usercheckbox" value="<?=$activeList->getIsChecked()?>" <?php echo ($activeList->getIsChecked()) ? 'checked="checked"' : ''?> data-id="<?=$activeList->getTaskId()?>">
+                                            <label class="text-sm" for="usercheckbox">Responsible</label>
+                                        </span>
                                     </li>
                                     <li class="d-inline">
                                         <input type="checkbox" name="admincheckbox" id="admincheckbox"  class="admincheckbox" value="<?=$activeList->getIsCheckedByAdmin()?>" <?php echo ($activeList->getIsCheckedByAdmin()) ? 'checked="checked"' : ''?> data-id="<?=$activeList->getTaskId()?>">
@@ -436,6 +436,7 @@ class Task
         </table>
         <script type="text/javascript">
             $(document).ready(function(){
+
                 $("#viewAllTasksTable").DataTable({
                         "RowId": 0,
                         "searching": true,
@@ -463,6 +464,7 @@ class Task
                             }
                         ]
                     })
+
             })
         </script>
 
@@ -496,7 +498,7 @@ class Task
             $i=1;
             foreach ($todayTasks as $activeList):
                 ?>
-                <tr data-id="viewTodayTasksTable">
+                <tr class="loadTodayTasks" data-id="viewTodayTasksTable">
                     <td><?= $i++ .'<br>';
                         if ($activeList->getFile()){
                             $item = json_decode($activeList->getFile(), true);
@@ -525,7 +527,7 @@ class Task
                         <ul class="list-unstyled">
                             <li>
                                 <span class="d-inline">
-                                    <input type="checkbox" value="<?=$activeList->getIsChecked()?>" <?php echo ($activeList->getIsChecked()) ? 'checked="checked"' : ''?> name="usercheckbox" id="usercheckbox" data-id="<?=$activeList->getTaskId()?>">
+                                    <input type="checkbox" name="usercheckbox" id="usercheckbox" class="usercheckbox" value="<?=$activeList->getIsChecked()?>" <?php echo ($activeList->getIsChecked()) ? 'checked="checked"' : ''?> data-id="<?=$activeList->getTaskId()?>">
                                     <label class="text-sm" for="usercheckbox">Responsible</label>
                                 </span>
                             </li>
@@ -554,6 +556,7 @@ class Task
         </table>
         <script type="text/javascript">
             $(document).ready(function(){
+
                 $('#viewTodayTasksTable').DataTable({
                     "RowId": 0,
                     "searching": true,
@@ -581,6 +584,7 @@ class Task
                         }
                     ]
                 })
+
             })
         </script>
 

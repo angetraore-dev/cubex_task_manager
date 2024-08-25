@@ -226,11 +226,11 @@ ob_start();?>
 
                                 <!-- List of all responsible -->
                                 <div class="dropdown mx-2">
-                                    <button class="btn btn-sm border border-1 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                    <button class="btn btn-sm border border-1 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-autohide="true"
                                             style="text-decoration: none; color: white !important;">
                                         users
                                     </button>
-                                    <ul class="dropdown-menu" id="userbydepartment-1"></ul>
+                                    <ul class="dropdown-menu list-unstyled" id="userbydepartment-1"></ul>
                                 </div>
                             </fieldset>
                         </div>
@@ -241,6 +241,8 @@ ob_start();?>
 
                 <!-- Tasks(title-tasks-checked) Department Responsible - due date-->
                 <div class="row">
+                    <!-- Dynamics displayed all tables -->
+                    <div class="table-responsive allTables d-none" id="allTables"></div>
                     <!-- All Active Tasks Div -->
                     <div class="table-responsive allTasksDiv d-none" id="allTasksDiv"></div>
 
