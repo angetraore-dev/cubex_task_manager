@@ -566,6 +566,18 @@ $(document).ready(function (){
     ADD TASK PAGE PROCESS
      */
 
+    //Refresh and DISPLAY ALl Tables Onclick Event Process
+    const refreshTable = (tableBtn) => {
+        $.post({
+            url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+            data:{viewTasksBtn:tableBtn},
+            success:function (response) {
+                allTablesDiv.removeClass('d-none').fadeIn()
+                allTablesDiv.html(response)
+            }
+        })
+    }
+
     //Display Table : All tasks Btn - Today Task Btn - Late Task Btn - Future Task Btn
     let viewTaskBtns = document.querySelectorAll(".viewTasksBtn");
 
@@ -578,25 +590,19 @@ $(document).ready(function (){
 
                 let func = event.currentTarget.getAttribute('data-id');
 
-                $.post({
-                    url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
-                    data:{viewTasksBtn:func},
-                    success:function (response) {
-                        //$("#allTables").load(location.href +" #allTables >*","")
-                        allTablesDiv.removeClass('d-none').fadeIn()
-                        allTablesDiv.html(response)
-                    }
-                })
+                refreshTable(func)
             })
         })
     }
     displayTasksTableOnClickBtn()
 
 
+
+
     //CheckBoxes Process
     $(document).on('click', 'tr input.checkbox', function (event){
-        let displayedTable = $(this).closest('tr').data('id');
 
+        let displayedTable = $(this).closest('tr').data('id');
         let obj = {};
         let check = event.currentTarget.checked;
         let taskId = event.currentTarget.getAttribute('data-id');
@@ -613,22 +619,14 @@ $(document).ready(function (){
                         text:"something went wrong, please contact the admin"
 
                     }).then( () => {
-                        //$("#"+displayedTable).DataTable().draw()
                         // $("#"+displayedTable).load(location.href +" #"+displayedTable +">*","")
-
-                        $("#"+displayedTable).load(location.href +" #"+displayedTable +">*","")
+                        refreshTable(displayedTable)
                     })
                 }else {
                     Toast.fire({
                         text:"Successfull updated"
                     }).then(() => {
-                        if (new DataTable($('#'+displayedTable))){
-                            console.log("Done")
-                        }else {
-                            console.log("Not Done")
-                        }
-                        //$("#"+displayedTable).load(location.href +" #"+displayedTable +">*","")
-
+                        refreshTable(displayedTable)
                     })
                 }
             }
@@ -639,7 +637,7 @@ $(document).ready(function (){
 
     //Delete Task Item in All Table Process WORK AND REFRESHED TABLE WORK TOO
     $(document).on('click', 'tr button.delItem', function (e){
-        let displayedtable = $(this).closest('tr').data('id');
+        let displayedTable = $(this).closest('tr').data('id');
         let $button = $(this);
         let taskIdItem = $(this).data('id');
         Toast.fire({
@@ -662,7 +660,8 @@ $(document).ready(function (){
                                 text:"Something went wrong",
                                 position:"bottom-end"
                             }).then(() => {
-                                $("#"+displayedtable).DataTable().row($button.parents('tr')).remove().draw(false)
+                                //$("#"+displayedtable).DataTable().row($button.parents('tr')).remove().draw(false)
+                                refreshTable(displayedTable)
                             })
                         }else {
                             Toast.fire({
@@ -670,8 +669,8 @@ $(document).ready(function (){
                                 text:"Successfull deleted",
                                 position:"bottom-end"
                             }).then(() => {
-                                $("#"+displayedtable).DataTable().row($button.parents('tr')).remove().draw(false)
-
+                                //$("#"+displayedtable).DataTable().row($button.parents('tr')).remove().draw(false)
+                                refreshTable(displayedTable)
                             })
 
                         }

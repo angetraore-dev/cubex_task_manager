@@ -284,6 +284,58 @@ class Task
         return StaticDb::getDB()->prepare($sql, [$departmentId], get_called_class(), false);
     }
 
+
+    /**
+     * add Task Form
+     * @return void
+     */
+    function taskForm():void
+    {?>
+        <form class="row g-3 my-4 needs-validation taskForm" id="taskForm" enctype="multipart/form-data" novalidate>
+            <fieldset class="border border-2 fw-bold text-center text-uppercase">
+                <legend  class="float-none w-auto my-3">add task Form</legend>
+            </fieldset>
+            <div class="col-md-4 mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" name="title" id="title" class="form-control" required>
+                <div class="invalid-feedback">Please fill it</div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="todo" class="form-label">Task To do</label>
+                <textarea rows="3" name="todo" id="todo" class="form-control" required></textarea>
+                <div class="invalid-feedback">Write what to do</div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="due_date" class="form-label">Due Date</label>
+                <input type="datetime-local" name="due_date" id="due_date" class="form-control" required>
+                <div class="invalid-feedback"> Select a valid date</div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="userid" class="form-label">Assign</label>
+                <select class="form-select" name="userid" id="userid" required>
+                    <option value="" class="form-control">Choose the responsible</option>
+
+                    <?php $usersList = User::read(); if($usersList) : foreach ($usersList as $user): ?>
+                        <option class="form-control" value="<?=$user->getUserId()?>"><?=$user->getFullname()?></option>
+                    <?php endforeach; else: echo "<p class='text-center text-muted'>No user Records found !</p>";?>
+                    <?php endif;?>
+
+                </select>
+                <div class="invalid-feedback">Please assign task to a user</div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="file" class="form-label">File</label>
+                <input type="file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" name="file[]" id="file" class="form-control" multiple="multiple">
+            </div>
+            <div class="text-end mb-3">
+                <button type="button" class="btn btn-sm btn-secondary closeTaskFormBtn">Cancel</button>
+                <button type="button" class="btn btn-sm btn-primary sendTaskFormBtn">create</button>
+            </div>
+        </form>
+        <?php
+    }
+
     /**
      * Get active task in Task Page
      * @return void
@@ -355,15 +407,15 @@ class Task
     }
 
     /**
-     * Active tasks in add Task Page
+     * Active tasks in ADD Task Page
      * @return void
      */
     function viewAllTasksInAddTaskPage():void
     {
         $allTasks = self::allTasks();
         ?>
-            <div class="" id="">
-                <h4 class="text-center text-uppercase my-4">All Tasks Table</h4>
+            <div id="viewAllTasksTableDiv">
+                <h4 class="text-center text-uppercase my-4 fw-small text-sm">All Tasks Table</h4>
                 <table class="table table-condensed table-dark text-light text-capitalize viewAllTasksTable" id="viewAllTasksTable">
                     <thead>
                     <tr>
@@ -378,8 +430,8 @@ class Task
                     <?php
                     $i=1;
                     foreach ($allTasks as $allList):
-                        ?>
-                        <tr data-id="viewAllTasksTable">
+                        ?><!--viewAllTasksInAddTaskPage -->
+                        <tr data-id="viewAllTasksInAddTaskPage" <?php echo ($allList->getIsChecked() && $allList->getIsCheckedByAdmin()) ? 'disabled="disabled"' : ''?>>
                             <td><?= $i++ .'<br>';
                                 if ($allList->getFile()){
                                     $item = json_decode($allList->getFile(), true);
@@ -458,11 +510,8 @@ class Task
                         ],
                         "columnDefs":[
                             {
-                                "target":0,
-                                "searchable":true
-                            },
-                            {
                                 "target":1,
+                                "searchable":false,
                                 "visible":false
                             }
                         ]
@@ -484,7 +533,7 @@ class Task
         $f = $date->format('d F Y');
         ?>
             <div id="viewTodayTasksTableDiv">
-                <h4 class="text-center text-uppercase my-4 fw-small">Today Tasks Table ( <?= $f?> )</h4>
+                <h4 class="text-center text-uppercase my-4 fw-small text-sm">Today Tasks Table ( <?= $f?> )</h4>
                 <table class="table table-condensed table-dark text-light text-capitalize viewTodayTasksTable" id="viewTodayTasksTable">
                     <thead>
                     <tr>
@@ -499,8 +548,8 @@ class Task
                     <?php
                     $i=1;
                     foreach ($todayTasks as $activeList):
-                        ?>
-                        <tr data-id="viewTodayTasksTable">
+                        ?><!-- viewTodayTasksTable-->
+                        <tr data-id="viewTodayTasksInAddTaskPage">
                             <td><?= $i++ .'<br>';
                                 if ($activeList->getFile()){
                                     $item = json_decode($activeList->getFile(), true);
@@ -599,7 +648,7 @@ class Task
         $lateTasks = self::lateOnDelivery();
         ?>
             <div class="viewLateTasksTableDiv">
-                <h3 class="text-center text-uppercase my-4">Late Tasks Table</h3>
+                <h3 class="text-center text-uppercase my-4 fw-small text-sm">Late Tasks Table</h3>
                     <table class="table table-condensed table-dark text-light text-capitalize viewLateTasksTable" id="viewLateTasksTable">
                         <thead>
                         <tr>
@@ -614,8 +663,8 @@ class Task
                         <?php
                         $i=1;
                         foreach ($lateTasks as $lateList):
-                            ?>
-                            <tr data-id="viewLateTasksTable">
+                            ?><!--viewLateTasksTable-->
+                            <tr data-id="viewLateTasksInAddTaskPage">
                                 <td><?= $i++ .'<br>';
                                     if ($lateList->getFile()){
                                         $item = json_decode($lateList->getFile(), true);
@@ -693,6 +742,7 @@ class Task
                 "columnDefs":[
                     {
                         "target":1,
+                        "searchable":false,
                         "visible":false
                     }
                 ]
@@ -710,7 +760,7 @@ class Task
         $futureTasks = self::futureTasks();
         ?>
             <div class="viewFutureTasksTableDiv">
-            <h4 class="text-center text-uppercase my-4">Future Tasks Table</h4>
+            <h4 class="text-center text-uppercase my-4 fw-small text-sm">Future Tasks Table</h4>
             <table class="table table-condensed table-dark text-light text-capitalize viewFutureTasksTable" id="viewFutureTasksTable">
                 <thead>
                 <tr>
@@ -725,8 +775,8 @@ class Task
                 <?php
                 $i=1;
                 foreach ($futureTasks as $futureList):
-                    ?>
-                    <tr data-id="viewFutureTasksTable">
+                    ?><!--viewFutureTasksTable -->
+                    <tr data-id="viewFutureTasksInAddTaskPage">
                         <td><?= $i++ .'<br>';
                             if ($futureList->getFile()){
                                 $item = json_decode($futureList->getFile(), true);
@@ -804,6 +854,7 @@ class Task
                 "columnDefs":[
                     {
                         "target":1,
+                        "searchable":false,
                         "visible":false
                     }
                 ]
@@ -812,56 +863,6 @@ class Task
         <?php
     }
 
-    /**
-     * add Task Form
-     * @return void
-     */
-    function taskForm():void
-    {?>
-        <form class="row g-3 my-4 needs-validation taskForm" id="taskForm" enctype="multipart/form-data" novalidate>
-            <fieldset class="border border-2 fw-bold text-center text-uppercase">
-                <legend  class="float-none w-auto my-3">add task Form</legend>
-            </fieldset>
-            <div class="col-md-4 mb-3">
-                    <label for="title" class="form-label">Title</label>
-                    <input type="text" name="title" id="title" class="form-control" required>
-                    <div class="invalid-feedback">Please fill it</div>
-                </div>
-            <div class="col-md-4 mb-3">
-                    <label for="todo" class="form-label">Task To do</label>
-                    <textarea rows="3" name="todo" id="todo" class="form-control" required></textarea>
-                    <div class="invalid-feedback">Write what to do</div>
-                </div>
-            <div class="col-md-4 mb-3">
-                    <label for="due_date" class="form-label">Due Date</label>
-                    <input type="datetime-local" name="due_date" id="due_date" class="form-control" required>
-                    <div class="invalid-feedback"> Select a valid date</div>
-                </div>
-
-            <div class="col-md-6 mb-3">
-                    <label for="userid" class="form-label">Assign</label>
-                    <select class="form-select" name="userid" id="userid" required>
-                        <option value="" class="form-control">Choose the responsible</option>
-
-                    <?php $usersList = User::read(); if($usersList) : foreach ($usersList as $user): ?>
-                    <option class="form-control" value="<?=$user->getUserId()?>"><?=$user->getFullname()?></option>
-                    <?php endforeach; else: echo "<p class='text-center text-muted'>No user Records found !</p>";?>
-                    <?php endif;?>
-
-                    </select>
-                    <div class="invalid-feedback">Please assign task to a user</div>
-                </div>
-            <div class="col-md-6 mb-3">
-                    <label for="file" class="form-label">File</label>
-                    <input type="file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" name="file[]" id="file" class="form-control" multiple="multiple">
-                </div>
-            <div class="text-end mb-3">
-                    <button type="button" class="btn btn-sm btn-secondary closeTaskFormBtn">Cancel</button>
-                    <button type="button" class="btn btn-sm btn-primary sendTaskFormBtn">create</button>
-                </div>
-        </form>
-    <?php
-    }
 
 
 }
