@@ -111,6 +111,7 @@ class AdminController
                     }
 
                     break;
+                    //deptask and userTASK MUST BE REVIEW
                 case isset($_POST["depTask"]):
 
                     $departmentId = $_POST["depTask"];
@@ -244,20 +245,15 @@ class AdminController
                     echo $del;
 
                     break;
-                case isset($_POST["checkAdmin"]):
+                case isset($_POST["checkedd"]):
 
-                    $data = json_decode($_POST["checkAdmin"]);
+                    $data = json_decode($_POST["checkedd"]);
                     $bit = ($data->check) ? 1 : "0";
-                    $field = ["isCheckedByAdmin" => $bit];
-                    $update = $this->database->update($data->taskId, $field, 'task');
-                    echo $update;
-
-                    break;
-                case isset($_POST["checkUser"]):
-                    $data = json_decode($_POST["checkUser"]);
-                    $bit = ($data->check) ? 1 : "0";
-                    $field = ["isChecked" => $bit];
-                    $update = $this->database->update($data->taskId, $field, 'task');
+                    $val = explode("_", $data->taskId);
+                    $taskId = $val[0];
+                    $field = $val[1];
+                    $arr = ["$field" => $bit];
+                    $update = $this->database->update($taskId, $arr, 'task');
                     echo $update;
 
                     break;
@@ -272,12 +268,18 @@ class AdminController
                     $this->task->futureTaskInTaskPage();
 
                     break;
-                case isset($_POST['viewAllTasksInAddTaskPage']):
-                    $this->task->viewAllTasksInAddTaskPage();
+                case isset($_POST["viewTasksBtn"]):
+                //This case is for display tasks onclick on View all tasks - today task - late task and future task Btn
+                    $func = $_POST["viewTasksBtn"];
 
-                    break;
-                case isset($_POST["viewTodayTasksTable"]):
-                    $this->task->viewTodayTasksInAddTaskPage();
+                    if ( method_exists(Task::class, $func) ){
+
+                        $this->task->{$func}();
+
+                    }else{
+
+                        StaticDb::notFound();
+                    }
 
                     break;
 

@@ -155,7 +155,8 @@ ob_start();?>
                     <div class="row justify-content-around">
                         <div class="col-sm-3 mb-4">
                             <div class="d-flex flex-wrap align-self-center justify-content-around pb-2">
-                                <button id="viewAllTasksBtn" class="viewAllTasksBtn btn btn-sm btn-outline-success text-uppercase border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
+                                <!-- id=viewAllTasksBtn class=viewAllTasksBtn-->
+                                <button type="button" data-id="viewAllTasksInAddTaskPage"  class="btn btn-sm btn-outline-success text-uppercase border border-1 viewTasksBtn" style="text-decoration: none !important; color: #FFFFFF;">
                                     View all tasks
                                 </button>
                             </div>
@@ -187,11 +188,11 @@ ob_start();?>
                             <fieldset class="d-flex flex-wrap justify-content-around align-content-around border border-1 pb-2">
                                 <legend  class="float-none w-auto fw-small fs-6 text-uppercase">tasks Btn</legend>
 
-                                <button class="btn btn-sm text-uppercase border border-1 text-center" style="text-decoration: none !important; color: #FFFFFF;" type="button">Late</button>
+                                <button type="button" data-id="viewLateTasksInAddTaskPage"  class="btn btn-sm text-uppercase border border-1 text-center viewTasksBtn" style="text-decoration: none !important; color: #FFFFFF;">Late</button>
 
-                                <button class="btn btn-sm text-uppercase border border-1 text-center" style="text-decoration: none !important; color: #FFFFFF;" type="button" id="viewTodayTasksBtn">Today</button>
+                                <button type="button" data-id="viewTodayTasksInAddTaskPage" class="btn btn-sm text-uppercase border border-1 text-center viewTasksBtn" style="text-decoration: none !important; color: #FFFFFF;">Today</button>
 
-                                <button type="button" id="futuresTasks-tab" class="btn btn-sm text-uppercase border border-1 text-center" style="text-decoration: none !important; color: #FFFFFF;">Future</button>
+                                <button type="button" data-id="viewFutureTasksInAddTaskPage" class="btn btn-sm text-uppercase border border-1 text-center viewTasksBtn" style="text-decoration: none !important; color: #FFFFFF;">Future</button>
 
                             </fieldset>
                         </div>

@@ -561,63 +561,51 @@ $(document).ready(function (){
         })
     }
     loadActiveTasks();
+
     /*
     ADD TASK PAGE PROCESS
      */
 
+    //Display Table : All tasks Btn - Today Task Btn - Late Task Btn - Future Task Btn
+    let viewTaskBtns = document.querySelectorAll(".viewTasksBtn");
 
-    //Active Tasks Process
-    //table
-    let btnViewAllTasks = $('.viewAllTasksBtn');
-    //let activeTasksDivInAddTaskPage = $('.allTasksDiv');
-    const loadAllTasks = () => {
-        $.post({
-            url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
-            data:{viewAllTasksInAddTaskPage:1},
-            success:function (response) {
-                //refresh div before display table requested
-                //$("#allTables").load(location.href +" #allTables >*","")
-                allTablesDiv.removeClass('d-none').fadeIn();
-                allTablesDiv.html(response)
-            }
+    const displayTasksTableOnClickBtn = () => {
+        'use-strict'
+
+        Array.from(viewTaskBtns).forEach(viewTaskBtn => {
+
+            viewTaskBtn.addEventListener('click', (event) => {
+
+                let func = event.currentTarget.getAttribute('data-id');
+
+                $.post({
+                    url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+                    data:{viewTasksBtn:func},
+                    success:function (response) {
+                        //$("#allTables").load(location.href +" #allTables >*","")
+                        allTablesDiv.removeClass('d-none').fadeIn()
+                        allTablesDiv.html(response)
+                    }
+                })
+            })
         })
     }
-    btnViewAllTasks.click( () => {
-        loadAllTasks()
-    });
-
-    //Today Tasks Displayed Process In Add Task Page
-    let btnViewTodayTasks = $('#viewTodayTasksBtn');
-
-    const loadTodayTasks = () => {
-        $.post({
-            url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
-            data:{viewTodayTasksTable:1},
-            success:function (response) {
-                //$("#allTables").load(location.href +" #allTables >*","")
-                allTablesDiv.removeClass('d-none').fadeIn();
-                allTablesDiv.html(response)
-            }
-        })
-    }
-    btnViewTodayTasks.click( () => {
-        loadTodayTasks()
-    })
+    displayTasksTableOnClickBtn()
 
 
-    //Checked by Admin Process
-    $(document).on('click', 'tr input[name="admincheckbox"]', function (event) {
+    //CheckBoxes Process
+    $(document).on('click', 'tr input.checkbox', function (event){
         let displayedTable = $(this).closest('tr').data('id');
-        //let work = $(this).closest('tr').attr("class").Object
 
         let obj = {};
         let check = event.currentTarget.checked;
         let taskId = event.currentTarget.getAttribute('data-id');
         obj['check'] = check
         obj['taskId'] = taskId
+
         $.post({
             url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
-            data:{checkAdmin:JSON.stringify(obj)},
+            data:{checkedd:JSON.stringify(obj)},
             success:function (response){
                 if (!response){
                     toastMixin.fire({
@@ -626,57 +614,21 @@ $(document).ready(function (){
 
                     }).then( () => {
                         //$("#"+displayedTable).DataTable().draw()
-                       // $("#"+displayedTable).load(location.href +" #"+displayedTable +">*","")
-                        if ($("#"+displayedTable).load(location.href +" #"+displayedTable +">*","")){
-                            console.log("refreshed")
-                        }
-                    })
-                }else {
-                    Toast.fire({
-                        text:"Successfull updated"
-                    }).then(() => {
+                        // $("#"+displayedTable).load(location.href +" #"+displayedTable +">*","")
+
                         $("#"+displayedTable).load(location.href +" #"+displayedTable +">*","")
-
                     })
-                }
-            }
-        })
-
-    })
-
-    //Checked by User Process
-    $(document).on('click', 'tr input[name="usercheckbox"]', function (event) {
-        let displayedTable = $(this).closest('tr').data('id')
-
-        //let work = $(this).closest('tr').attr("class")
-        //console.log(work)
-        let put = {};
-        let check = event.currentTarget.checked;
-        let taskId = event.currentTarget.getAttribute('data-id');
-        put['check'] = check
-        put['taskId'] = taskId
-        $.post({
-            url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
-            data:{checkUser:JSON.stringify(put)},
-            success:function (result){
-                if (!result){
-                    toastMixin.fire({
-                        icon:"error",
-                        text:"something went wrong, please contact the admin"
-
-                    }).then( () => {
-                        if ($("#"+displayedTable).load(location.href +" #"+displayedTable +">*","")){
-                            console.log("refreshed")
-                        }
-                    })
-
                 }else {
                     Toast.fire({
                         text:"Successfull updated"
                     }).then(() => {
-                        if ($("#"+displayedTable).load(location.href +" #"+displayedTable +">*","")){
-                            console.log("refreshed")
+                        if (new DataTable($('#'+displayedTable))){
+                            console.log("Done")
+                        }else {
+                            console.log("Not Done")
                         }
+                        //$("#"+displayedTable).load(location.href +" #"+displayedTable +">*","")
+
                     })
                 }
             }
@@ -684,7 +636,8 @@ $(document).ready(function (){
 
     })
 
-    //Delete Task Item in All Table Process
+
+    //Delete Task Item in All Table Process WORK AND REFRESHED TABLE WORK TOO
     $(document).on('click', 'tr button.delItem', function (e){
         let displayedtable = $(this).closest('tr').data('id');
         let $button = $(this);
@@ -728,7 +681,6 @@ $(document).ready(function (){
             }
         })
     })
-
 
 
 
