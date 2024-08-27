@@ -275,6 +275,7 @@ $(document).ready(function (){
     })
 
 
+
     //Dropdown user Filter
     let userDropdownFilter = $('#userbydepartment-1')
     $(document).on("click", 'li[data-id] a', function (){
@@ -486,6 +487,14 @@ $(document).ready(function (){
         }
     })
 
+    let addBtns = document.querySelectorAll(".addBtn");
+    Array.from(addBtns).forEach(addBtn => {
+        addBtn.addEventListener('click', event => {
+            let func = event.currentTarget.getAttribute('data-id')
+            console.log(func)
+        })
+    })
+
 
 
     //first-page-admin Btn and actions Div Btn Menu
@@ -591,6 +600,7 @@ $(document).ready(function (){
     }
 
     //Display Table : All tasks Btn - Today Task Btn - Late Task Btn - Future Task Btn
+
     let viewTaskBtns = document.querySelectorAll(".viewTasksBtn");
     const displayTasksTableOnClickBtn = () => {
         'use-strict'
@@ -606,6 +616,7 @@ $(document).ready(function (){
     displayTasksTableOnClickBtn()
 
     //CheckBoxes Process
+
     $(document).on('click', 'tr input.checkbox', function (event){
 
         let displayedTable = $(this).closest('tr').data('id');
@@ -641,6 +652,7 @@ $(document).ready(function (){
     })
 
     //Delete Task Item in All Table Process WORK AND REFRESHED TABLE WORK TOO
+
     $(document).on('click', 'tr button.delItem', function (e){
         let displayedTable = $(this).closest('tr').data('id');
         let taskIdItem = $(this).data('id');
@@ -685,6 +697,7 @@ $(document).ready(function (){
     })
 
     //Get Department List to display in Add Task Page Dropdown Filter
+
     let departmentDropdownContainer = $('#receiveDepartmentList');
     const allDepartmentsListForDropdownFilter = () => {
 
@@ -697,10 +710,15 @@ $(document).ready(function (){
         })
     }
 
-    //Display Department List in Filter Dropdown On demand *Click on
+    //Display Department List in Filter Dropdown On demand OnClick
+
     $(document).on('click', 'div .departmentListFilter', function (){
         allDepartmentsListForDropdownFilter()
     })
 
+    //Review Add Department Delete department add User delete User add Task delete task
+    $(".modal").on('shown.bs.modal', function() {
+        $('.modal-backdrop').css('background-color', '#00000073 !important');
+    });
 
 })

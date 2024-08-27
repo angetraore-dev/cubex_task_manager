@@ -124,13 +124,13 @@ ob_start();?>
                             <fieldset class="d-flex flex-wrap align-self-start justify-content-around border border-1 pb-2">
                                 <legend  class="float-none w-auto fw-small fs-6 text-uppercase">Department</legend>
 
-                                <button data-bs-toggle="modal" data-bs-target="#addDepartment" id="add-dep" class="addDepartment btn btn-sm btn-outline-success text-uppercase border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
+                                <button data-bs-toggle="modal" data-bs-target="#addDepartment" id="add-dep" data-id="addDepartmentForm" class="addBtn btn btn-sm btn-outline-success text-uppercase border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill mx-4" viewBox="0 0 16 16">
                                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
                                     </svg>
                                 </button>
-                                <button data-bs-toggle="modal" data-bs-target="#delDep" class="delDep btn btn-sm text-uppercase btn-outline-danger border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
+                                <button data-bs-toggle="modal" data-bs-target="#delDep" data-id="delDepartmentForm" class="delDep delBtn btn btn-sm text-uppercase btn-outline-danger border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill mx-4" viewBox="0 0 16 16">
                                         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
                                     </svg>
@@ -140,7 +140,7 @@ ob_start();?>
                         <div class="col-sm-3">
                             <fieldset class="d-flex flex-wrap align-self-center justify-content-around pb-2">
                                 <legend  class="float-none w-auto fw-small fs-6 text-uppercase mx-auto">add task</legend>
-                                <button type="button" id="addTaskBtn" class="add-user btn btn-sm btn-outline-success text-uppercase border-success mb-1">
+                                <button type="button" id="addTaskBtn" data-id="addTaskForm" class="add-user addBtn btn btn-sm btn-outline-success text-uppercase border-success mb-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill mx-4" viewBox="0 0 16 16">
                                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
@@ -169,13 +169,13 @@ ob_start();?>
                         <div class="col-sm-3 mb-4">
                             <fieldset class="d-flex flex-wrap align-self-center justify-content-around border border-1 pb-2">
                                 <legend  class="float-none w-auto fw-small fs-6 text-uppercase">User</legend>
-                                <button data-bs-toggle="modal" data-bs-target="#addUser" id="add-user" class="addUser btn btn-sm btn-outline-success text-uppercase border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
+                                <button data-bs-toggle="modal" data-bs-target="#addUser" data-id="addUserForm" id="add-user" class="addUser addBtn btn btn-sm btn-outline-success text-uppercase border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill mx-4" viewBox="0 0 16 16">
                                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
                                     </svg>
                                 </button>
-                                <button data-bs-toggle="modal" data-bs-target="#delUser" class="delUser btn btn-sm text-uppercase btn-outline-danger border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
+                                <button data-bs-toggle="modal" data-bs-target="#delUser" data-id="delUserForm" class="delUser delBtn btn btn-sm text-uppercase btn-outline-danger border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill mx-4" viewBox="0 0 16 16">
                                         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
                                     </svg>
@@ -194,7 +194,8 @@ ob_start();?>
 
                                 <button type="button" data-id="viewFutureTasksInAddTaskPage" class="btn btn-sm text-uppercase border border-1 text-center viewTasksBtn" style="text-decoration: none !important; color: #FFFFFF;">Future</button>
 
-                                <button type="button" data-id="viewInWaitingTasksInAddTaskPage" class="btn btn-sm text-uppercase border border-1 text-center viewTasksBtn" style="text-decoration: none !important; color: #FFFFFF;">Waiting <span class="badge text-bg-secondary">1</span> </button>
+                                <!--<span class="badge text-bg-secondary">1</span>-->
+                                <button type="button" data-id="viewInWaitingTasksInAddTaskPage" class="btn btn-sm text-uppercase border border-1 text-center viewTasksBtn" style="text-decoration: none !important; color: #FFFFFF;">Waiting </button>
 
                             </fieldset>
                         </div>
@@ -518,55 +519,4 @@ ob_start();?>
 
 <?php $content = ob_get_clean(); ?>
 <?php require_once DOCROOT .'/templates/layout.php';?>
-
-<!--
-<div class="row text-white">
-                    <ul class="nav nav-fill nav-tabs btn" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link active" id="activesTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-activesTasks" role="tab" aria-controls="nav-activesTasks" aria-selected="true"> Actives Tasks </a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="archivedTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-archivedTasks" role="tab" aria-controls="nav-archivedTasks" aria-selected="false"> Archived Tasks </a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="futuresTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-futuresTasks" role="tab" aria-controls="nav-futuresTasks" aria-selected="false"> Today Tasks </a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="inWaitingTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-inWaitingTasks" role="tab" aria-controls="nav-inWaitingTasks" aria-selected="false"> Tasks in Waiting </a>
-                        </li>
-                    </ul>
-                    <div class="tab-content pt-5" id="tab-content">
-<div class="tab-pane" id="nav-viewAllTasksBtn" role="tabpanel" aria-labelledby="nav-viewAllTasksBtn">
-
-    <div class="row my-2" id="activesTasksTableDiv">
-        <div class="table-responsive">
-
-            <table class="table table-condensed text-uppercase" id="activesTasksTable">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>id</th>
-                    <th>task</th>
-                    <th>checked</th>
-                    <th>department</th>
-                    <th>responsible</th>
-                    <th>due date</th>
-                </tr>
-                </thead>
-                <tbody><p class="text-center">Yep</p> </tbody>
-            </table>
-
-        </div>
-    </div>
-</div>
-<div class="tab-pane" id="nav-archivedTasks" role="tabpanel" aria-labelledby="nav-archivedTasks">
-
-
-</div>
-<div class="tab-pane" id="nav-futuresTasks" role="tabpanel" aria-labelledby="nav-futuresTasks">Today and future tasks</div>
-<div class="tab-pane" id="nav-inWaitingTasks" role="tabpanel" aria-labelledby="nav-inWaitingTasks">In waiting task</div>
-
-</div>
-</div>
--->
 

@@ -71,6 +71,7 @@ class AdminController
 
                     break;
                 case isset($_POST["deleteUser"]):
+                    //Must be Review
 
                     $data = json_decode($_POST["deleteUser"]);
                     foreach ($data as $key => $value){
@@ -80,11 +81,14 @@ class AdminController
 
                     break;
                 case isset($_POST["delDepForm"]):
+                    //Must be review
 
                     $this->department->delGrpedForm();
 
                     break;
+
                 case isset($_POST["deleteDepartment"]):
+                    //Delete Department must be review
 
                     $data = json_decode($_POST["deleteDepartment"]);
                     $del = 0;
@@ -94,6 +98,7 @@ class AdminController
                     echo $del;
 
                     break;
+
                 case isset($_POST["userByDep"]):
                     //Display Department User's List in User Dropdown Filter
 
@@ -101,6 +106,7 @@ class AdminController
                     $this->user->displayUserListByDepartment($id);
 
                     break;
+
                 case isset($_POST["displayDepartmentTaskOnDropdownClick"]):
                     //Display Departments List on Department Dropdown Filter Clicked
 
@@ -116,12 +122,14 @@ class AdminController
 
                     break;
                 case isset($_POST["taskBtn"]):
+
                     //Display Task Form Modal
                     $this->task->taskForm();
 
                     break;
                 case isset($_POST["delTask"]):
                     //Delete Task in any table
+
                     $identifier = $_POST["delTask"];
                     $del = $this->database->delete($identifier, 'task');
                     echo $del;
@@ -161,10 +169,11 @@ class AdminController
                     break;
                 case isset($_POST["viewTasksBtn"]):
                 //This case is for display tasks onclick on View all tasks - today task - late task and future task Btn
+
                     $func = $_POST["viewTasksBtn"];
                     $ex = explode("_", $func);
 
-                    if ($ex[1]){
+                    if (isset($ex[1])){
                         $method = $ex[0];
                         $args = $ex[1];
 
@@ -191,7 +200,6 @@ class AdminController
 
                     }
 
-
                     break;
 
                 //default: StaticDb::notFound(); break;
@@ -200,6 +208,9 @@ class AdminController
         }
     }
 
+    /**
+     * @return void
+     */
     public function addtaskRequest():void
     {
         $arrFiles = $_FILES['file'];
@@ -243,6 +254,7 @@ class AdminController
             'file' => $fileData
         ];
         $createTask = $this->database->insert($field, 'task');
+
         echo $createTask;
     }
 

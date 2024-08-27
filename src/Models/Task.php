@@ -348,12 +348,11 @@ class Task
      */
     function futureTaskInTaskPage():void
     {
-        $tasksActive = self::futureTasks();
+        $tasksActive = self::lateOnDelivery();
         $total = count($tasksActive);
-
+        if ($tasksActive) :
         for ($i = 0; $i < $total; $i++):   ?>
          <div class="col-lg-4 p-1" style="border-right: gold 1px solid">
-
              <!-- Item -->
              <div class="col d-flex mb-1">
                  <span class="p-2 me-1" style="border: white 1px solid !important;"></span>
@@ -409,7 +408,7 @@ class Task
                  </div>
              </div>
          </div>
-     <?php endfor;
+     <?php endfor; else: echo '<div class="row my-4"><p class="text-center">No future tasks found</p></div>'; endif;
     }
 
 
@@ -1050,9 +1049,6 @@ class Task
     {
         $uList = self::countDistinctUserTaskByJoinDepartment($departmentId);
         $departmentTasks = self::findTaskByJoinDepartment($departmentId);
-        //var_dump($uList);
-        //echo '<hr>';
-        //var_dump($departmentTasks);
         if ($departmentTasks) :
     ?>
         <div id="DepartmentTasksTableDiv">
@@ -1142,6 +1138,7 @@ class Task
         </div>
 
         <script type="text/javascript">
+
             $('#DepartmentTasksTable').DataTable({
                 "RowId": 0,
                 "searching": true,
@@ -1188,10 +1185,14 @@ class Task
         endif;
     }
 
+    /**
+     * @param $userId
+     * @return void
+     * @throws \Exception
+     */
     function userTasksTableOnClickUserListInDropdownFilter($userId):void
     {
         $userTasks = Task::findByUserId($userId);
-        //var_dump($userTasks);
         if ($userTasks):
         ?>
             <div id="userTaskTableDiv">

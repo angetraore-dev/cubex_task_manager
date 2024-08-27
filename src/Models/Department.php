@@ -124,13 +124,22 @@ class Department
     }
 
     /**
+     * @param int $departementId
+     * @return array|false|mixed
+     */
+    public static function getAllUserInOneDepartment(int $departementId): mixed
+    {
+        $req = "SELECT * JOIN user u on d.department_id = u.department WHERE d.department_id = ?";
+        return StaticDb::getDB()->prepare($req, [$departementId], get_called_class());
+    }
+
+    /**
      * @return void
      */
     public function delGrpedForm():void
     {
         $list = self::readAll(); if ($list):
         ?>
-
         <form class="row g-3 needs-validation delgped-dep" novalidate>
             <?php foreach ($list as $item): ?>
                 <div class="input-group <?=$item->getDepartmentId()?>">
@@ -142,17 +151,7 @@ class Department
             <button type="button" class="btn btn-secondary cancelDelGpedDep" data-bs-dismiss="modal">cancel</button>
             <button type="button" id="delGpedDep" name="delGpedDep" class="btn btn-primary">delete</button>
         </form>
-        <?php else: echo "<p class='text-muted text-center'>No data found</p>"; endif;
-    }
-
-    /**
-     * @param int $departementId
-     * @return array|false|mixed
-     */
-    public static function getAllUserInOneDepartment(int $departementId): mixed
-    {
-        $req = "SELECT * JOIN user u on d.department_id = u.department WHERE d.department_id = ?";
-        return StaticDb::getDB()->prepare($req, [$departementId], get_called_class());
+    <?php else: echo "<p class='text-muted text-center'>No data found</p>"; endif;
     }
 
 }
