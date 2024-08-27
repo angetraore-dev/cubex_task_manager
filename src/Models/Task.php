@@ -1158,24 +1158,29 @@ class Task
                 ]
             })
 
-            let smallTables = document.querySelectorAll("#smallTable")
-            Array.from(smallTables).forEach(smallTable => {
-                let  opts = {
-                    "RowId": 0,
-                    "searching": true,
-                    "paging":true,
-                    "pageLength": 2,
-                    "orderable":true,
-                    "order": [[0, 'asc']],
-                    "autoWidth": false,
-                    "selected": true,
-                    "columns":[
-                        {"data":0},
-                        {"data":1}
-                    ]
-                }
-                new DataTable(smallTable, opts);
+            $(document).ready(() => {
+                'use-strict'
+
+                const smallTables = document.querySelectorAll("#smallTable")
+                Array.from(smallTables).forEach(smallTable => {
+                    let  opts = {
+                        "RowId": 0,
+                        "searching": true,
+                        "paging":true,
+                        "pageLength": 2,
+                        "orderable":true,
+                        "order": [[0, 'asc']],
+                        "autoWidth": false,
+                        "selected": true,
+                        "columns":[
+                            {"data":0},
+                            {"data":1}
+                        ]
+                    }
+                    new DataTable(smallTable, opts);
+                })
             })
+
         </script>
 
     <?php
