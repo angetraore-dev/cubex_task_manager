@@ -284,6 +284,12 @@ class Task
         return StaticDb::getDB()->prepare($sql, [$departmentId], get_called_class(), false);
     }
 
+    public static function countDistinctUserTaskByJoinDepartment($departmentId):mixed
+    {
+        $sql = "SELECT task_id, title, todo, due_date, created_at, isChecked, isArchived, userid, isCheckedByAdmin, file, u.fullname, d.color, d.libelle, d.department_id FROM task INNER JOIN user u on u.user_id = task.userid INNER JOIN department d on d.department_id = u.department WHERE u.department = ? GROUP BY u.fullname";
+        return StaticDb::getDB()->prepare($sql, [$departmentId], get_called_class(), false);
+    }
+
 
     /**
      * add Task Form
@@ -1042,8 +1048,11 @@ class Task
      */
     function departmentTasksListInDropdownFilter($departmentId):void
     {
+        $uList = self::countDistinctUserTaskByJoinDepartment($departmentId);
         $departmentTasks = self::findTaskByJoinDepartment($departmentId);
-        var_dump($departmentTasks);
+        //var_dump($uList);
+        //echo '<hr>';
+        //var_dump($departmentTasks);
         if ($departmentTasks) :
     ?>
         <div id="DepartmentTasksTableDiv">
@@ -1056,64 +1065,79 @@ class Task
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>id</th>
-                    <th>Tasks</th>
+                    <th>Responsible</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <?php $i=1; foreach ($departmentTasks as $taskdepartment): ?>
-                    <tr data-id="departmentTasksListInDropdownFilter_<?=$departmentTasks[0]->department_id?>">
+                    <?php $i=1; foreach ($uList as $taskdepartment): ?>
+                        <tr id="<?=$taskdepartment->getUserId()?>" data-id="departmentTasksListInDropdownFilter_<?=$taskdepartment->department_id?>">
+                            <td><?= $i++?></td>
+                            <td><?= $taskdepartment->fullname?></td>
 
-                        <td><!-- ID COUNT-->
-                            <?= $i++ .'<br>';
-                                if ($taskdepartment->getFile()){
-                                    $item = json_decode($taskdepartment->getFile(), true);
-                                    foreach ($item as $file){?>
-                                        <a href="<?= HTTP .'/'.$file ?>" target="_blank"><i class="fa fa-paperclip"></i> </a><br>
-                                        <?php
-                                    }
-                                }
-                            ?>
-                            <button class="btn btn-sm border border-0 delItem" type="button" data-id="<?=$taskdepartment->getTaskId()?>" style="text-decoration: none !important; background-color: white !important;"><i class="fa fa-trash"></i> </button>
-                        </td>
-                        <td><?=$taskdepartment->getTaskId()?></td>
+                            <!-- Display all Tasks by user with checking box and delete button -->
+                            <td>
+                                <table id="smallTable">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Tasks List</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!--for ($x = 0; $x < count($departmentTasks); $x++)-->
+                                        <?php $y =1; foreach($departmentTasks as $taskItem) : if ( $taskItem->getUserId() == $taskdepartment->getUserId() ) : ?>
+                                            <tr id="<?=$taskItem->getTaskId()?>" data-id="departmentTasksListInDropdownFilter_<?=$taskItem->department_id?>">
+                                                <td>
+                                                    <?php
+                                                        echo $y++ .'<br>';
+                                                        if ($taskItem->getFile()){
+                                                            $item = json_decode($taskItem->getFile(), true);
+                                                            foreach ($item as $file){?>
+                                                                <a href="<?= HTTP .'/'.$file ?>" target="_blank"><i class="fa fa-paperclip"></i> </a><br>
+                                                                <?php
+                                                            }
+                                                        }
+                                                    ?>
+                                                    <button class="btn btn-sm border border-0 delItem" type="button" data-id="<?=$taskItem->getTaskId()?>" style="text-decoration: none !important; background-color: white !important;"><i class="fa fa-trash"></i> </button>
+                                                </td>
+                                                <td class="d-flex justify-content-between">
+                                                    <ul class="list-unstyled">
+                                                        <li class="nav-item">
+                                                            <?php $f = ($taskItem->getCreatedAt()) ? new DateTime($taskItem->getCreatedAt()) : date('Y-m-d H:i:s');
+                                                            echo '<p class="text-sm fw-small fs-6 text-capitalize mb-1">
+                                                                title: '.$taskItem->getTitle() .
+                                                                '<br>To do: '. $taskItem->getTodo().
+                                                                '<br>Created At: ' .$f->format('Y-m-d') .'"</p>';
+                                                                if($taskItem->getDueDate()){
+                                                                    $f = new DateTime($taskdepartment->getDueDate());
+                                                                    echo 'Due date: ' .$f->format('Y-m-d H:i A');
+                                                                }
+                                                            ?>
+                                                        </li>
+                                                    </ul>
 
-                        <!-- Task -->
-                        <td class="fs-6 fw-lighter">
-                            <ul class="list-unstyled">
-                                <li class="nav-item">
-                                    <?php $f = ($taskdepartment->getCreatedAt()) ? new DateTime($taskdepartment->getCreatedAt()) : date('Y-m-d H:i:s');
-                                    echo '<p class="text-sm fw-small fs-6 text-capitalize mb-1">
-                                            title: '.$taskdepartment->getTitle() .
-                                        '<br>To do: '. $taskdepartment->getTodo().
-                                        '<br>Assigned to: '.$taskdepartment->fullname .
-                                        '<br>Created At: ' .$f->format('Y-m-d') .'"</p>';
-                                    if($taskdepartment->getDueDate()){
-                                        $f = new DateTime($taskdepartment->getDueDate());
-                                        echo 'Due date: ' .$f->format('Y-m-d H:i A');
-                                    }
-                                    ?>
-                                </li>
-                            </ul>
-                            <ul class="list-unstyled">
-                                <li>
-                                <span class="d-inline">
-                                    <input type="checkbox" name="usercheckbox" id="usercheckbox" class="checkbox" value="<?=$taskdepartment->getIsChecked()?>" <?php echo ($taskdepartment->getIsChecked()) ? 'checked="checked"' : ''?> data-id="<?=$taskdepartment->getTaskId().'_isChecked'?>">
-                                    <label class="text-sm" for="usercheckbox">Responsible</label>
-                                </span>
-                                </li>
-                                <li class="d-inline">
-                                    <input type="checkbox" name="admincheckbox" id="admincheckbox" class="checkbox" value="<?=$taskdepartment->getIsCheckedByAdmin()?>" <?php echo ($taskdepartment->getIsCheckedByAdmin()) ? 'checked="checked"' : ''?> data-id="<?=$taskdepartment->getTaskId().'_IsCheckedByAdmin'?>">
-                                    <label for="admincheckbox" class="text-sm">Admin</label>
-                                </li>
-                            </ul>
-                        </td>
-
-                    </tr>
-
-                <?php endforeach;?>
+                                                    <ul class="list-unstyled">
+                                                        <li>
+                                                                <span class="d-inline">
+                                                                    <input type="checkbox" name="usercheckbox" id="usercheckbox" class="checkbox" value="<?=$taskItem->getIsChecked()?>" <?php echo ($taskItem->getIsChecked()) ? 'checked="checked"' : ''?> data-id="<?=$taskItem->getTaskId().'_isChecked'?>">
+                                                                    <label class="text-sm" for="usercheckbox">Responsible</label>
+                                                                </span>
+                                                        </li>
+                                                        <li class="d-inline">
+                                                            <input type="checkbox" name="admincheckbox" id="admincheckbox" class="checkbox" value="<?=$taskItem->getIsCheckedByAdmin()?>" <?php echo ($taskItem->getIsCheckedByAdmin()) ? 'checked="checked"' : ''?> data-id="<?=$taskItem->getTaskId().'_IsCheckedByAdmin'?>">
+                                                            <label for="admincheckbox" class="text-sm">Admin</label>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        <?php endif; endforeach;?>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    <?php endforeach;?>
                 </tbody>
-
             </table>
         </div>
 
@@ -1131,14 +1155,26 @@ class Task
                     {"data":0},
                     {"data":1},
                     {"data":2}
-                ],
-                "columnDefs":[
-                    {
-                        "target":1,
-                        "searchable":false,
-                        "visible":false
-                    }
                 ]
+            })
+
+            let smallTables = document.querySelectorAll("#smallTable")
+            Array.from(smallTables).forEach(smallTable => {
+                let  opts = {
+                    "RowId": 0,
+                    "searching": true,
+                    "paging":true,
+                    "pageLength": 2,
+                    "orderable":true,
+                    "order": [[0, 'asc']],
+                    "autoWidth": false,
+                    "selected": true,
+                    "columns":[
+                        {"data":0},
+                        {"data":1}
+                    ]
+                }
+                new DataTable(smallTable, opts);
             })
         </script>
 
