@@ -1050,35 +1050,51 @@ class Task
             <table class="table table-condensed table-dark text-light text-capitalize caption-top DepartmentTasksTable" id="DepartmentTasksTable">
                 <caption class="my-3 text-center p-2" style="border: 1px solid <?=$departmentTasks[0]->color?>; background-color: <?=$departmentTasks[0]->color?>">
                     <h3 class="d-inline text-sm fw-small text-white">
-                        <?=$departmentTasks[0]->libelle?>
+                        <?=$departmentTasks[0]->libelle . ' Department Tasks ' ?>
                     </h3>
                 </caption>
                 <thead>
                 <tr>
                     <th>#</th>
+                    <th>id</th>
                     <th>Tasks</th>
-                    <th>Checked</th>
-                    <th>Responsible</th>
-                    <th>Due date</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php $i=1; foreach ($departmentTasks as $taskdepartment): ?>
                     <tr data-id="departmentTasksListInDropdownFilter_<?=$departmentTasks[0]->department_id?>">
-                        <td><?= $i++ .'<br>';
-                            if ($taskdepartment->getFile()){
-                                $item = json_decode($taskdepartment->getFile(), true);
-                                foreach ($item as $file){?>
-                                    <a href="<?= HTTP .'/'.$file ?>" target="_blank"><i class="fa fa-paperclip"></i> </a><br>
-                                    <?php
+
+                        <td><!-- ID COUNT-->
+                            <?= $i++ .'<br>';
+                                if ($taskdepartment->getFile()){
+                                    $item = json_decode($taskdepartment->getFile(), true);
+                                    foreach ($item as $file){?>
+                                        <a href="<?= HTTP .'/'.$file ?>" target="_blank"><i class="fa fa-paperclip"></i> </a><br>
+                                        <?php
+                                    }
                                 }
-                            }
-                            echo '<br>';
                             ?>
-                            <button class="btn btn-sm btn-default border border-0 delItem" type="button" data-id="<?=$taskdepartment->getTaskId()?>" style="text-decoration: none !important; background-color: white !important;"><i class="fa fa-trash"></i> </button>
+                            <button class="btn btn-sm border border-0 delItem" type="button" data-id="<?=$taskdepartment->getTaskId()?>" style="text-decoration: none !important; background-color: white !important;"><i class="fa fa-trash"></i> </button>
                         </td>
-                        <td><?=$taskdepartment->getTitle() .'<br>' .$taskdepartment->getTodo()?></td>
-                        <td>
+                        <td><?=$taskdepartment->getTaskId()?></td>
+
+                        <!-- Task -->
+                        <td class="fs-6 fw-lighter">
+                            <ul class="list-unstyled">
+                                <li class="nav-item">
+                                    <?php $f = ($taskdepartment->getCreatedAt()) ? new DateTime($taskdepartment->getCreatedAt()) : date('Y-m-d H:i:s');
+                                    echo '<p class="text-sm fw-small fs-6 text-capitalize mb-1">
+                                            title: '.$taskdepartment->getTitle() .
+                                        '<br>To do: '. $taskdepartment->getTodo().
+                                        '<br>Assigned to: '.$taskdepartment->fullname .
+                                        '<br>Created At: ' .$f->format('Y-m-d') .'"</p>';
+                                    if($taskdepartment->getDueDate()){
+                                        $f = new DateTime($taskdepartment->getDueDate());
+                                        echo 'Due date: ' .$f->format('Y-m-d H:i A');
+                                    }
+                                    ?>
+                                </li>
+                            </ul>
                             <ul class="list-unstyled">
                                 <li>
                                 <span class="d-inline">
@@ -1093,10 +1109,6 @@ class Task
                             </ul>
                         </td>
 
-                        <td><?=$taskdepartment->fullname?></td>
-                        <td><?php if($taskdepartment->getDueDate()){
-                                $f = new DateTime($taskdepartment->getDueDate()); echo $f->format('Y-m-d, H:i A');
-                            }  ?></td>
                     </tr>
 
                 <?php endforeach;?>
@@ -1118,9 +1130,7 @@ class Task
                 "columns":[
                     {"data":0},
                     {"data":1},
-                    {"data":2},
-                    {"data":3},
-                    {"data":4}
+                    {"data":2}
                 ],
                 "columnDefs":[
                     {
@@ -1140,7 +1150,7 @@ class Task
     function userTasksTableOnClickUserListInDropdownFilter($userId):void
     {
         $userTasks = Task::findByUserId($userId);
-        var_dump($userTasks);
+        //var_dump($userTasks);
         if ($userTasks):
         ?>
             <div id="userTaskTableDiv">
@@ -1176,7 +1186,9 @@ class Task
 
                             </td>
 
-                            <td><?=$task->getTaskId()?></td>
+                            <td>
+                                <?=$task->getTaskId()?>
+                            </td>
                             <td class="d-flex justify-content-between fs-6 fw-lighter">
                                 <ul class="list-unstyled">
                                     <li class="nav-item">
@@ -1212,6 +1224,31 @@ class Task
 
                 </table>
             </div>
+
+            <script type="text/javascript">
+                $('#userTaskTable').DataTable({
+                    "RowId": 0,
+                    "searching": true,
+                    "paging":true,
+                    "pageLength": 10,
+                    "orderable":true,
+                    "order": [[1, 'asc']],
+                    "autoWidth": false,
+                    "selected": true,
+                    "columns":[
+                        {"data":0},
+                        {"data":1},
+                        {"data":2}
+                    ],
+                    "columnDefs":[
+                        {
+                            "target":1,
+                            "searchable":false,
+                            "visible":false
+                        }
+                    ]
+                })
+            </script>
 
         <?php
             else: echo "<p class='text-sm text-center'>No user tasks found </p>";

@@ -325,7 +325,6 @@ $(document).ready(function (){
             url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
             data:{displayDepartmentTaskOnDropdownClick:depId},
             success:function (response){
-
                 allTablesDiv.removeClass('d-none').fadeIn()
                 allTablesDiv.html(response)
             }
