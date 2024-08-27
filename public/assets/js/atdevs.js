@@ -274,6 +274,7 @@ $(document).ready(function (){
         }
     })
 
+
     //Dropdown user Filter
     let userDropdownFilter = $('#userbydepartment-1')
     $(document).on("click", 'li[data-id] a', function (){
@@ -303,18 +304,30 @@ $(document).ready(function (){
         })
     })
 
-    //Result of Click On display task all Department in User Dropdown Filter
+    //Result of Click On display list task all Department in User Dropdown Filter
     $(document).on('click', 'li.alldep', function (){
         const departmentId = $(this).closest('li').data('id');
         $.post({
             url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
             data:{depTask:departmentId},
             success:function (response){
-                //userTaskTableDivInDashboard.load(location.href+" #user-task-table>*","");
-                //departmentTaskTableDivInDashboard.removeClass('d-none').fadeIn().html(response);
 
                allTablesDiv.removeClass('d-none').fadeIn().html(response)
                new DataTable(DepartmentTasksTableVeritable);
+            }
+        })
+    })
+
+    //List Department Clicked in Department Dropdown
+    $(document).on('click', 'li.departmentList', function (){
+        let depId = $(this).closest('li').data('id')
+        $.post({
+            url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+            data:{displayDepartmentTaskOnDropdownClick:depId},
+            success:function (response){
+
+                allTablesDiv.removeClass('d-none').fadeIn()
+                allTablesDiv.html(response)
             }
         })
     })
@@ -580,24 +593,18 @@ $(document).ready(function (){
 
     //Display Table : All tasks Btn - Today Task Btn - Late Task Btn - Future Task Btn
     let viewTaskBtns = document.querySelectorAll(".viewTasksBtn");
-
     const displayTasksTableOnClickBtn = () => {
         'use-strict'
-
         Array.from(viewTaskBtns).forEach(viewTaskBtn => {
 
             viewTaskBtn.addEventListener('click', (event) => {
 
                 let func = event.currentTarget.getAttribute('data-id');
-
                 refreshTable(func)
             })
         })
     }
     displayTasksTableOnClickBtn()
-
-
-
 
     //CheckBoxes Process
     $(document).on('click', 'tr input.checkbox', function (event){
@@ -634,11 +641,9 @@ $(document).ready(function (){
 
     })
 
-
     //Delete Task Item in All Table Process WORK AND REFRESHED TABLE WORK TOO
     $(document).on('click', 'tr button.delItem', function (e){
         let displayedTable = $(this).closest('tr').data('id');
-        let $button = $(this);
         let taskIdItem = $(this).data('id');
         Toast.fire({
             icon:"warning",
@@ -660,7 +665,6 @@ $(document).ready(function (){
                                 text:"Something went wrong",
                                 position:"bottom-end"
                             }).then(() => {
-                                //$("#"+displayedtable).DataTable().row($button.parents('tr')).remove().draw(false)
                                 refreshTable(displayedTable)
                             })
                         }else {
@@ -681,6 +685,23 @@ $(document).ready(function (){
         })
     })
 
+    //Get Department List to display in Add Task Page Dropdown Filter
+    let departmentDropdownContainer = $('#receiveDepartmentList');
+    const allDepartmentsListForDropdownFilter = () => {
+
+        $.post({
+            url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+            data:{departmentListForFilter:1},
+            success:function (response){
+                departmentDropdownContainer.html(response)
+            }
+        })
+    }
+
+    //Display Department List in Filter Dropdown On demand *Click on
+    $(document).on('click', 'div .departmentListFilter', function (){
+        allDepartmentsListForDropdownFilter()
+    })
 
 
 })

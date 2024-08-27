@@ -122,30 +122,6 @@ class User
     }
 
     /**
-     * @return void
-     */
-    function delGrpedForm():void
-    {
-        $userList = self::read();
-        if ($userList):
-        ?>
-        <form class="row g-3 needs-validation delgped" id="delgped" novalidate>
-            <?php foreach ($userList as $item): if($_SESSION["user_id"] != $item->getUserId()):?>
-                <div class="input-group <?=$item->getUserId()?>">
-                    <input class="form-check-input" required type="checkbox" id="<?='list_'.$item->getUserId()?>" name="<?='list_'.$item->getUserId()?>" value="<?=$item->getUserId()?>">
-                    <label class="form-check-label mx-1" for="<?='list_'.$item->getUserId()?>"><?=$item->getFullname()?></label>
-                </div>
-
-            <?php endif; endforeach;?>
-            <div class="invalid-feedback">You must select at least one item</div>
-            <button type="button" class="btn btn-secondary cancelDelGpedUser" data-bs-dismiss="modal">cancel</button>
-            <button type="button" id="delGpedUser" name="delGpedUser" class="btn btn-primary">delete</button>
-        </form>
-    <?php else: echo "<p class='text-muted text-center'>No data found</p>"; endif;
-    }
-
-
-    /**
      * @param string $identifier
      * @return mixed
      */
@@ -198,6 +174,52 @@ class User
             }
         }
         return false;
+    }
+
+    /**
+     * @return void
+     */
+    function delGrpedForm():void
+    {
+        $userList = self::read();
+        if ($userList):
+            ?>
+            <form class="row g-3 needs-validation delgped" id="delgped" novalidate>
+                <?php foreach ($userList as $item): if($_SESSION["user_id"] != $item->getUserId()):?>
+                    <div class="input-group <?=$item->getUserId()?>">
+                        <input class="form-check-input" required type="checkbox" id="<?='list_'.$item->getUserId()?>" name="<?='list_'.$item->getUserId()?>" value="<?=$item->getUserId()?>">
+                        <label class="form-check-label mx-1" for="<?='list_'.$item->getUserId()?>"><?=$item->getFullname()?></label>
+                    </div>
+
+                <?php endif; endforeach;?>
+                <div class="invalid-feedback">You must select at least one item</div>
+                <button type="button" class="btn btn-secondary cancelDelGpedUser" data-bs-dismiss="modal">cancel</button>
+                <button type="button" id="delGpedUser" name="delGpedUser" class="btn btn-primary">delete</button>
+            </form>
+        <?php else: echo "<p class='text-muted text-center'>No data found</p>"; endif;
+    }
+
+    /**
+     * Display user By Department in User Dropdown Filter
+     * @param $departmentId
+     * @return void
+     */
+    public function displayUserListByDepartment($departmentId):void
+    {
+        $usersList = self::findByDepartmentId($departmentId);
+        if ($usersList):
+            foreach ($usersList as $userList):
+        ?>
+            <li class="dropdown-item btn" data-id="<?=$userList->getUserId()?>">
+                <p>
+                    <?=$userList->getFullname()?>
+                </p>
+            </li>
+
+        <?php
+            endforeach;
+            else: echo '<li>No records found</li>';
+            endif;
     }
 
 

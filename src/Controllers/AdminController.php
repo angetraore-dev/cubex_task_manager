@@ -95,157 +95,40 @@ class AdminController
 
                     break;
                 case isset($_POST["userByDep"]):
+                    //Display Department User's List in User Dropdown Filter
 
                     $id = $_POST["userByDep"];
-                    $data = $this->user->findByDepartmentId($id);
-                    if ($data){
-                        $output = "";
-                        foreach ($data as $datum){
-
-                            $output .="<li class='dropdown-item' data-id='".$datum->getUserId()."'><p>".$datum->getFullname()."</p></li>";
-                        }
-                        $output .="<li class='dropdown-item alldep' data-id='".$id."'>all department's tasks</li>";
-                        echo $output;
-                    }else{
-                        echo "<li>No records found</li>";
-                    }
+                    $this->user->displayUserListByDepartment($id);
 
                     break;
-                    //deptask and userTASK MUST BE REVIEW
-                case isset($_POST["depTask"]):
+                case isset($_POST["displayDepartmentTaskOnDropdownClick"]):
+                    //Display Departments List on Department Dropdown Filter Clicked
 
-                    $departmentId = $_POST["depTask"];
-                    $departmentTasks = Task::findTaskByJoinDepartment($departmentId);
-
-                    if ($departmentTasks){?>
-                        <div class="table-responsive" id="DepartmentTasksTableDiv">
-                            <table class="table text-uppercase text-center caption-top" id="DepartmentTasksTable">
-                                <caption><h3 class="d-inline"><?=$departmentTasks[0]->libelle. ' department <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="'.$departmentTasks[0]->color.'"></rect></svg>
-                                '?></h3></caption>
-                                <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Tasks</th>
-                                    <th scope="col">Checked</th>
-                                    <th scope="col">Responsible</th>
-                                    <th scope="col">Due date</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php $users = User::read(); $i=1; foreach ($departmentTasks as $task): ?>
-                                    <tr>
-                                        <td><?=$i++?></td>
-                                        <td><?=$task->getTitle() .'<br>' .$task->getTodo()?></td>
-                                        <td>
-                                            <ul class="list-unstyled">
-                                                <li>
-                                                    <input type="checkbox" value="<?=$task->getIsChecked()?>" <?php echo ($task->getIsChecked()) ? 'checked="checked"' : ''?> name="responsible" id="responsible">
-                                                    <label for="responsible">responsible</label>
-                                                </li>
-
-                                                <li class="unstyled-list">
-                                                    <input type="checkbox" value="<?=$task->getIsCheckedByAdmin()?>" <?php echo ($task->getIsCheckedByAdmin()) ? 'checked="checked"' : ''?> name="admin" id="admin">
-                                                    <label for="admin">Admin</label>
-                                                </li>
-                                            </ul>
-                                        </td>
-
-                                        <td><?=$task->fullname?></td>
-                                        <td><?php if($task->getDueDate()){
-                                                $f = new DateTime($task->getDueDate()); echo $f->format('Y-m-d, H:i A');
-                                            }  ?></td>
-                                    </tr>
-
-                                <?php endforeach;?>
-                                </tbody>
-
-                            </table>
-                        </div>
-
-                        <?php
-                    }else{
-                        //display no task exist for thiis department
-                        echo "<p class='text-muted text-center'>No records found for this department </p>";
-                    }
+                    $depId = $_POST["displayDepartmentTaskOnDropdownClick"];
+                    $this->task->departmentTasksListInDropdownFilter($depId);
 
                     break;
                 case isset($_POST["userTask"]):
+                    //Display User tasks OnClick on User's List in User Dropdown Filter
 
                     $userid = $_POST["userTask"];
-                    $userTasks = Task::findByUserId($userid);
-
-                    if ($userTasks){?>
-                        <div class="table-responsive" id="userTaskTableDiv">
-                            <table class="table text-uppercase text-center caption-top" id="userTaskTable">
-                                <caption class="text-dark fw-bold"><h3 class="d-inline"><?=$userTasks[0]->fullname."'s tasks of " .$userTasks[0]->libelle . ' <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="'.$userTasks[0]->color.'"></rect></svg>';?></h3></caption>
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Tasks</th>
-                                        <th scope="col">Checked</th>
-                                        <th scope="col">Due Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php $i=1; foreach ($userTasks as $task): ?>
-                                        <tr>
-                                            <td>
-                                                <ul>
-                                                    <li class="list-unstyled d-flex justify-content-between"><?=$i++?> <button class="btn btn-danger border border-0 delTask" id="delTask" type="button" data-id="<?=$task->getTaskId()?>"><i class="fa fa-trash"></i> </button></li>
-                                                </ul>
-                                                <input type="hidden" id="userid" value="<?=$task->getUserId()?>">
-                                            </td>
-                                            <td><?php echo $task->getTitle() .'<br>' .$task->getTodo() .'<br>';
-                                                if ($task->getFile()){
-                                                    $item = json_decode($task->getFile(), true);
-                                                    foreach ($item as $file){?>
-                                                    <a href="<?= HTTP .'/'.$file ?>" target="_blank"><i class="fa fa-paperclip"></i> </a>
-                                                    <?php
-                                                    }
-                                                }
-                                            ?></td>
-                                            <td>
-                                                <ul class="list-unstyled">
-                                                    <li>
-                                                        <input type="checkbox" value="<?=$task->getIsChecked()?>" <?php echo ($task->getIsChecked()) ? 'checked="checked"' : ''?> name="responsible" id="responsible">
-                                                        <label for="responsible">responsible</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="checkbox" value="<?=$task->getIsCheckedByAdmin()?>" <?php echo ($task->getIsCheckedByAdmin()) ? 'checked="checked"' : ''?> name="admin" id="admin">
-                                                        <label for="admin">Admin</label>
-                                                    </li>
-                                                </ul>
-
-                                            </td>
-
-                                            <td><?php if($task->getDueDate()){
-                                                    $f = new DateTime($task->getDueDate()); echo $f->format('Y-m-d H:i A');
-                                                } ?></td>
-                                        </tr>
-                                    <?php endforeach;?>
-                                </tbody>
-
-                            </table>
-                        </div>
-                    <?php
-                    }else{
-                        echo "<p class='text-muted text-center'>No user tasks found </p>";
-                    }
+                    $this->task->userTasksTableOnClickUserListInDropdownFilter($userid);
 
                     break;
                 case isset($_POST["taskBtn"]):
-
+                    //Display Task Form Modal
                     $this->task->taskForm();
 
                     break;
                 case isset($_POST["delTask"]):
-
-                    $identifier =$_POST["delTask"];
+                    //Delete Task in any table
+                    $identifier = $_POST["delTask"];
                     $del = $this->database->delete($identifier, 'task');
                     echo $del;
 
                     break;
                 case isset($_POST["checkedd"]):
+                    //user and admin checkbox
 
                     $data = json_decode($_POST["checkedd"]);
                     $bit = ($data->check) ? 1 : "0";
@@ -258,11 +141,19 @@ class AdminController
 
                     break;
                 case isset($_POST["departmentList"]):
+                    //Concerne department list in Task Page
 
                     $list = Department::departmentJoinHeader();
                     $this->department->displayDepartmentslist($list);
 
                     break;
+
+                case isset($_POST["departmentListForFilter"]):
+                    //display list of department in DEPARTMENT Dropdown Filter
+
+                    $this->department->departmentInDropdownFilter();
+                    break;
+
                 case isset($_POST["activeTasksList"]):
 
                     $this->task->futureTaskInTaskPage();
@@ -271,15 +162,35 @@ class AdminController
                 case isset($_POST["viewTasksBtn"]):
                 //This case is for display tasks onclick on View all tasks - today task - late task and future task Btn
                     $func = $_POST["viewTasksBtn"];
+                    $ex = explode("_", $func);
 
-                    if ( method_exists(Task::class, $func) ){
+                    if ($ex[1]){
+                        $method = $ex[0];
+                        $args = $ex[1];
 
-                        $this->task->{$func}();
+                        if ( method_exists(Task::class, $method) ){
+
+                            if (isset($args)) {
+                                $this->task->{$method}($args);
+                            }
+
+                        }else{
+                            StaticDb::notFound();
+                        }
 
                     }else{
 
-                        StaticDb::notFound();
+                        if ( method_exists(Task::class, $func) ){
+
+                            $this->task->{$func}();
+
+                        }else{
+
+                            StaticDb::notFound();
+                        }
+
                     }
+
 
                     break;
 

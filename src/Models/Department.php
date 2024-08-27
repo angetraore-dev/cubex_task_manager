@@ -13,12 +13,6 @@ class Department
     protected $libelle;
     protected $color;
 
-    //private Database $database;
-    //    function __construct()
-    //    {
-    //        $this->database = new Database();
-    //    }
-
     /**
      * @return mixed
      */
@@ -80,6 +74,33 @@ class Department
         return StaticDb::getDb()->query($stmt, get_called_class());
     }
 
+    /**
+     * List Of Department in Department dropdown Filter
+     * @return void
+     */
+    public function departmentInDropdownFilter():void
+    {
+        $dropdown_department = Department::readAll(); if($dropdown_department): foreach ($dropdown_department as $item):
+        ?>
+        <li class="list-unstyled departmentList" data-id="<?= $item->getDepartmentId()?>">
+            <a class="dropdown-item" href="#">
+             <span class="d-block">
+               <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="<?=$item->getColor()?>"></rect></svg>
+                 <?= $item->getLibelle()?>
+             </span>
+            </a>
+
+        </li>
+    <?php endforeach; else:
+        echo '<li class="text-center text-muted"><span> No records found</span></li>';
+    endif;
+    }
+
+    /**
+     * Display Department List in Task Page
+     * @param $department
+     * @return void
+     */
     public function displayDepartmentslist($department):void
     {
         if ($department): ?>

@@ -184,7 +184,7 @@ ob_start();?>
                         </div>
 
                         <!-- LATE - TODAY - FUTURE Btn -->
-                        <div class="col-sm-4 mb-4">
+                        <div class="col-sm-5 mb-4">
                             <fieldset class="d-flex flex-wrap justify-content-around align-content-around border border-1 pb-2">
                                 <legend  class="float-none w-auto fw-small fs-6 text-uppercase">tasks Btn</legend>
 
@@ -193,6 +193,8 @@ ob_start();?>
                                 <button type="button" data-id="viewTodayTasksInAddTaskPage" class="btn btn-sm text-uppercase border border-1 text-center viewTasksBtn" style="text-decoration: none !important; color: #FFFFFF;">Today</button>
 
                                 <button type="button" data-id="viewFutureTasksInAddTaskPage" class="btn btn-sm text-uppercase border border-1 text-center viewTasksBtn" style="text-decoration: none !important; color: #FFFFFF;">Future</button>
+
+                                <button type="button" data-id="viewInWaitingTasksInAddTaskPage" class="btn btn-sm text-uppercase border border-1 text-center viewTasksBtn" style="text-decoration: none !important; color: #FFFFFF;">Waiting <span class="badge text-bg-secondary">1</span> </button>
 
                             </fieldset>
                         </div>
@@ -203,25 +205,13 @@ ob_start();?>
                                 <legend  class="float-none w-auto fw-smaller fs-6 text-uppercase">filter</legend>
 
                                 <!-- List of all departments mx-2-->
-                                <div class="dropdown departmentlist" id="departmentlist">
+                                <div class="dropdown departmentListFilter">
                                     <button class="btn btn-sm border border-1 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
                                             style="text-decoration: none; color: white !important;">
                                         departments
                                     </button>
-                                    <ul class="dropdown-menu depList">
-                                        <?php $dropdown_department = Department::readAll(); if($dropdown_department): foreach ($dropdown_department as $item): ?>
-                                            <li class="list-unstyled deptarment" data-id="<?= $item->getDepartmentId()?>">
-                                                <a class="dropdown-item" href="#">
-                                    <span class="d-block">
-                                    <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="<?=$item->getColor()?>"></rect></svg>
-                                    <?= $item->getLibelle()?>
-                                    </span>
-                                                </a>
+                                    <ul class="dropdown-menu receiveDepartmentList" id="receiveDepartmentList">
 
-                                            </li>
-                                        <?php endforeach; else:?>
-                                            <li class="text-center text-muted"><span> No records found</span></li>
-                                        <?php endif;?>
                                     </ul>
                                 </div>
 
@@ -399,7 +389,7 @@ ob_start();?>
 <!-- Modal add Department-->
 <div class="modal fade" id="addDepartment" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" style="background-color: #0c0c0c !important; color: white !important;">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">add department</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -432,7 +422,7 @@ ob_start();?>
 </div>
 
 <!-- Modal add User-->
-<div class="modal fade" id="addUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal bg-body-dark text-white fade" id="addUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -495,7 +485,7 @@ ob_start();?>
 </div>
 
 <!-- Modal delete user List -->
-<div class="modal fade" id="delUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelDel" aria-hidden="true">
+<div class="modal bg-body-dark text-white fade" id="delUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelDel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -511,7 +501,7 @@ ob_start();?>
 </div>
 
 <!-- Modal delete department List -->
-<div class="modal fade" id="delDep" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelDel" aria-hidden="true">
+<div class="modal bg-body-dark text-white fade" id="delDep" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelDel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
