@@ -295,50 +295,68 @@ class Task
      * add Task Form
      * @return void
      */
-    function taskForm():void
+    function addTaskForm():void
     {?>
-        <form class="row g-3 my-4 needs-validation taskForm" id="taskForm" enctype="multipart/form-data" novalidate>
-            <fieldset class="border border-2 fw-bold text-center text-uppercase">
-                <legend  class="float-none w-auto my-3">add task Form</legend>
-            </fieldset>
-            <div class="col-md-4 mb-3">
+        <form class="row col-md-8 mx-auto bg-body-tertiary text-dark rounded rounded-2 opacity-80 g-3 my-4 needs-validation taskForm" id="taskForm" enctype="multipart/form-data" novalidate>
+            <h3 class="my-3 fw-small fs-6 bg-dark text-white rounded rounded-2 text-center text-uppercase p-1 border border-1">add task Form</h3>
+
+            <div class="col-md-6 mb-3">
                 <label for="title" class="form-label">Title</label>
-                <input type="text" name="title" id="title" class="form-control" required>
+                <input type="text" name="title" id="title" class="form-control bg-body-tertiary text-dark" required>
                 <div class="invalid-feedback">Please fill it</div>
             </div>
-            <div class="col-md-4 mb-3">
+            <div class="col-md-6 mb-3">
                 <label for="todo" class="form-label">Task To do</label>
-                <textarea rows="3" name="todo" id="todo" class="form-control" required></textarea>
+                <textarea rows="3" name="todo" id="todo" class="form-control" style="border: gold 1px solid;" required></textarea>
                 <div class="invalid-feedback">Write what to do</div>
             </div>
-            <div class="col-md-4 mb-3">
+            <div class="col-md-5 mb-3">
                 <label for="due_date" class="form-label">Due Date</label>
-                <input type="datetime-local" name="due_date" id="due_date" class="form-control" required>
+                <input type="datetime-local" name="due_date" id="due_date" class="form-control bg-body-tertiary date text-dark" required>
                 <div class="invalid-feedback"> Select a valid date</div>
             </div>
 
-            <div class="col-md-6 mb-3">
-                <label for="userid" class="form-label">Assign</label>
-                <select class="form-select" name="userid" id="userid" required>
-                    <option value="" class="form-control">Choose the responsible</option>
-
-                    <?php $usersList = User::read(); if($usersList) : foreach ($usersList as $user): ?>
-                        <option class="form-control" value="<?=$user->getUserId()?>"><?=$user->getFullname()?></option>
-                    <?php endforeach; else: echo "<p class='text-center text-muted'>No user Records found !</p>";?>
+            <div class="col-md-3 mb-3">
+                <label for="depart" class="form-label">Department</label>
+                <select class="form-select" style="border: gold 1px solid;" name="depart" id="depart" required>
+                    <option class="form-control" value="">Choose a department </option>
+                    <?php $depList = Department::readAll(); if($depList) : foreach ($depList as $item): ?>
+                        <option class="form-control p-1" value="<?=$item->getDepartmentId()?>">
+                            <?=$item->getLibelle() . '<span class="badge p-1" style="background-color:'.$item->getColor().' !important;"></span>';?>
+                        </option>
+                    <?php endforeach; else: echo "<p class='text-center text-muted'>No department Records found !</p>";?>
                     <?php endif;?>
 
                 </select>
-                <div class="invalid-feedback">Please assign task to a user</div>
+                <div class="invalid-feedback">Please select a department to view the responsible list</div>
             </div>
-            <div class="col-md-6 mb-3">
+
+            <div class="col-md-3 mb-3 d-none" id="responsibleChoice">
+
+            </div>
+            <div class="col-md-12 mb-3">
                 <label for="file" class="form-label">File</label>
-                <input type="file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" name="file[]" id="file" class="form-control" multiple="multiple">
+                <input type="file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" name="file[]" id="file" class="form-control bg-body-tertiary text-dark" multiple="multiple">
             </div>
             <div class="text-end mb-3">
-                <button type="button" class="btn btn-sm btn-secondary closeTaskFormBtn">Cancel</button>
-                <button type="button" class="btn btn-sm btn-primary sendTaskFormBtn">create</button>
+                <button type="button" class="btn btn-sm btn-secondary cancelForm">Cancel</button>
+                <button type="button" class="btn btn-sm btn-dark sendFormBtn" data-id="taskForm_task_create">create</button>
             </div>
         </form>
+
+        <script type="text/javascript">
+
+            $('#depart').on('change', function(){
+                let departmentId = $(this).val();
+                $.post({
+                    url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+                    data:{selectOpt:departmentId},
+                    success:function (response){
+                        $('#responsibleChoice').removeClass('d-none').html(response).fadeIn()
+                    }
+                })
+            })
+        </script>
         <?php
     }
 

@@ -115,8 +115,8 @@ ob_start();?>
             <!-- Btn Department - Task - User and dropdown department-responsibles -->
             <div class="container-fluid border border-1">
 
-                <!-- Btn DIV-->
-                <div class="row" id="depUserTaskDiv">
+                <!-- All Button in Add-Task-Page BTN DIV-->
+                <div class="row allBtnsAddTaskPage" id="depUserTaskDiv">
 
                     <!-- DIV FOR DEPARTMENT TASK BTN ROW -->
                     <div class="row ps-0 justify-content-around departmentTaskDiv">
@@ -124,13 +124,13 @@ ob_start();?>
                             <fieldset class="d-flex flex-wrap align-self-start justify-content-around border border-1 pb-2">
                                 <legend  class="float-none w-auto fw-small fs-6 text-uppercase">Department</legend>
 
-                                <button data-bs-toggle="modal" data-bs-target="#addDepartment" id="add-dep" data-id="addDepartmentForm" class="addBtn btn btn-sm btn-outline-success text-uppercase border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
+                                <button data-bs-toggle="modal" data-bs-target="#addDepartment" id="add-dep" data-id="department_addDepartmentForm" class="addBtn btn btn-sm btn-outline-success text-uppercase border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill mx-4" viewBox="0 0 16 16">
                                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
                                     </svg>
                                 </button>
-                                <button data-bs-toggle="modal" data-bs-target="#delDep" data-id="delDepartmentForm" class="delDep delBtn btn btn-sm text-uppercase btn-outline-danger border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
+                                <button data-bs-toggle="modal" data-bs-target="#delDep" data-id="department_delDepartmentForm" class="delDep delBtn btn btn-sm text-uppercase btn-outline-danger border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill mx-4" viewBox="0 0 16 16">
                                         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
                                     </svg>
@@ -140,7 +140,7 @@ ob_start();?>
                         <div class="col-sm-3">
                             <fieldset class="d-flex flex-wrap align-self-center justify-content-around pb-2">
                                 <legend  class="float-none w-auto fw-small fs-6 text-uppercase mx-auto">add task</legend>
-                                <button type="button" id="addTaskBtn" data-id="addTaskForm" class="add-user addBtn btn btn-sm btn-outline-success text-uppercase border-success mb-1">
+                                <button type="button" id="addTaskBtn" data-id="task_addTaskForm" class="add-user addBtn btn btn-sm btn-outline-success text-uppercase border-success mb-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill mx-4" viewBox="0 0 16 16">
                                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
@@ -169,13 +169,13 @@ ob_start();?>
                         <div class="col-sm-3 mb-4">
                             <fieldset class="d-flex flex-wrap align-self-center justify-content-around border border-1 pb-2">
                                 <legend  class="float-none w-auto fw-small fs-6 text-uppercase">User</legend>
-                                <button data-bs-toggle="modal" data-bs-target="#addUser" data-id="addUserForm" id="add-user" class="addUser addBtn btn btn-sm btn-outline-success text-uppercase border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
+                                <button data-bs-toggle="modal" data-bs-target="#addUser" data-id="user_addUserForm" id="add-user" class="addUser addBtn btn btn-sm btn-outline-success text-uppercase border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill mx-4" viewBox="0 0 16 16">
                                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
                                     </svg>
                                 </button>
-                                <button data-bs-toggle="modal" data-bs-target="#delUser" data-id="delUserForm" class="delUser delBtn btn btn-sm text-uppercase btn-outline-danger border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
+                                <button data-bs-toggle="modal" data-bs-target="#delUser" data-id="user_delUserForm" class="delUser delBtn btn btn-sm text-uppercase btn-outline-danger border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill mx-4" viewBox="0 0 16 16">
                                         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
                                     </svg>
@@ -232,23 +232,29 @@ ob_start();?>
                 <!-- END Btn DIV-->
 
                 <!-- Tasks(title-tasks-checked) Department Responsible - due date-->
-                <div class="row">
+                <div class="row" id="AddTaskPageContainerBtnClick">
                     <!-- Dynamics displayed all tables -->
                     <div class="table-responsive allTables d-none" id="allTables"></div>
-                    <!-- All Active Tasks Div -->
-                    <div class="table-responsive allTasksDiv d-none" id="allTasksDiv"></div>
 
                     <!-- Div for Filter Department-User selected -->
                     <div class="row my-2 d-none" id="user-task-table"></div>
                     <div class="row my-2 d-none" id="department-task-table"></div>
                     <!-- End Div Filter Department-User selected-->
+
+                    <!-- Div To display All Forms Kind (ADD or DELETE ) -->
+                    <div class="row my-2 d-none" id="addTaskPageFormsDisplay"></div>
+
                     <div class="text-end my-4">
                         <button type="button" class="btn btn-success btn-outline-secondary text-white text-center" onclick="return window.location.reload();">REFRESH</button>
                     </div>
+                    <!-- All Active Tasks Div
+                    <div class="table-responsive allTasksDiv d-none" id="allTasksDiv"></div>
+                    -->
                 </div>
 
-                <!-- Today Tasks Div -->
+                <!-- Today Tasks Div
                 <div class="table-responsive todayTasksDiv d-none" id="todayTasksDiv"></div>
+                -->
                 <!-- Form add Task Div -->
                 <div class="col-md-8 mx-auto d-flex justify-content-center align-items-center d-none" id="taskFormDiv"></div>
 

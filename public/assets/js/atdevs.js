@@ -3,7 +3,26 @@ $(document).ready(function (){
     //refresh div $("#departmentlist").load(location.href+" #departmentlist>*","")
 
     //Dynamic displayed allTables DIV -->
+
+    //All top buttons div
+    let depUserTaskDiv = $("#depUserTaskDiv");
+    let taskFormDiv = $("#taskFormDiv");
+    //let userTaskTableDivInDashboard = $('#user-task-table');
+    //let departmentTaskTableDivInDashboard = $('#department-task-table');
     let allTablesDiv = $('#allTables');
+    let loader = $("#loaderDiv");
+    let userDropdownFilter = $('#userbydepartment-1')
+    let addBtns = document.querySelectorAll(".addBtn")
+    let allBtnsAddTaskPageDiv = $('.allBtnsAddTaskPage')
+    let addTaskPageFormsDisplay = $('#addTaskPageFormsDisplay')
+    let firstPageAdminBtnDiv = $('#first-page-admin')
+    let menus = document.querySelectorAll('.pageHref');
+    let backDiv = $('.backDiv');
+    let backToFirstPageAdminBtnDiv = document.querySelectorAll('.back');
+    let departmentListDiv = $("#departmentListInTaskPage");
+    let activeTasksInTaskPage = $("#activeTasksInTaskPage");
+    let viewTaskBtns = document.querySelectorAll(".viewTasksBtn");
+    let departmentDropdownContainer = $('#receiveDepartmentList');
 
 
     //stay on tab active on refresh
@@ -64,10 +83,7 @@ $(document).ready(function (){
 
     //DataTable.moment("DD-MM-YYYY");
 
-    let loader = $("#loaderDiv");
-    //All top buttons div
-    let depUserTaskDiv = $("#depUserTaskDiv");
-    let taskFormDiv = $("#taskFormDiv");
+
     //TaskByUserTable in AdminController
     let taskByUserTableVeritable = $(this).closest('#userTaskTable').DataTable({
         "RowId": 0,
@@ -136,10 +152,6 @@ $(document).ready(function (){
         ]
     });
 
-    //user-task-table-div
-    let userTaskTableDivInDashboard = $('#user-task-table');
-    //department-task-table-div
-    let departmentTaskTableDivInDashboard = $('#department-task-table');
 
     //Login Process
     $("#loginform").on("submit", function (event){
@@ -277,7 +289,7 @@ $(document).ready(function (){
 
 
     //Dropdown user Filter
-    let userDropdownFilter = $('#userbydepartment-1')
+
     $(document).on("click", 'li[data-id] a', function (){
         const id = $(this).closest('li').data('id');
 
@@ -332,37 +344,6 @@ $(document).ready(function (){
         })
     })
 
-    //User Process
-    $('#saveUser').click(function (){
-        let form = document.querySelector('#userForm');
-        if (!form.checkValidity()){
-            form.classList.add('was-validated');
-        }else {
-            let obj = {};
-            let formData = new FormData(form);
-            formData.forEach((value,key) => obj[key]=value);
-            $.post({
-                url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
-                data:{saveUser:JSON.stringify(obj)},
-                success:function (response) {
-                    //console.log(response)
-                    if (response == true){
-
-                        toastMixin.fire({
-                            text: "User sucessfully created"
-                        }).then(() => $("#userForm").get(0).reset())
-                    }else {
-                        toastMixin.fire({
-                            icon:"error",
-                            title:"Something went wrong!",
-                            text: "please contact the developer."
-                        })
-                    }
-                }
-            })
-        }
-    })
-    $(".cancelUser").click(function (){ $("#userForm").get(0).reset();})
 
     //display list of all users and admin can choose who to delete, Grouped delete or single
     $('.delUser').click(function (){
@@ -415,71 +396,31 @@ $(document).ready(function (){
         }
     })
 
-    //Task Process
-    $('#addTaskBtn').click(function (){
-        userTaskTableDivInDashboard.addClass('d-none').fadeOut()
-        departmentTaskTableDivInDashboard.addClass('d-none').fadeOut();
-        depUserTaskDiv.addClass('d-none').fadeOut();
-        loader.removeClass('d-none');
-        $.post({
-            url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
-            data:{taskBtn:1},
-            success: function (response) {
-                loader.addClass('d-none').fadeOut();
-                taskFormDiv.removeClass('d-none').fadeIn().html(response);
-            }
-        })
-    })
-
-    $(document).on('click', '.closeTaskFormBtn', function (){
-        loader.removeClass('d-none').fadeIn()
-        taskFormDiv.addClass('d-none').fadeOut()
-        loader.addClass('d-none').fadeOut()
-        depUserTaskDiv.removeClass('d-none').fadeIn()
-    })
-
-    $(document).on('click', '.sendTaskFormBtn', function (){
-        let form = document.querySelector('#taskForm');
+    //Add - Cancel Btns Process
+    //User Process
+    $('#saveUser').click(function (){
+        let form = document.querySelector('#userForm');
         if (!form.checkValidity()){
-            form.classList.add('was-validated')
+            form.classList.add('was-validated');
         }else {
-            let formdata = new FormData(form);
+            let obj = {};
+            let formData = new FormData(form);
+            formData.forEach((value,key) => obj[key]=value);
             $.post({
-                url:"http://localhost/php/taskmanagerapp/admin/addtaskRequest",
-                contentType:false,
-                processData:false,
-                data:formdata,
+                url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+                data:{saveUser:JSON.stringify(obj)},
                 success:function (response) {
                     //console.log(response)
-                    if (response != true){
+                    if (response == true){
 
                         toastMixin.fire({
-                            icon:"error",
-                            text:"Something went wrong, please contact the admin"
-                        })
-                            //.then(()=> window.location.reload())
-
+                            text: "User sucessfully created"
+                        }).then(() => $("#userForm").get(0).reset())
                     }else {
                         toastMixin.fire({
-                            title:"Task successfull Assigned",
-                            text:"Would you want to assign another task ?",
-                            timer:false,
-                            timerProgressBar: false,
-                            showConfirmButton: true,
-                            confirmButtonText: "Yes",
-                            showCancelButton:true,
-                            customClass: {
-                                actions: 'my-actions',
-                                //cancelButton: 'order-1 right-gap',
-                                confirmButton: 'order-2',
-                                cancelButton: 'order-3',
-                            },
-                        }).then( (result) => {
-                            if (result.isConfirmed){
-                                form.reset();
-                            }else {
-                                window.location.reload()
-                            }
+                            icon:"error",
+                            title:"Something went wrong!",
+                            text: "please contact the developer."
                         })
                     }
                 }
@@ -487,21 +428,95 @@ $(document).ready(function (){
         }
     })
 
-    let addBtns = document.querySelectorAll(".addBtn");
-    Array.from(addBtns).forEach(addBtn => {
-        addBtn.addEventListener('click', event => {
-            let func = event.currentTarget.getAttribute('data-id')
-            console.log(func)
-        })
+    $(document).on('click', '.cancelForm', function (){
+        loader.removeClass('d-none').fadeIn()
+        addTaskPageFormsDisplay.addClass('d-none').fadeOut()
+        loader.addClass('d-none').fadeOut()
+        allBtnsAddTaskPageDiv.removeClass('d-none').fadeIn()
+    })
+
+    //Send Any form and Php Process Side OK
+    $(document).on('click', '.sendFormBtn', function (event){
+
+        //this var contain formID - Entity Name and method name
+        let info = event.currentTarget.getAttribute('data-id')
+        const words = info.split('_')
+
+        let form = document.querySelector('#'+words[0]);
+
+        if (words[0] == "taskForm"){
+
+            if (!form.checkValidity()) {
+
+                form.classList.add('was-validated')
+
+            } else {
+
+                let formdata = new FormData(form);
+                $.post({
+                    url:"http://localhost/php/taskmanagerapp/admin/addtaskRequest",
+                    contentType:false,
+                    processData:false,
+                    data:formdata,
+                    success:function (response) {
+
+                        if (response != true){
+
+                            toastMixin.fire({
+                                icon:"error",
+                                text:"Something went wrong, please contact the admin"
+                            })
+
+                        }else {
+
+                            toastMixin.fire({
+                                text:"Task Successfully created"
+                            })
+                            .then(() => form.reset())
+
+                        }
+                    }
+                })
+            }
+
+        }else {
+            //Same way to for all saving
+
+
+        }
+        console.log(words[1])
     })
 
 
 
+
+    //Add Process Department - Task - User
+
+
+    Array.from(addBtns).forEach(addBtn => {
+        addBtn.addEventListener('click', event => {
+            loader.removeClass('d-none').fadeIn()
+            let func = event.currentTarget.getAttribute('data-id')
+            loadForm(func)
+        })
+    })
+    const loadForm = (func) => {
+        $.post({
+            url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+            data:{disForm:func},
+            success:function (response) {
+                allBtnsAddTaskPageDiv.addClass('d-none').fadeOut()
+                allTablesDiv.addClass('d-none').fadeOut()
+                loader.addClass('d-none').fadeOut()
+                addTaskPageFormsDisplay.removeClass('d-none').html(response).fadeIn()
+            }
+        })
+    }
+
+
+
     //first-page-admin Btn and actions Div Btn Menu
-    let firstPageAdminBtnDiv = $('#first-page-admin')
-    let menus = document.querySelectorAll('.pageHref');
-    let backDiv = $('.backDiv');
-    let backToFirstPageAdminBtnDiv = document.querySelectorAll('.back');
+
 
     //Menu Button to Display Page and Back to menu button
     const menuBtnAction = () => {
@@ -558,7 +573,7 @@ $(document).ready(function (){
     }
 
     //Display Department list in Task-page for CEO - ADMIN ROLE
-    let departmentListDiv = $("#departmentListInTaskPage");
+
     const loadDepartments = () => {
         $.post({
             url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
@@ -571,7 +586,7 @@ $(document).ready(function (){
     loadDepartments();
 
     //Load Active task to Display in common admin Ceo View
-    let activeTasksInTaskPage = $("#activeTasksInTaskPage");
+
     const loadActiveTasks = () => {
         $.post({
             url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
@@ -601,7 +616,6 @@ $(document).ready(function (){
 
     //Display Table : All tasks Btn - Today Task Btn - Late Task Btn - Future Task Btn
 
-    let viewTaskBtns = document.querySelectorAll(".viewTasksBtn");
     const displayTasksTableOnClickBtn = () => {
         'use-strict'
         Array.from(viewTaskBtns).forEach(viewTaskBtn => {
@@ -698,7 +712,6 @@ $(document).ready(function (){
 
     //Get Department List to display in Add Task Page Dropdown Filter
 
-    let departmentDropdownContainer = $('#receiveDepartmentList');
     const allDepartmentsListForDropdownFilter = () => {
 
         $.post({
@@ -716,9 +729,5 @@ $(document).ready(function (){
         allDepartmentsListForDropdownFilter()
     })
 
-    //Review Add Department Delete department add User delete User add Task delete task
-    $(".modal").on('shown.bs.modal', function() {
-        $('.modal-backdrop').css('background-color', '#00000073 !important');
-    });
 
 })

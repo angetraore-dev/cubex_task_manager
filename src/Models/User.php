@@ -222,6 +222,30 @@ class User
             endif;
     }
 
+    /**
+     * @param $departmentId
+     * @return void
+     */
+    public function userListBydepartmentInAddTaskForm($departmentId):void
+    {
+        $usersLists = self::findByDepartmentId($departmentId);
+        if ($usersLists):
+            ?>
+            <label for="userid" class="form-label">choose a responsible</label>
+            <select class="form-select" style="border: gold 1px solid;" name="userid" id="userid" required>
+                <option value="" class="form-control">Choose the responsible</option>
+                <?php foreach ($usersLists as $userList): ?>
+                    <option class="form-control" value="<?=$userList->getUserId()?>">
+                        <?=$userList->getFullname()?>
+                    </option>
+                <?php endforeach;?>
+            </select>
+            <div class="invalid-feedback">Please choose the responsible in the list</div>
+
+        <?php else: echo '<li>No records found</li>';
+        endif;
+    }
+
 
 
 }

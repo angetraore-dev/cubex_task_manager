@@ -7,8 +7,6 @@ use App\Models\StaticDb;
 use App\Models\Task;
 use App\Models\User;
 use App\Models\Database;
-use DateTime;
-use App\Config;
 
 class AdminController
 {
@@ -121,12 +119,29 @@ class AdminController
                     $this->task->userTasksTableOnClickUserListInDropdownFilter($userid);
 
                     break;
-                case isset($_POST["taskBtn"]):
+                case isset($_POST["disForm"]):
+                    $data = $_POST["disForm"];
+                    $explode_data = explode("_", $data);
 
-                    //Display Task Form Modal
-                    $this->task->taskForm();
+                    if (isset($explode_data[1])){
+
+                        $model = $explode_data[0];
+
+                        $func = $explode_data[1];
+
+                        $this->{$model}->{$func}();
+
+                    }else{
+                        echo "not found";
+                    }
 
                     break;
+
+                case isset($_POST["selectOpt"]):
+                    $departmentId = $_POST["selectOpt"];
+                    $this->user->userListBydepartmentInAddTaskForm($departmentId);
+                    break;
+
                 case isset($_POST["delTask"]):
                     //Delete Task in any table
 
