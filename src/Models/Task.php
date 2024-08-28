@@ -340,7 +340,7 @@ class Task
             </div>
             <div class="text-end mb-3">
                 <button type="button" class="btn btn-sm btn-secondary cancelForm">Cancel</button>
-                <button type="button" class="btn btn-sm btn-dark sendFormBtn" data-id="taskForm_task_create">create</button>
+                <button type="button" class="btn btn-sm btn-dark sendFormBtn" data-id="taskForm_task_insert">create</button>
             </div>
         </form>
 

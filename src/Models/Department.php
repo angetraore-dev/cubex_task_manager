@@ -75,6 +75,16 @@ class Department
     }
 
     /**
+     * @param $libelle
+     * @return array|false|mixed
+     */
+    public static function checkIfExist($libelle):mixed
+    {
+        $stmt = "SELECT * FROm task_db.department WHERE libelle = '$libelle'";
+        return StaticDb::getDb()->query($stmt, get_called_class());
+    }
+
+    /**
      * List Of Department in Department dropdown Filter
      * @return void
      */
@@ -152,6 +162,37 @@ class Department
             <button type="button" id="delGpedDep" name="delGpedDep" class="btn btn-primary">delete</button>
         </form>
     <?php else: echo "<p class='text-muted text-center'>No data found</p>"; endif;
+    }
+
+    //good
+    public function addDepartmentForm():void
+    {
+        ?>
+        <form class="row col-md-8 mx-auto bg-body-tertiary text-dark rounded rounded-2 opacity-80 g-3 my-4 needs-validation" id="departmentForm" novalidate>
+            <h3 class="my-3 fw-small fs-6 bg-dark text-white rounded rounded-2 text-center text-uppercase p-1 border border-1">add department Form</h3>
+
+
+            <div class="col-md-6 mb-3">
+                <label for="department_libelle">Department name</label>
+                <input type="text" name="department_libelle" id="department_libelle" class="form-control bg-body-tertiary text-dark" required>
+                <div class="invalid-feedback">
+                    enter a department
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="department_color">Department color</label><br>
+                <input type="color" name="department_color" id="department_color" value="#FFFF55" class="form-control-color bg-body-tertiary text-dark" required>
+                <div class="invalid-feedback">
+                    enter a department
+                </div>
+            </div>
+
+            <div class="text-end mb-3">
+                <button type="button" class="btn btn-sm btn-secondary cancelForm">Cancel</button>
+                <button type="button" class="btn btn-sm btn-dark sendFormBtn" data-id="departmentForm_department_insert">create</button>
+            </div>
+        </form>
+        <?php
     }
 
 }

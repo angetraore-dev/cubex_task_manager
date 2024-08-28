@@ -124,7 +124,8 @@ ob_start();?>
                             <fieldset class="d-flex flex-wrap align-self-start justify-content-around border border-1 pb-2">
                                 <legend  class="float-none w-auto fw-small fs-6 text-uppercase">Department</legend>
 
-                                <button data-bs-toggle="modal" data-bs-target="#addDepartment" id="add-dep" data-id="department_addDepartmentForm" class="addBtn btn btn-sm btn-outline-success text-uppercase border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
+                                <!--data-bs-toggle="modal" data-bs-target="#addDepartment"  -->
+                                <button id="addDepBtn" data-id="department_addDepartmentForm" class="addBtn btn btn-sm btn-outline-success text-uppercase border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill mx-4" viewBox="0 0 16 16">
                                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
@@ -140,7 +141,7 @@ ob_start();?>
                         <div class="col-sm-3">
                             <fieldset class="d-flex flex-wrap align-self-center justify-content-around pb-2">
                                 <legend  class="float-none w-auto fw-small fs-6 text-uppercase mx-auto">add task</legend>
-                                <button type="button" id="addTaskBtn" data-id="task_addTaskForm" class="add-user addBtn btn btn-sm btn-outline-success text-uppercase border-success mb-1">
+                                <button type="button" id="addTaskBtn" data-id="task_addTaskForm" class="addBtn btn btn-sm btn-outline-success text-uppercase border-success mb-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill mx-4" viewBox="0 0 16 16">
                                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
@@ -169,7 +170,7 @@ ob_start();?>
                         <div class="col-sm-3 mb-4">
                             <fieldset class="d-flex flex-wrap align-self-center justify-content-around border border-1 pb-2">
                                 <legend  class="float-none w-auto fw-small fs-6 text-uppercase">User</legend>
-                                <button data-bs-toggle="modal" data-bs-target="#addUser" data-id="user_addUserForm" id="add-user" class="addUser addBtn btn btn-sm btn-outline-success text-uppercase border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
+                                <button data-id="user_addUserForm" id="add-user" class="addBtn btn btn-sm btn-outline-success text-uppercase border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill mx-4" viewBox="0 0 16 16">
                                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
@@ -392,104 +393,6 @@ ob_start();?>
  <!-- End DIVs for differents menu items -->
 
 
-
-<!-- Modal add Department-->
-<div class="modal fade" id="addDepartment" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content" style="background-color: #0c0c0c !important; color: white !important;">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">add department</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form class="form g-3 needs-validation" id="departmentForm" novalidate>
-                    <div class="form-group">
-                        <label for="department_libelle">Department name</label>
-                        <input type="text" name="department_libelle" id="department_libelle" class="form-control" required>
-                        <div class="invalid-feedback">
-                            enter a department
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="department_color">Department color</label>
-                        <input type="color" name="department_color" id="department_color" class="form-control" required>
-                        <div class="invalid-feedback">
-                            enter a department
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary cancelDepartment" data-bs-dismiss="modal">cancel</button>
-                        <button type="button" id="saveDepartment" name="saveDepartment" class="btn btn-primary">create</button>
-                    </div>
-                </form>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<!-- Modal add User-->
-<div class="modal bg-body-dark text-white fade" id="addUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">add user</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form class="row g-3 needs-validation" id="userForm" role="form" novalidate>
-                    <div class="col-md-4 mb-3">
-                        <label for="fullname">Fullname</label>
-                        <input type="text" name="fullname" id="fullname" class="form-control" required>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" id="email" class="form-control" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" required>
-                        <div class="invalid-feedback">
-                            Please fill out
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="password">Password</label>
-                        <input minlength="6" maxlength="9" type="password" name="password" id="password" class="form-control" required>
-                        <div class="invalid-feedback">Please enter a valid password</div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="role">User role</label>
-                        <select class="form-select" id="role" name="role" required>
-                            <option class="form-control" value="">choose role</option>
-                            <?php $role = Role::readAll(); if ($role): foreach ($role as $ro): ?>
-                                <option class="text-center" value="<?=$ro->getRoleId()?>"><?= $ro->getRoleName()?></option>
-                            <?php endforeach; else:?>
-                                <p class="text-muted"> Please create department before </p>
-                            <?php endif;?>
-                        </select>
-                        <div class="invalid-feedback">Please enter a role user</div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="department">User department</label>
-                        <select class="form-select" id="department" name="department" required>
-                            <option class="form-control" value="">choose department</option>
-                            <?php $department = Department::readAll(); if($department) : foreach ($department as $dep): ?>
-                                <option class="text-center" value="<?=$dep->getDepartmentId()?>"><?=$dep->getLibelle()?></option>
-
-                            <?php endforeach;  else: ?>
-                                <p class="text-muted"> Please create department before </p>
-                            <?php endif;?>
-                        </select>
-                        <div class="invalid-feedback">Please select the user department</div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary cancelUser" data-bs-dismiss="modal">cancel</button>
-                        <button type="button" id="saveUser" name="saveUser" class="btn btn-primary">add</button>
-                    </div>
-                </form>
-            </div>
-
-        </div>
-    </div>
-</div>
 
 <!-- Modal delete user List -->
 <div class="modal bg-body-dark text-white fade" id="delUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelDel" aria-hidden="true">

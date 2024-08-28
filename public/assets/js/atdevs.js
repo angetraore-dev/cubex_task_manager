@@ -428,6 +428,35 @@ $(document).ready(function (){
         }
     })
 
+
+    /**
+     * Good Add Process Start
+     */
+
+    //Add Process Department - Task - User
+    Array.from(addBtns).forEach(addBtn => {
+        addBtn.addEventListener('click', event => {
+            loader.removeClass('d-none').fadeIn()
+            let func = event.currentTarget.getAttribute('data-id')
+            console.log(func)
+            loadForm(func)
+        })
+    })
+
+    //Form Add Process Display
+    const loadForm = (func) => {
+        $.post({
+            url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+            data:{disForm:func},
+            success:function (response) {
+                allBtnsAddTaskPageDiv.addClass('d-none').fadeOut()
+                allTablesDiv.addClass('d-none').fadeOut()
+                loader.addClass('d-none').fadeOut()
+                addTaskPageFormsDisplay.removeClass('d-none').html(response).fadeIn()
+            }
+        })
+    }
+
     $(document).on('click', '.cancelForm', function (){
         loader.removeClass('d-none').fadeIn()
         addTaskPageFormsDisplay.addClass('d-none').fadeOut()
@@ -444,15 +473,16 @@ $(document).ready(function (){
 
         let form = document.querySelector('#'+words[0]);
 
-        if (words[0] == "taskForm"){
+        if (!form.checkValidity()){
 
-            if (!form.checkValidity()) {
+            form.classList.add('was-validated')
 
-                form.classList.add('was-validated')
+        }else {
 
-            } else {
+            let formdata = new FormData(form);
 
-                let formdata = new FormData(form);
+            if (words[0] == "taskForm"){
+
                 $.post({
                     url:"http://localhost/php/taskmanagerapp/admin/addtaskRequest",
                     contentType:false,
@@ -472,53 +502,45 @@ $(document).ready(function (){
                             toastMixin.fire({
                                 text:"Task Successfully created"
                             })
-                            .then(() => form.reset())
+                                .then(() => form.reset())
 
                         }
                     }
                 })
+
+            }else {
+                let obj = {}
+                obj['class'] = words[1]
+                obj['method'] = words[2]
+                formdata.forEach(((value, key) => obj[key] = value))
+
+                $.post({
+                    url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+                    data:{formIns:JSON.stringify(obj)},
+                    success:function (response){
+
+                        if (response == true){
+                            toastMixin.fire({
+                                icon:"success",
+                                text:"Successfully Updated"
+                            }).then(() => form.reset())
+                        }else {
+                            toastMixin.fire({
+                                icon:"error",
+                                text:response
+                            })
+                        }
+                    }
+                })
+
             }
-
-        }else {
-            //Same way to for all saving
-
-
+            //console.log(words[0] +" "+words[1] +" " +words[2])
         }
-        console.log(words[1])
+
+
     })
 
 
-
-
-    //Add Process Department - Task - User
-
-
-    Array.from(addBtns).forEach(addBtn => {
-        addBtn.addEventListener('click', event => {
-            loader.removeClass('d-none').fadeIn()
-            let func = event.currentTarget.getAttribute('data-id')
-            loadForm(func)
-        })
-    })
-    const loadForm = (func) => {
-        $.post({
-            url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
-            data:{disForm:func},
-            success:function (response) {
-                allBtnsAddTaskPageDiv.addClass('d-none').fadeOut()
-                allTablesDiv.addClass('d-none').fadeOut()
-                loader.addClass('d-none').fadeOut()
-                addTaskPageFormsDisplay.removeClass('d-none').html(response).fadeIn()
-            }
-        })
-    }
-
-
-
-    //first-page-admin Btn and actions Div Btn Menu
-
-
-    //Menu Button to Display Page and Back to menu button
     const menuBtnAction = () => {
         'use strict'
         Array.from(menus).forEach(menu =>{
@@ -556,6 +578,7 @@ $(document).ready(function (){
         });
 
     }
+    //Admin Page side Menu actions
     menuBtnAction()
 
     //Display active Page on reload Page

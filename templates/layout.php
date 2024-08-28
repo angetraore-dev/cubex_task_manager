@@ -8,6 +8,7 @@
     <title class="text-uppercase"><?= SITE_NAME ." - ". $title ?></title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.dataTables.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 
 </head>
 <body>
@@ -86,6 +87,7 @@
 <!--<script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.min.js"></script>-->
 <script src="https://cdn.datatables.net/buttons/1.4.0/js/buttons.print.min.js"></script>
 <!-- End dataTables -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
 <script type="text/javascript" src="<?=HTTP.'/assets/js/atdevs.js'?>"></script>
 

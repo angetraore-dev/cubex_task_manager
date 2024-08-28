@@ -39,30 +39,45 @@ class AdminController
         {
             switch ($_POST){
 
-                case isset($_POST["saveDepartment"]):
+                case isset($_POST["formIns"]):
+                    $save = "";
+                    $data = json_decode($_POST["formIns"]);
+                    if ($data->class == 'department' && $data->method == 'insert'){
+                        $check = Department::checkIfExist($data->department_libelle);
+                        if ($check){
+                            $save = "A department with the same name already exist";
 
-                    $item = json_decode($_POST["saveDepartment"]);
-                    $field = ['libelle' => $item->department_libelle, 'color'=> $item->department_color];
-                    $class_name = 'department';
-                    $save = $this->database->insert($field, $class_name);
-                    echo $save;
+                        }else{
+                            $field = ['libelle' => $data->department_libelle, 'color'=> $data->department_color];
+                            $save = $this->database->{$data->method}($field, $data->class);
+                        }
+                        echo $save;
 
+                    }elseif ($data->class == 'user' && $data->method == 'insert'){
+
+                        $check = User::findByEmail($data->email);
+                        if ($check){
+
+                            $save = "An User with the same Email already Exist";
+
+                        }else{
+
+                            $hashed = password_hash($data->password, PASSWORD_DEFAULT);
+
+                            $field = [
+                                'fullname' => $data->fullname,
+                                'email' => $data->email,
+                                'password' => $hashed,
+                                'roleid' => $data->role,
+                                'department' => $data->department
+                            ];
+                            $save = $this->database->{$data->method}($field, $data->class);
+
+                        }
+                        echo $save;
+                    }
                     break;
-                case isset($_POST["saveUser"]):
 
-                    $item = json_decode($_POST["saveUser"]);
-                    $hashed = password_hash($item->password, PASSWORD_DEFAULT);
-                    $field = [
-                        'fullname' => $item->fullname,
-                        'email' => $item->email,
-                        'password' => $hashed,
-                        'roleid' => $item->role,
-                        'department' => $item->department
-                    ];
-                    $save = $this->database->insert($field, 'user');
-                    echo $save;
-
-                    break;
                 case isset($_POST["delUserForm"]):
                     //Display form list of user
                     $this->user->delGrpedForm();
@@ -120,6 +135,8 @@ class AdminController
 
                     break;
                 case isset($_POST["disForm"]):
+                    //dynamic display Form
+
                     $data = $_POST["disForm"];
                     $explode_data = explode("_", $data);
 
@@ -138,6 +155,8 @@ class AdminController
                     break;
 
                 case isset($_POST["selectOpt"]):
+                    //List of user by department in assign task to a user
+
                     $departmentId = $_POST["selectOpt"];
                     $this->user->userListBydepartmentInAddTaskForm($departmentId);
                     break;
