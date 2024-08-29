@@ -146,11 +146,15 @@ class Department
     /**
      * @return void
      */
-    public function delGrpedForm():void
+    public function delDepartmentForm():void
     {
-        $list = self::readAll(); if ($list):
+        $list = self::readAll();
+        if ($list):
         ?>
-        <form class="row g-3 needs-validation delgped-dep" novalidate>
+        <!--delgped-dep-->
+        <form class="row col-md-8 mx-auto bg-body-tertiary text-dark rounded rounded-2 opacity-80 g-3 my-4 needs-validation" id="deleteGroupedDepartmentForm" novalidate>
+            <h3 class="my-3 fw-small fs-6 bg-dark text-white rounded rounded-2 text-center text-uppercase p-1 border border-1">Delete Multiple departments Form</h3>
+
             <?php foreach ($list as $item): ?>
                 <div class="input-group <?=$item->getDepartmentId()?>">
                     <input class="form-check-input" type="checkbox" id="<?='list_'.$item->getDepartmentId()?>" name="<?='list_'.$item->getDepartmentId()?>" value="<?=$item->getDepartmentId()?>">
@@ -158,10 +162,15 @@ class Department
                 </div>
             <?php endforeach;?>
             <div class="invalid-feedback">You must select at least one item</div>
-            <button type="button" class="btn btn-secondary cancelDelGpedDep" data-bs-dismiss="modal">cancel</button>
-            <button type="button" id="delGpedDep" name="delGpedDep" class="btn btn-primary">delete</button>
+            <!--cancelDelGpedDep-->
+            <div class="text-end mb-3">
+                <button type="button" class="btn btn-secondary cancelForm">cancel</button>
+                <button type="button" class="btn btn-primary sendFormBtn" data-id="deleteGroupedDepartmentForm_department_delete">delete</button>
+            </div>
         </form>
-    <?php else: echo "<p class='text-muted text-center'>No data found</p>"; endif;
+    <?php
+        else: echo "<p class='text-muted text-center'>No data found</p>";
+        endif;
     }
 
     //good

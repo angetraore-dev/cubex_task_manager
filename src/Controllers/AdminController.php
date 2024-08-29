@@ -39,41 +39,90 @@ class AdminController
         {
             switch ($_POST){
 
+                //Insert/Delete Of Create department or create User
                 case isset($_POST["formIns"]):
+
                     $save = "";
+
                     $data = json_decode($_POST["formIns"]);
-                    if ($data->class == 'department' && $data->method == 'insert'){
-                        $check = Department::checkIfExist($data->department_libelle);
-                        if ($check){
-                            $save = "A department with the same name already exist";
+
+                    if ( $data->class == 'department' ){
+
+                        if ( $data->method == 'insert' ){
+
+                            $check = Department::checkIfExist($data->department_libelle);
+
+                            if ($check){
+
+                                $save = "A department with the same name already exist";
+
+                            }else{
+
+                                $field = ['libelle' => $data->department_libelle, 'color'=> $data->department_color];
+
+                                $save = $this->database->{$data->method}($field, $data->class);
+                            }
+
+                            echo $save;
+
+
+                        }elseif( $data->method == 'delete' ){
+                            //data= ['class', 'method']
+                            $arr = [];
+
+                            foreach ($data as $datum){
+
+                                if ($datum != 'department' && $datum != 'delete'){
+
+                                    $arr[] = $datum;
+                                }
+                            }
+
+                            foreach ($arr as $item){
+
+                                $save = $this->database->{$data->method}($item, $data->class);
+                            }
+
+                            echo $save;
 
                         }else{
-                            $field = ['libelle' => $data->department_libelle, 'color'=> $data->department_color];
-                            $save = $this->database->{$data->method}($field, $data->class);
+
+                            StaticDb::notFound();
                         }
-                        echo $save;
 
-                    }elseif ($data->class == 'user' && $data->method == 'insert'){
+                    }elseif ( $data->class == 'user' ){
 
-                        $check = User::findByEmail($data->email);
-                        if ($check){
+                        if ( $data->method == 'insert' ){
 
-                            $save = "An User with the same Email already Exist";
+                            $check = User::findByEmail($data->email);
+
+                            if ($check){
+
+                                $save = "An User with the same Email already Exist";
+
+                            }else{
+
+                                $hashed = password_hash($data->password, PASSWORD_DEFAULT);
+
+                                $field = [
+                                    'fullname' => $data->fullname,
+                                    'email' => $data->email,
+                                    'password' => $hashed,
+                                    'roleid' => $data->role,
+                                    'department' => $data->department
+                                ];
+
+                                $save = $this->database->{$data->method}($field, $data->class);
+
+                            }
+
+                        }elseif ( $data->method == 'delete' ){
 
                         }else{
 
-                            $hashed = password_hash($data->password, PASSWORD_DEFAULT);
-
-                            $field = [
-                                'fullname' => $data->fullname,
-                                'email' => $data->email,
-                                'password' => $hashed,
-                                'roleid' => $data->role,
-                                'department' => $data->department
-                            ];
-                            $save = $this->database->{$data->method}($field, $data->class);
-
+                            StaticDb::notFound();
                         }
+
                         echo $save;
                     }
                     break;
@@ -93,26 +142,8 @@ class AdminController
                     echo $del;
 
                     break;
-                case isset($_POST["delDepForm"]):
-                    //Must be review
 
-                    $this->department->delGrpedForm();
-
-                    break;
-
-                case isset($_POST["deleteDepartment"]):
-                    //Delete Department must be review
-
-                    $data = json_decode($_POST["deleteDepartment"]);
-                    $del = 0;
-                    foreach ($data as $value){
-                        $del = $this->database->delete($value, 'department');
-                    }
-                    echo $del;
-
-                    break;
-
-                case isset($_POST["userByDep"]):
+                case isset($_POST["userByDep"]): //ok
                     //Display Department User's List in User Dropdown Filter
 
                     $id = $_POST["userByDep"];
@@ -120,14 +151,14 @@ class AdminController
 
                     break;
 
-                case isset($_POST["displayDepartmentTaskOnDropdownClick"]):
+                case isset($_POST["displayDepartmentTaskOnDropdownClick"]): //ok
                     //Display Departments List on Department Dropdown Filter Clicked
 
                     $depId = $_POST["displayDepartmentTaskOnDropdownClick"];
                     $this->task->departmentTasksListInDropdownFilter($depId);
 
                     break;
-                case isset($_POST["userTask"]):
+                case isset($_POST["userTask"]): //ok
                     //Display User tasks OnClick on User's List in User Dropdown Filter
 
                     $userid = $_POST["userTask"];
@@ -135,7 +166,7 @@ class AdminController
 
                     break;
                 case isset($_POST["disForm"]):
-                    //dynamic display Form
+                    //dynamic display Form - use to display delete department and user
 
                     $data = $_POST["disForm"];
                     $explode_data = explode("_", $data);

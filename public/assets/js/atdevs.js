@@ -181,7 +181,6 @@ $(document).ready(function (){
                             title: "Error",
                             text: "Bad credentials"
                         })
-                        //.then(() => $('#loginform').get(0).reset())
 
                     }else {
                         window.location.replace("http://localhost/php/taskmanagerapp"+response)
@@ -234,16 +233,7 @@ $(document).ready(function (){
         $("#departmentForm").get(0).reset();
     })
 
-    //Display del department form on click
-    $('.delDep').click(function (){
-        $.post({
-            url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
-            data:{delDepForm:1},
-            success:function (response) {
-                $(".delDepList").html(response);
-            }
-        })
-    })
+
 
     $(document).on("click", "form #delGpedDep", function (){
         let form = document.querySelector(".delgped-dep");
@@ -270,14 +260,16 @@ $(document).ready(function (){
                         //console.log(response)
                         if (response != true){
 
-                            toastMixin.fire({
+                            Toast.fire({
                                 icon:"error",
                                 title:"Something went wrong!",
                                 text: "please contact the developer."
                             })
                         }else {
-                            toastMixin.fire({
+                            Toast.fire({
+                                icon:"success",
                                 text: "Department sucessfully deleted"
+
                             }).then(() => window.location.reload())
                         }
                     }
@@ -286,10 +278,7 @@ $(document).ready(function (){
         }
     })
 
-
-
     //Dropdown user Filter
-
     $(document).on("click", 'li[data-id] a', function (){
         const id = $(this).closest('li').data('id');
 
@@ -396,49 +385,17 @@ $(document).ready(function (){
         }
     })
 
-    //Add - Cancel Btns Process
-    //User Process
-    $('#saveUser').click(function (){
-        let form = document.querySelector('#userForm');
-        if (!form.checkValidity()){
-            form.classList.add('was-validated');
-        }else {
-            let obj = {};
-            let formData = new FormData(form);
-            formData.forEach((value,key) => obj[key]=value);
-            $.post({
-                url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
-                data:{saveUser:JSON.stringify(obj)},
-                success:function (response) {
-                    //console.log(response)
-                    if (response == true){
-
-                        toastMixin.fire({
-                            text: "User sucessfully created"
-                        }).then(() => $("#userForm").get(0).reset())
-                    }else {
-                        toastMixin.fire({
-                            icon:"error",
-                            title:"Something went wrong!",
-                            text: "please contact the developer."
-                        })
-                    }
-                }
-            })
-        }
-    })
-
 
     /**
      * Good Add Process Start
      */
 
-    //Add Process Department - Task - User
+    //Add Process Department - Task - User --- Use too to delete User or Department
     Array.from(addBtns).forEach(addBtn => {
         addBtn.addEventListener('click', event => {
             loader.removeClass('d-none').fadeIn()
             let func = event.currentTarget.getAttribute('data-id')
-            console.log(func)
+            //console.log(func)
             loadForm(func)
         })
     })
@@ -492,17 +449,18 @@ $(document).ready(function (){
 
                         if (response != true){
 
-                            toastMixin.fire({
+                            Toast.fire({
                                 icon:"error",
                                 text:"Something went wrong, please contact the admin"
                             })
 
                         }else {
 
-                            toastMixin.fire({
+                            Toast.fire({
+                                icon:"success",
                                 text:"Task Successfully created"
-                            })
-                                .then(() => form.reset())
+
+                            }).then(() => form.reset())
 
                         }
                     }
@@ -520,12 +478,17 @@ $(document).ready(function (){
                     success:function (response){
 
                         if (response == true){
-                            toastMixin.fire({
+
+                            Toast.fire({
                                 icon:"success",
                                 text:"Successfully Updated"
-                            }).then(() => form.reset())
+
+                            }).then(() => {
+                                form.reset()
+                            })
+
                         }else {
-                            toastMixin.fire({
+                            Toast.fire({
                                 icon:"error",
                                 text:response
                             })
@@ -603,10 +566,13 @@ $(document).ready(function (){
             data:{departmentList:1},
             success:function (response) {
                 departmentListDiv.html(response);
+
             }
         })
     }
-    loadDepartments();
+    //setInterval(() => {$('#departmentListInTaskPage').load(location.href +" #departmentListInTaskPage >*","")
+    //},2000)
+    loadDepartments()
 
     //Load Active task to Display in common admin Ceo View
 
@@ -668,7 +634,7 @@ $(document).ready(function (){
             data:{checkedd:JSON.stringify(obj)},
             success:function (response){
                 if (!response){
-                    toastMixin.fire({
+                    Toast.fire({
                         icon:"error",
                         text:"something went wrong, please contact the admin"
 
@@ -678,6 +644,7 @@ $(document).ready(function (){
                     })
                 }else {
                     Toast.fire({
+                        icon:"success",
                         text:"Successfull updated"
                     }).then(() => {
                         refreshTable(displayedTable)
@@ -710,16 +677,17 @@ $(document).ready(function (){
                         if (!response){
                             Toast.fire({
                                 icon:"error",
-                                text:"Something went wrong",
-                                position:"bottom-end"
+                                text:"Something went wrong"
+
                             }).then(() => {
                                 refreshTable(displayedTable)
                             })
+
                         }else {
+
                             Toast.fire({
                                 icon:"success",
-                                text:"Successfull deleted",
-                                position:"bottom-end"
+                                text:"Successfull deleted"
                             }).then(() => {
                                 //$("#"+displayedtable).DataTable().row($button.parents('tr')).remove().draw(false)
                                 refreshTable(displayedTable)
@@ -754,3 +722,47 @@ $(document).ready(function (){
 
 
 })
+
+////Add - Cancel Btns Process
+//     //User Process
+//     $('#saveUser').click(function (){
+//         let form = document.querySelector('#userForm');
+//         if (!form.checkValidity()){
+//             form.classList.add('was-validated');
+//         }else {
+//             let obj = {};
+//             let formData = new FormData(form);
+//             formData.forEach((value,key) => obj[key]=value);
+//             $.post({
+//                 url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+//                 data:{saveUser:JSON.stringify(obj)},
+//                 success:function (response) {
+//                     //console.log(response)
+//                     if (response == true){
+//
+//                         Toast.fire({
+//                             icon:"success",
+//                             text: "User sucessfully created"
+//                         }).then(() => $("#userForm").get(0).reset())
+//                     }else {
+//                         Toast.fire({
+//                             icon:"error",
+//                             title:"Something went wrong!",
+//                             text: "please contact the developer."
+//                         })
+//                     }
+//                 }
+//             })
+//         }
+//     })
+
+//Display del department form on click
+//     $('.delDep').click(function (){
+//         $.post({
+//             url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+//             data:{delDepForm:1},
+//             success:function (response) {
+//                 $(".delDepList").html(response);
+//             }
+//         })
+//     })
