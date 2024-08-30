@@ -113,7 +113,7 @@ ob_start();?>
 
             <!--container <h3 class="text-center my-4"> Add Task Page **</h3>-->
             <!-- Btn Department - Task - User and dropdown department-responsibles -->
-            <div class="container-fluid border border-1">
+            <div class="container-fluid border border-1" id="addTaskPageContainerDiv">
 
                 <!-- All Button in Add-Task-Page BTN DIV-->
                 <div class="row allBtnsAddTaskPage" id="depUserTaskDiv">
@@ -259,10 +259,6 @@ ob_start();?>
                 -->
                 <!-- Form add Task Div -->
                 <div class="col-md-8 mx-auto d-flex justify-content-center align-items-center d-none" id="taskFormDiv"></div>
-
-
-
-
             </div>
         </div>
 

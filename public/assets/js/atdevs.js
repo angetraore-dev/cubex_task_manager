@@ -1,6 +1,7 @@
 $(document).ready(function (){
     console.log("angetraore-dev: +225 0507 333 944");
     //refresh div $("#departmentlist").load(location.href+" #departmentlist>*","")
+    //$("#myMainDiv").load(location.href + " #myRefreshDiv");
 
     //Dynamic displayed allTables DIV -->
 
@@ -234,50 +235,6 @@ $(document).ready(function (){
     })
 
 
-
-    $(document).on("click", "form #delGpedDep", function (){
-        let form = document.querySelector(".delgped-dep");
-
-        if (!form.checkValidity()){
-            form.classList.add('was-validated')
-        }else {
-            let obj={};
-            let formdata = new FormData(form);
-            formdata.forEach((value, key) => obj[key]=value);
-            if (jQuery.isEmptyObject(obj)){
-
-                toastMixin.fire({
-                    icon:"warning",
-                    title:"Please select someone to delete!",
-                    text: "Please select someone to delete"
-                })
-
-            }else {
-                $.post({
-                    url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
-                    data:{deleteDepartment:JSON.stringify(obj)},
-                    success:function (response) {
-                        //console.log(response)
-                        if (response != true){
-
-                            Toast.fire({
-                                icon:"error",
-                                title:"Something went wrong!",
-                                text: "please contact the developer."
-                            })
-                        }else {
-                            Toast.fire({
-                                icon:"success",
-                                text: "Department sucessfully deleted"
-
-                            }).then(() => window.location.reload())
-                        }
-                    }
-                })
-            }
-        }
-    })
-
     //Dropdown user Filter
     $(document).on("click", 'li[data-id] a', function (){
         const id = $(this).closest('li').data('id');
@@ -369,7 +326,7 @@ $(document).ready(function (){
 
                             toastMixin.fire({
                                 text: "User sucessfully deleted"
-                            }).then(() => window.location.reload())
+                            }).then(() => closeForm() )//window.location.reload()
 
                         }else {
                             toastMixin.fire({
@@ -452,7 +409,7 @@ $(document).ready(function (){
                             Toast.fire({
                                 icon:"error",
                                 text:"Something went wrong, please contact the admin"
-                            })
+                            }).then(() => closeForm())
 
                         }else {
 
@@ -460,7 +417,7 @@ $(document).ready(function (){
                                 icon:"success",
                                 text:"Task Successfully created"
 
-                            }).then(() => form.reset())
+                            }).then(() => closeForm())
 
                         }
                     }
@@ -480,18 +437,17 @@ $(document).ready(function (){
                         if (response == true){
 
                             Toast.fire({
+                                toast:true,
                                 icon:"success",
                                 text:"Successfully Updated"
 
-                            }).then(() => {
-                                form.reset()
-                            })
+                            }).then(() => closeForm())
 
                         }else {
                             Toast.fire({
                                 icon:"error",
                                 text:response
-                            })
+                            }).then(() => closeForm())
                         }
                     }
                 })
@@ -502,6 +458,11 @@ $(document).ready(function (){
 
 
     })
+
+    //Close any form
+    const closeForm = () => {
+        $('.cancelForm').trigger('click')
+    }
 
 
     const menuBtnAction = () => {
@@ -723,46 +684,45 @@ $(document).ready(function (){
 
 })
 
-////Add - Cancel Btns Process
-//     //User Process
-//     $('#saveUser').click(function (){
-//         let form = document.querySelector('#userForm');
-//         if (!form.checkValidity()){
-//             form.classList.add('was-validated');
-//         }else {
-//             let obj = {};
-//             let formData = new FormData(form);
-//             formData.forEach((value,key) => obj[key]=value);
-//             $.post({
-//                 url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
-//                 data:{saveUser:JSON.stringify(obj)},
-//                 success:function (response) {
-//                     //console.log(response)
-//                     if (response == true){
+//    $(document).on("click", "form #delGpedDep", function (){
+//         let form = document.querySelector(".delgped-dep");
 //
-//                         Toast.fire({
-//                             icon:"success",
-//                             text: "User sucessfully created"
-//                         }).then(() => $("#userForm").get(0).reset())
-//                     }else {
-//                         Toast.fire({
-//                             icon:"error",
-//                             title:"Something went wrong!",
-//                             text: "please contact the developer."
-//                         })
+//         if (!form.checkValidity()){
+//             form.classList.add('was-validated')
+//         }else {
+//             let obj={};
+//             let formdata = new FormData(form);
+//             formdata.forEach((value, key) => obj[key]=value);
+//             if (jQuery.isEmptyObject(obj)){
+//
+//                 toastMixin.fire({
+//                     icon:"warning",
+//                     title:"Please select someone to delete!",
+//                     text: "Please select someone to delete"
+//                 })
+//
+//             }else {
+//                 $.post({
+//                     url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+//                     data:{deleteDepartment:JSON.stringify(obj)},
+//                     success:function (response) {
+//                         //console.log(response)
+//                         if (response != true){
+//
+//                             Toast.fire({
+//                                 icon:"error",
+//                                 title:"Something went wrong!",
+//                                 text: "please contact the developer."
+//                             })
+//                         }else {
+//                             Toast.fire({
+//                                 icon:"success",
+//                                 text: "Department sucessfully deleted"
+//
+//                             }).then(() => window.location.reload())
+//                         }
 //                     }
-//                 }
-//             })
-//         }
-//     })
-
-//Display del department form on click
-//     $('.delDep').click(function (){
-//         $.post({
-//             url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
-//             data:{delDepForm:1},
-//             success:function (response) {
-//                 $(".delDepList").html(response);
+//                 })
 //             }
-//         })
+//         }
 //     })
