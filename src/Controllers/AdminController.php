@@ -39,6 +39,12 @@ class AdminController
         {
             switch ($_POST){
 
+                case isset($_POST["userListByDepartmentTodelete"]):
+
+                    $id = $_POST["userListByDepartmentTodelete"];
+                    $this->user->userListByDepartmentTodelete($id);
+                    break;
+
                 //Insert/Delete Of Create department or create User
                 case isset($_POST["formIns"]):
 
@@ -118,6 +124,27 @@ class AdminController
 
                         }elseif ( $data->method == 'delete' ){
 
+                            $arr = [];
+
+                            foreach ($data as $datum){
+
+                                if ($datum != 'user' && $datum != 'delete' && $datum != 'department'){
+
+                                    $arr[] = $datum;
+                                }
+                            }
+
+                            foreach ($arr as $item){
+
+                                $save = $this->database->{$data->method}($item, $data->class);
+                            }
+
+                            if ($save){
+                                echo "Sucessfully Deleted";
+                            }else{
+                                echo "Something went wrong";
+                            }
+
                         }else{
 
                             StaticDb::notFound();
@@ -125,22 +152,6 @@ class AdminController
 
                         echo $save;
                     }
-                    break;
-
-                case isset($_POST["delUserForm"]):
-                    //Display form list of user
-                    $this->user->delGrpedForm();
-
-                    break;
-                case isset($_POST["deleteUser"]):
-                    //Must be Review
-
-                    $data = json_decode($_POST["deleteUser"]);
-                    foreach ($data as $key => $value){
-                        $del = $this->database->delete($value, 'user');
-                    }
-                    echo $del;
-
                     break;
 
                 case isset($_POST["userByDep"]): //ok

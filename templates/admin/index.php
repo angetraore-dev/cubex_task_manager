@@ -179,7 +179,7 @@ ob_start();?>
                                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
                                     </svg>
                                 </button>
-                                <button data-bs-toggle="modal" data-bs-target="#delUser" data-id="user_delUserForm" class="delUser delBtn btn btn-sm text-uppercase btn-outline-danger border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
+                                <button type="button" data-id="user_delUserForm" class="addBtn btn btn-sm text-uppercase btn-outline-danger border border-1" style="text-decoration: none !important; color: #FFFFFF;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill mx-4" viewBox="0 0 16 16">
                                         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
                                     </svg>
@@ -389,33 +389,6 @@ ob_start();?>
 </div>
  <!-- End DIVs for differents menu items -->
 
-
-
-<!-- Modal delete user List -->
-<div class="modal bg-body-dark text-white fade" id="delUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelDel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabelDel">Delete user</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body delUserList"></div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal delete department List -->
-<div class="modal fade" id="delDep" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelDel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content bg-body-tertiary text-dark">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5 text-center" id="staticBackdropLabelDel">Delete department</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body delDepList"></div>
-        </div>
-    </div>
-</div>
 
 <?php $content = ob_get_clean(); ?>
 <?php require_once DOCROOT .'/templates/layout.php';?>

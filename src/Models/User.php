@@ -176,6 +176,74 @@ class User
         return false;
     }
 
+    public function userListByDepartmentTodelete($departmentId)
+    {
+        $list = self::findByDepartmentId($departmentId);
+        if ($list):
+            ?>
+            <?php foreach ($list as $item): if($_SESSION["user_id"] != $item->getUserId()):?>
+                <div class="input-group <?=$item->getUserId()?>">
+                    <input class="form-check-input" required type="checkbox" id="<?='list_'.$item->getUserId()?>" name="<?='list_'.$item->getUserId()?>" value="<?=$item->getUserId()?>">
+                    <label class="form-check-label mx-1" for="<?='list_'.$item->getUserId()?>"><?=$item->getFullname()?></label>
+                </div>
+            <?php endif; endforeach;?>
+            <div class="invalid-feedback">Please choose one or multiple responsible to delete</div>
+
+        <?php else: echo '<li>No records found</li>';
+        endif;
+    }
+
+    public function delUserForm()
+    {
+        $department = Department::readAll();
+        if ($department):
+        ?>
+        <form class="row col-md-8 mx-auto bg-body-tertiary text-dark rounded rounded-2 opacity-80 g-3 my-4 needs-validation" id="deleteUserForm" novalidate>
+            <h3 class="my-3 fw-small fs-6 bg-dark text-white rounded rounded-2 text-center text-uppercase p-1 border border-1">Delete Multiple User Form</h3>
+
+            <div class="col-md-12 department_select_div">
+                <label for="department">Department</label>
+                <select class="form-select" name="department" id="department" required>
+                    <option value=""> --> department list <--</option>
+                    <?php foreach ( $department as $item): ?>
+                        <option value="<?=$item->getDepartmentId()?>"><?= $item->getLibelle()?></option>
+                    <?php endforeach;?>
+                </select>
+                <div class="invalid-feedback">You must choose at least one department</div>
+
+            </div>
+            <div class="col-md-12 d-none" id="userList"></div>
+            <div class="invalid-feedback">You must select at least one item</div>
+            <!--cancelDelGpedDep-->
+            <div class="text-end mb-3">
+                <button type="button" class="btn btn-secondary cancelForm">cancel</button>
+                <button type="button" class="btn btn-primary sendFormBtn" data-id="deleteUserForm_user_delete">delete</button>
+            </div>
+        </form>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#department').on('change', function (){
+                    let departmentId = $(this).val();
+                    if (departmentId){
+
+                        $.post({
+                            url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+                            data:{userListByDepartmentTodelete:departmentId},
+                            success:function (response) {
+                                $('#userList').removeClass('d-none').html(response).fadeIn()
+                            }
+                        })
+
+                    }
+                })
+            })
+        </script>
+        <?php
+        else:
+            echo "<p class='text-muted text-center'>No data found</p>";
+        endif;
+    }
+
     /**
      * @return void
      */
