@@ -146,6 +146,115 @@ class Department
     /**
      * @return void
      */
+    public static function addDepartmentFormChoice()
+    {
+        ?>
+        <form class="row col-md-8 mx-auto bg-body-tertiary text-dark rounded rounded-2 opacity-80 g-3 my-4 needs-validation" id="departmentFormChoice" novalidate>
+            <h3 class="my-3 fw-small fs-6 bg-dark text-white rounded rounded-2 text-center text-uppercase p-1 border border-1">add department Form</h3>
+
+            <div class="col-md-12 mb-3" id="Choices">
+                <label for="department_choice">Department name</label>
+                <select class="form-select" name="department_choice" id="department_choice">
+                    <option class="form-control" value="ceo_#FFFFFF">ceo</option>
+                    <option class="form-control" value="pmo_#FF0000">pmo</option>
+                    <option class="form-control" value="operations_#DA7843">operations</option>
+                    <option class="form-control" value="finance_#4FAD5B">finance</option>
+                    <option class="form-control" value="shared services_#4FADEA">shared services</option>
+                    <option class="form-control" value="strategy_#FFFF55">strategy</option>
+                    <option class="form-control" value="marketing_#1431F5">marketing</option>
+                    <option class="form-control" value="creative_#68349A">creative</option>
+                    <option class="form-control" value="procurement_#8E2966">procurement</option>
+                    <option class="form-control" value="factory_#AEAEAE">factory</option>
+
+                </select>
+            </div>
+
+            <div class="d-none" id="result">
+                <div class="col-md-6 mb-3">
+                    <label for="department_libelle">Department name</label>
+                    <input type="text" name="department_libelle" id="department_libelle" class="form-control bg-body-tertiary text-dark" required>
+                    <div class="invalid-feedback">
+                        enter a department
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="department_color">Department color</label><br>
+                    <input type="color" name="department_color" id="department_color" value="#FFFF55" class="form-control-color bg-body-tertiary text-dark" required>
+                    <div class="invalid-feedback">
+                        enter a department
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="text-end mb-3">
+                <!--<button type="button" class="btn btn-sm btn-secondary cancelForm">Cancel</button>-->
+                <button type="button" class="btn btn-sm btn-secondary cancelForm" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-sm btn-dark sendFormBtn" data-id="departmentFormChoice_department_insert">create</button>
+            </div>
+        </form>
+
+        <script type="text/javascript">
+            $(document).ready(function (){
+                $('#department_choice').change(function (){
+                    let value = $(this).val()
+                    let data = value.split("_")
+                    $('#department_libelle').val(data[0])
+                    $('#department_color').val(data[1])
+                    $("#result").removeClass('d-none').fadeIn()
+                })
+            })
+        </script>
+        <?php
+    }
+
+    public static function buttonAddDepartment($task)
+    {
+        ?>
+            <div class="d-flex flex-wrap">
+                <!--id="callDepartmentChoiceForm" data-id="department_addDepartmentFormChoice"-->
+            <button data-bs-toggle="modal" data-bs-target="#staticBackdrop" type="button" class="btn border-0 align-self-start" style="color: white !important;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"></path>
+                </svg>
+            </button>
+
+            <div class="align-self-center justify-content-between">
+                <?php $departments = Department::readAll(); foreach ($departments as $department): if ($department->getColor() == $task->color): ?>
+                    <svg style="background-color: <?= $task->color?>" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="<?=$task->color?>" class="bi bi-square me-1" viewBox="0 0 16 16">
+                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                    </svg>
+                <?php else: ?>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="<?=$department->getColor()?>" class="bi bi-square me-1" viewBox="0 0 16 16">
+                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                    </svg>
+
+                <?php endif; endforeach;?>
+            </div>
+
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content modal-lg">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <?php Department::addDepartmentFormChoice();?>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <?php
+    }
+
+    /**
+     * @return void
+     */
     public function delDepartmentForm():void
     {
         $list = self::readAll();

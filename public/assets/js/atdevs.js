@@ -459,14 +459,45 @@ $(document).ready(function (){
 
     })
 
+    //Load Active tasks And departments in Task-page for CEO - ADMIN ROLE
+    const loadDepartments = () => {
+        $.post({
+            url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+            data:{departmentList:1},
+            success:function (response) {
+                departmentListDiv.html(response);
+
+            }
+        })
+    }
+    loadDepartments()
+
+    const loadActiveTasks = () => {
+        $.post({
+            url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
+            data:{activeTasksList:1},
+            success:function (response) {
+                activeTasksInTaskPage.html(response);
+            }
+        })
+    }
+    loadActiveTasks();
+
     //Close any form
     const closeForm = () => {
         $('.cancelForm').trigger('click')
+        //Load departments and active Tasks in task-page again
+        setTimeout(() => {
+            loadDepartments()
+            loadActiveTasks()
+        },2000)
     }
 
-
+    //First menu on Admin Route
     const menuBtnAction = () => {
         'use strict'
+
+        //render menu route on click
         Array.from(menus).forEach(menu =>{
             menu.addEventListener('click', event => {
 
@@ -486,9 +517,16 @@ $(document).ready(function (){
 
                 loader.addClass('d-none').fadeOut()
 
+                //Load departments and active Tasks in task-page again
+                setTimeout(() => {
+                    loadDepartments()
+                    loadActiveTasks()
+                },2000)
+
             }, false)
         });
 
+        //Back Menu in admin route
         Array.from(backToFirstPageAdminBtnDiv).forEach(back =>{
             back.addEventListener('click', e =>{
                 loader.removeClass('d-none').fadeIn()
@@ -498,6 +536,7 @@ $(document).ready(function (){
                 backDiv.addClass('d-none').fadeOut()
                 firstPageAdminBtnDiv.removeClass('d-none').fadeIn()
                 loader.addClass('d-none').fadeOut()
+
             }, false)
         });
 
@@ -512,6 +551,7 @@ $(document).ready(function (){
         console.log("localstorage is not allowed in code snippets here test it on jsfiddle");
     }
     if (activePage) {
+        //console.log(activePage)
         firstPageAdminBtnDiv.addClass('d-none').fadeOut()
         loader.removeClass('d-none').fadeIn()
         backDiv.removeClass('d-none').fadeIn()
@@ -519,34 +559,7 @@ $(document).ready(function (){
         loader.addClass('d-none').fadeOut()
     }
 
-    //Display Department list in Task-page for CEO - ADMIN ROLE
 
-    const loadDepartments = () => {
-        $.post({
-            url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
-            data:{departmentList:1},
-            success:function (response) {
-                departmentListDiv.html(response);
-
-            }
-        })
-    }
-    //setInterval(() => {$('#departmentListInTaskPage').load(location.href +" #departmentListInTaskPage >*","")
-    //},2000)
-    loadDepartments()
-
-    //Load Active task to Display in common admin Ceo View
-
-    const loadActiveTasks = () => {
-        $.post({
-            url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
-            data:{activeTasksList:1},
-            success:function (response) {
-                activeTasksInTaskPage.html(response);
-            }
-        })
-    }
-    loadActiveTasks();
 
     /*
     ADD TASK PAGE PROCESS
@@ -565,7 +578,6 @@ $(document).ready(function (){
     }
 
     //Display Table : All tasks Btn - Today Task Btn - Late Task Btn - Future Task Btn
-
     const displayTasksTableOnClickBtn = () => {
         'use-strict'
         Array.from(viewTaskBtns).forEach(viewTaskBtn => {
@@ -580,7 +592,6 @@ $(document).ready(function (){
     displayTasksTableOnClickBtn()
 
     //CheckBoxes Process
-
     $(document).on('click', 'tr input.checkbox', function (event){
 
         let displayedTable = $(this).closest('tr').data('id');
@@ -617,7 +628,6 @@ $(document).ready(function (){
     })
 
     //Delete Task Item in All Table Process WORK AND REFRESHED TABLE WORK TOO
-
     $(document).on('click', 'tr button.delItem', function (e){
         let displayedTable = $(this).closest('tr').data('id');
         let taskIdItem = $(this).data('id');
@@ -663,7 +673,6 @@ $(document).ready(function (){
     })
 
     //Get Department List to display in Add Task Page Dropdown Filter
-
     const allDepartmentsListForDropdownFilter = () => {
 
         $.post({
@@ -676,53 +685,9 @@ $(document).ready(function (){
     }
 
     //Display Department List in Filter Dropdown On demand OnClick
-
     $(document).on('click', 'div .departmentListFilter', function (){
         allDepartmentsListForDropdownFilter()
     })
 
 
 })
-
-//    $(document).on("click", "form #delGpedDep", function (){
-//         let form = document.querySelector(".delgped-dep");
-//
-//         if (!form.checkValidity()){
-//             form.classList.add('was-validated')
-//         }else {
-//             let obj={};
-//             let formdata = new FormData(form);
-//             formdata.forEach((value, key) => obj[key]=value);
-//             if (jQuery.isEmptyObject(obj)){
-//
-//                 toastMixin.fire({
-//                     icon:"warning",
-//                     title:"Please select someone to delete!",
-//                     text: "Please select someone to delete"
-//                 })
-//
-//             }else {
-//                 $.post({
-//                     url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
-//                     data:{deleteDepartment:JSON.stringify(obj)},
-//                     success:function (response) {
-//                         //console.log(response)
-//                         if (response != true){
-//
-//                             Toast.fire({
-//                                 icon:"error",
-//                                 title:"Something went wrong!",
-//                                 text: "please contact the developer."
-//                             })
-//                         }else {
-//                             Toast.fire({
-//                                 icon:"success",
-//                                 text: "Department sucessfully deleted"
-//
-//                             }).then(() => window.location.reload())
-//                         }
-//                     }
-//                 })
-//             }
-//         }
-//     })

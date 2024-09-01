@@ -124,7 +124,7 @@ ob_start();?>
                             <fieldset class="d-flex flex-wrap align-self-start justify-content-around border border-1 pb-2">
                                 <legend  class="float-none w-auto fw-small fs-6 text-uppercase">Department</legend>
 
-                                <!--data-bs-toggle="modal" data-bs-target="#addDepartment"  -->
+                                <!--department_addDepartmentFormChoice-->
                                 <button id="addDepBtn" data-id="department_addDepartmentForm" class="addBtn btn btn-sm btn-outline-success text-uppercase border border-1" style="text-decoration: none !important; color: #FFFFFF;" type="button">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill mx-4" viewBox="0 0 16 16">
                                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
@@ -370,12 +370,6 @@ ob_start();?>
                     <div class="d-flex flex-column justify-content-between p-1">
                         <button class="btn btn-sm mb-2" style="background-color: gold; text-decoration: none !important; color: #FFFFFF;" type="button">Checked</button>
                         <button class="btn btn-sm" style="border: gold 1px solid; text-decoration: none !important; color: #FFFFFF;" type="button">not Checked</button>
-
-                        <!--
-                        <div class="container-fluid">
-                            <h3 class="text-center fs-4">X</h3>
-                        </div>
-                        -->
                     </div>
 
                 </div>
