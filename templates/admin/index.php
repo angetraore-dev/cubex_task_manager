@@ -383,6 +383,22 @@ ob_start();?>
 </div>
  <!-- End DIVs for differents menu items -->
 
+<!-- Modal add Department by small caret click -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <?php Department::addDepartmentFormChoice();?>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 
 <?php $content = ob_get_clean(); ?>
 <?php require_once DOCROOT .'/templates/layout.php';?>

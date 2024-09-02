@@ -155,6 +155,7 @@ class Department
             <div class="col-md-12 mb-3" id="Choices">
                 <label for="department_choice">Department name</label>
                 <select class="form-select" name="department_choice" id="department_choice">
+                    <option class="form-control" value="">-->Select<--</option>
                     <option class="form-control" value="ceo_#FFFFFF">ceo</option>
                     <option class="form-control" value="pmo_#FF0000">pmo</option>
                     <option class="form-control" value="operations_#DA7843">operations</option>
@@ -208,47 +209,36 @@ class Department
         <?php
     }
 
-    public static function buttonAddDepartment($task)
+    /**
+     * @param $task
+     * @return void
+     */
+    public static function buttonAddDepartment($task):void
     {
+        //var_dump($task);
         ?>
             <div class="d-flex flex-wrap">
                 <!--id="callDepartmentChoiceForm" data-id="department_addDepartmentFormChoice"-->
-            <button data-bs-toggle="modal" data-bs-target="#staticBackdrop" type="button" class="btn border-0 align-self-start" style="color: white !important;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"></path>
-                </svg>
-            </button>
-
-            <div class="align-self-center justify-content-between">
-                <?php $departments = Department::readAll(); foreach ($departments as $department): if ($department->getColor() == $task->color): ?>
-                    <svg style="background-color: <?= $task->color?>" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="<?=$task->color?>" class="bi bi-square me-1" viewBox="0 0 16 16">
-                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                <button data-bs-toggle="modal" data-bs-target="#staticBackdrop" type="button" class="btn border-0 align-self-start" style="color: white !important;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"></path>
                     </svg>
-                <?php else: ?>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="<?=$department->getColor()?>" class="bi bi-square me-1" viewBox="0 0 16 16">
-                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                    </svg>
+                </button>
 
-                <?php endif; endforeach;?>
-            </div>
+                <div class="align-self-center justify-content-between">
+                    <?php $departments = Department::readAll(); foreach ($departments as $department): if ($department->getColor() == $task->color): ?>
+                        <svg style="background-color: <?= $task->color?>" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="<?=$task->color?>" class="bi bi-square me-1" viewBox="0 0 16 16">
+                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                        </svg>
+                    <?php else: ?>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="<?=$department->getColor()?>" class="bi bi-square me-1" viewBox="0 0 16 16">
+                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                        </svg>
 
-        </div>
-        <!-- Modal -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content modal-lg">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <?php Department::addDepartmentFormChoice();?>
-                    </div>
-
+                    <?php endif; endforeach;?>
                 </div>
             </div>
-        </div>
-
+        <!-- Modal is in admin index view-->
         <?php
     }
 
