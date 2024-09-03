@@ -39,81 +39,79 @@ ob_start();?>
 
         <div class="d-flex align-items-stretch py-1 h-100 min-vh-100 vh-100 mh-100" style="height: 100%">
 
-        <!-- left Bar contain Logo and go back button -->
-        <div class="col-lg-1 p-1 mh-100 backDiv d-none" style="height: 100vh;">
-            <!-- Logo -->
-            <div class="text-center justify-content-start align-self-start mb-3">
-                <h3 class="fs-2 fw-bolder">X</h3>
+            <!-- left Bar contain Logo and go back button -->
+            <div class="col-lg-1 p-1 mh-100 backDiv d-none" style="height: 100vh;">
+                <!-- Logo -->
+                <div class="text-center justify-content-start align-self-start mb-3">
+                    <h3 class="fs-2 fw-bolder">X</h3>
+                </div>
+
+                <!--Back Button -->
+                <button class="btn btn-link-hover text-white align-self-end justify-content-end back" type="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5"></path>
+                    </svg>
+                    Back
+                </button>
             </div>
 
-            <!--Back Button -->
-            <button class="btn btn-link-hover text-white align-self-end justify-content-end back" type="button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5"></path>
-                </svg>
-                Back
-            </button>
-        </div>
+            <!-- Menu Main container -->
 
-        <!-- Menu Main container -->
+            <!-- TASK-page -->
+            <div class="col-lg-11 col-10 p-1 d-none" id="task-page">
+                <!-- Header -->
+                <div class="d-flex flex-row">
+                    <div class="align-self-start">
+                        <div class="navbar navbar-expand-lg">
+                            <div class="container-fluid">
+                                <p class="navbar-brand fs-3 fw-smaller" style="color: gold">
+                                    <i class="fa fa-home"></i> Tasks
+                                </p>
+                            </div>
+                        </div>
+                    </div>
 
-        <!-- TASK-page -->
-        <div class="col-lg-11 col-10 p-1 d-none" id="task-page">
-            <!-- Header -->
-            <div class="d-flex flex-row">
-                <div class="align-self-start">
-                    <div class="navbar navbar-expand-lg">
-                        <div class="container-fluid">
-                            <p class="navbar-brand fs-3 fw-smaller" style="color: gold">
-                                <i class="fa fa-home"></i> Tasks
-                            </p>
+                    <div class="ms-auto me-0">
+                        <div class="d-flex flex-column flex-grow-1 justify-content-between p-1">
+                            <button class="btn btn-sm mb-2" style="background-color: gold; text-decoration: none !important; color: #FFFFFF;" type="button">Checked</button>
+                            <button class="btn btn-sm" style="border: gold 1px solid; text-decoration: none !important; color: #FFFFFF;" type="button">not Checked</button>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Header -->
+
+                <!-- Departments View -->
+                <div class="row g-0 p-0" id="departmentListInTaskPage"></div>
+
+                <!-- Active Task List view -->
+                <div class="container-fluid p-0 d-flex flex-wrap justify-content-between activeTasksInTaskPage" id="activeTasksInTaskPage"></div>
+
+            </div>
+
+            <!-- AddTask - page and Done Archive Div-->
+            <div class="col-lg-11 col-10 p-1 d-none" id="addTask-page">
+                <!-- Header -->
+                <div class="col d-flex flex-row">
+                    <div class="align-self-start">
+                        <div class="navbar navbar-expand-lg">
+                            <div class="container-fluid">
+                                <p class="navbar-brand fs-3 fw-smaller" style="color: gold">
+                                    <i class="fa fa-home"></i> Tasks
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ms-auto me-0">
+                        <div class="d-flex flex-column flex-grow-1 justify-content-between p-1">
+                            <button data-id="doneArchiveContainerDiv" class="pageHref btn btn-sm text-uppercase" style="border: gold 1px solid; text-decoration: none !important; color: #FFFFFF;" type="button">Done Archive</button>
                         </div>
                     </div>
                 </div>
+                <!-- End Row Header -->
 
-                <div class="ms-auto me-0">
-                    <div class="d-flex flex-column flex-grow-1 justify-content-between p-1">
-                        <button class="btn btn-sm mb-2" style="background-color: gold; text-decoration: none !important; color: #FFFFFF;" type="button">Checked</button>
-                        <button class="btn btn-sm" style="border: gold 1px solid; text-decoration: none !important; color: #FFFFFF;" type="button">not Checked</button>
-                    </div>
-
-                </div>
-            </div>
-            <!-- Header -->
-
-            <!-- Departments View -->
-            <div class="row g-0 p-0" id="departmentListInTaskPage"></div>
-
-            <!-- Active Task List view -->
-            <div class="container-fluid p-0 d-flex flex-wrap justify-content-between activeTasksInTaskPage" id="activeTasksInTaskPage"></div>
-
-        </div>
-
-        <!-- AddTask - page -->
-        <div class="col-lg-11 col-10 p-1 d-none" id="addTask-page">
-            <!-- Header -->
-            <div class="col d-flex flex-row">
-                <div class="align-self-start">
-                    <div class="navbar navbar-expand-lg">
-                        <div class="container-fluid">
-                            <p class="navbar-brand fs-3 fw-smaller" style="color: gold">
-                                <i class="fa fa-home"></i> Tasks
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="ms-auto me-0">
-                    <div class="d-flex flex-column flex-grow-1 justify-content-between p-1">
-                        <button class="btn btn-sm text-uppercase" style="border: gold 1px solid; text-decoration: none !important; color: #FFFFFF;" type="button">Done Archive</button>
-                    </div>
-
-                </div>
-            </div>
-
-            <!--container <h3 class="text-center my-4"> Add Task Page **</h3>-->
-            <!-- Btn Department - Task - User and dropdown department-responsibles -->
-            <div class="container-fluid border border-1" id="addTaskPageContainerDiv">
+                <div class="container-fluid border border-1" id="addTaskPageContainerDiv">
 
                 <!-- All Button in Add-Task-Page BTN DIV-->
                 <div class="row allBtnsAddTaskPage" id="depUserTaskDiv">
@@ -228,159 +226,151 @@ ob_start();?>
                                 </div>
                             </fieldset>
                         </div>
-
                     </div>
                 </div>
-                <!-- END Btn DIV-->
-
-                <!-- Tasks(title-tasks-checked) Department Responsible - due date-->
+                    <!-- End Row AllBtnsAddTaskPage -->
+                <!-- Tab-Content-->
                 <div class="row" id="AddTaskPageContainerBtnClick">
+
                     <!-- Dynamics displayed all tables -->
                     <div class="table-responsive allTables d-none" id="allTables"></div>
-
                     <!-- Div for Filter Department-User selected -->
                     <div class="row my-2 d-none" id="user-task-table"></div>
                     <div class="row my-2 d-none" id="department-task-table"></div>
-                    <!-- End Div Filter Department-User selected-->
-
                     <!-- Div To display All Forms Kind (ADD or DELETE ) -->
                     <div class="row my-2 d-none" id="addTaskPageFormsDisplay"></div>
-
                     <div class="text-end my-4">
                         <button type="button" class="btn btn-success btn-outline-secondary text-white text-center" onclick="return window.location.reload();">REFRESH</button>
                     </div>
-                    <!-- All Active Tasks Div
-                    <div class="table-responsive allTasksDiv d-none" id="allTasksDiv"></div>
-                    -->
                 </div>
-
-                <!-- Today Tasks Div
-                <div class="table-responsive todayTasksDiv d-none" id="todayTasksDiv"></div>
-                -->
-                <!-- Form add Task Div -->
-                <div class="col-md-8 mx-auto d-flex justify-content-center align-items-center d-none" id="taskFormDiv"></div>
+                <!-- End Row id AddTaskPageContainerBtnClick -->
             </div>
+
+
+            <!--PROJECT Page -->
+            <div class="col-lg-11 col-10 p-1 d-none" id="project-page">
+                <!--Header -->
+                <div class="d-flex flex-row">
+
+                    <!-- Menu Page title -->
+                    <div class="align-self-start">
+                        <div class="navbar navbar-expand-lg">
+                            <div class="container-fluid">
+                                <p class="navbar-brand fs-3 fw-smaller" style="color: gold">
+                                    <i class="fa fa-home"></i> Projects
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lexik checked not checked -->
+                    <div class="ms-auto me-0">
+                        <div class="d-flex flex-column justify-content-between p-1">
+                            <button class="btn btn-sm mb-2" style="background-color: gold; text-decoration: none !important; color: #FFFFFF;" type="button">Checked</button>
+                            <button class="btn btn-sm" style="border: gold 1px solid; text-decoration: none !important; color: #FFFFFF;" type="button">not Checked</button>
+
+                            <!--
+                            <div class="container-fluid">
+                                <h3 class="text-center fs-4">X</h3>
+                            </div>
+                            -->
+                        </div>
+
+                    </div>
+                </div>
+                <!--container -->
+                <div class="row g-0"><h3 class="text-center my-4">Project Page</h3> </div>
+
+            </div>
+
+            <!--MEETING Page -->
+            <div class="col-lg-11 col-10 p-1 d-none" id="meeting-page">
+                <!--Header -->
+                <div class="d-flex flex-row">
+                    <div class="align-self-start">
+                        <div class="navbar navbar-expand-lg">
+                            <div class="container-fluid">
+                                <p class="navbar-brand fs-3 fw-smaller" style="color: gold">
+                                    <i class="fa fa-home"></i> Meetings
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ms-auto me-0">
+                        <div class="d-flex flex-column justify-content-between p-1">
+                            <button class="btn btn-sm mb-2" style="background-color: gold; text-decoration: none !important; color: #FFFFFF;" type="button">Checked</button>
+                            <button class="btn btn-sm" style="border: gold 1px solid; text-decoration: none !important; color: #FFFFFF;" type="button">not Checked</button>
+
+                            <!--
+                            <div class="container-fluid">
+                                <h3 class="text-center fs-4">X</h3>
+                            </div>
+                            -->
+                        </div>
+
+                    </div>
+                </div>
+                <!--container -->
+                <div class="row g-0"><h3 class="text-center my-4">Meeting Page</h3> </div>
+            </div>
+
+            <!--ORDER Page -->
+            <div class="col-lg-11 col-10 p-1 d-none" id="order-page">
+                <!-- Header -->
+                <div class="d-flex flex-row">
+                    <div class="align-self-start">
+                        <div class="navbar navbar-expand-lg">
+                            <div class="container-fluid">
+                                <p class="navbar-brand fs-3 fw-smaller" style="color: gold">
+                                    <i class="fa fa-home"></i> Orders
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ms-auto me-0">
+                        <div class="d-flex flex-column justify-content-between p-1">
+                            <button class="btn btn-sm mb-2" style="background-color: gold; text-decoration: none !important; color: #FFFFFF;" type="button">Checked</button>
+                            <button class="btn btn-sm" style="border: gold 1px solid; text-decoration: none !important; color: #FFFFFF;" type="button">not Checked</button>
+                        </div>
+                    </div>
+                </div>
+                <!--container -->
+                <div class="row g-0"><h3 class="text-center my-4">Order Page</h3> </div>
+            </div>
+
+            <!--ADD MEETING PAGE Page -->
+            <div class="col-lg-11 col-10 p-1 d-none" id="addMeeting-page">
+                <!-- Header -->
+                <div class="d-flex flex-row">
+                    <div class="align-self-start">
+                        <div class="navbar navbar-expand-lg">
+                            <div class="container-fluid">
+                                <p class="navbar-brand fs-3 fw-smaller" style="color: gold">
+                                    <i class="fa fa-home"></i> Meeting Form
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ms-auto me-0">
+                        <div class="d-flex flex-column justify-content-between p-1">
+                            <button class="btn btn-sm mb-2" style="background-color: gold; text-decoration: none !important; color: #FFFFFF;" type="button">Checked</button>
+                            <button class="btn btn-sm" style="border: gold 1px solid; text-decoration: none !important; color: #FFFFFF;" type="button">not Checked</button>
+                        </div>
+
+                    </div>
+                </div>
+                <!--container -->
+                <div class="row g-0"><h3 class="text-center my-4">Add Meeting Form</h3> </div>
+            </div>
+            <!-- Col Container Page -->
         </div>
 
-        <!--PROJECT Page -->
-        <div class="col-lg-11 col-10 p-1 d-none" id="project-page">
-            <!--Header -->
-            <div class="d-flex flex-row">
-
-                <!-- Menu Page title -->
-                <div class="align-self-start">
-                    <div class="navbar navbar-expand-lg">
-                        <div class="container-fluid">
-                            <p class="navbar-brand fs-3 fw-smaller" style="color: gold">
-                                <i class="fa fa-home"></i> Projects
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Lexik checked not checked -->
-                <div class="ms-auto me-0">
-                    <div class="d-flex flex-column justify-content-between p-1">
-                        <button class="btn btn-sm mb-2" style="background-color: gold; text-decoration: none !important; color: #FFFFFF;" type="button">Checked</button>
-                        <button class="btn btn-sm" style="border: gold 1px solid; text-decoration: none !important; color: #FFFFFF;" type="button">not Checked</button>
-
-                        <!--
-                        <div class="container-fluid">
-                            <h3 class="text-center fs-4">X</h3>
-                        </div>
-                        -->
-                    </div>
-
-                </div>
+            <!-- Done Archive container -->
+            <div class="col-lg-11 col-10 p-1 d-none border border-1" id="doneArchiveContainerDiv">
+                <h3 class="text-center mb-3">Done archive container</h3>
             </div>
-            <!--container -->
-            <div class="row g-0"><h3 class="text-center my-4">Project Page</h3> </div>
-
         </div>
-
-        <!--MEETING Page -->
-        <div class="col-lg-11 col-10 p-1 d-none" id="meeting-page">
-            <!--Header -->
-            <div class="d-flex flex-row">
-                <div class="align-self-start">
-                    <div class="navbar navbar-expand-lg">
-                        <div class="container-fluid">
-                            <p class="navbar-brand fs-3 fw-smaller" style="color: gold">
-                                <i class="fa fa-home"></i> Meetings
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="ms-auto me-0">
-                    <div class="d-flex flex-column justify-content-between p-1">
-                        <button class="btn btn-sm mb-2" style="background-color: gold; text-decoration: none !important; color: #FFFFFF;" type="button">Checked</button>
-                        <button class="btn btn-sm" style="border: gold 1px solid; text-decoration: none !important; color: #FFFFFF;" type="button">not Checked</button>
-
-                        <!--
-                        <div class="container-fluid">
-                            <h3 class="text-center fs-4">X</h3>
-                        </div>
-                        -->
-                    </div>
-
-                </div>
-            </div>
-            <!--container -->
-            <div class="row g-0"><h3 class="text-center my-4">Meeting Page</h3> </div>
-        </div>
-
-        <!--ORDER Page -->
-        <div class="col-lg-11 col-10 p-1 d-none" id="order-page">
-            <!-- Header -->
-            <div class="d-flex flex-row">
-                <div class="align-self-start">
-                    <div class="navbar navbar-expand-lg">
-                        <div class="container-fluid">
-                            <p class="navbar-brand fs-3 fw-smaller" style="color: gold">
-                                <i class="fa fa-home"></i> Orders
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="ms-auto me-0">
-                    <div class="d-flex flex-column justify-content-between p-1">
-                        <button class="btn btn-sm mb-2" style="background-color: gold; text-decoration: none !important; color: #FFFFFF;" type="button">Checked</button>
-                        <button class="btn btn-sm" style="border: gold 1px solid; text-decoration: none !important; color: #FFFFFF;" type="button">not Checked</button>
-                    </div>
-                </div>
-            </div>
-            <!--container -->
-            <div class="row g-0"><h3 class="text-center my-4">Order Page</h3> </div>
-        </div>
-
-        <!--ADD MEETING PAGE Page -->
-        <div class="col-lg-11 col-10 p-1 d-none" id="addMeeting-page">
-            <!-- Header -->
-            <div class="d-flex flex-row">
-                <div class="align-self-start">
-                    <div class="navbar navbar-expand-lg">
-                        <div class="container-fluid">
-                            <p class="navbar-brand fs-3 fw-smaller" style="color: gold">
-                                <i class="fa fa-home"></i> Meeting Form
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="ms-auto me-0">
-                    <div class="d-flex flex-column justify-content-between p-1">
-                        <button class="btn btn-sm mb-2" style="background-color: gold; text-decoration: none !important; color: #FFFFFF;" type="button">Checked</button>
-                        <button class="btn btn-sm" style="border: gold 1px solid; text-decoration: none !important; color: #FFFFFF;" type="button">not Checked</button>
-                    </div>
-
-                </div>
-            </div>
-            <!--container -->
-            <div class="row g-0"><h3 class="text-center my-4">Add Meeting Form</h3> </div>
-        </div>
-        <!-- Col Container Page -->
     </div>
-    <!-- End BigContainer -->
-</div>
  <!-- End DIVs for differents menu items -->
 
 <!-- Modal add Department by small caret click -->

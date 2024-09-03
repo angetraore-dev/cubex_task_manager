@@ -6,10 +6,14 @@ $(document).ready(function (){
     //Dynamic displayed allTables DIV -->
 
     //All top buttons div
-    let depUserTaskDiv = $("#depUserTaskDiv");
-    let taskFormDiv = $("#taskFormDiv");
+    //let depUserTaskDiv = $("#depUserTaskDiv");
+    //let taskFormDiv = $("#taskFormDiv");
     //let userTaskTableDivInDashboard = $('#user-task-table');
     //let departmentTaskTableDivInDashboard = $('#department-task-table');
+
+    //Add-Task-Page and Done Archive
+    let addTaskPageDiv = $('#addTaskPageContainerDiv')
+    let doneArchiveDiv = $('#doneArchiveContainerDiv')
     let allTablesDiv = $('#allTables');
     let loader = $("#loaderDiv");
     let userDropdownFilter = $('#userbydepartment-1')

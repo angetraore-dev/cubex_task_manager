@@ -433,11 +433,12 @@ class Task
                             </div>
                         </td>
                         <td class="text-center text-sm">
-                            <h6>Department</h6><br>
+                            <h6>Department</h6>
+                            <?php Department::buttonAddDepartment($allList);?>
                             <?='<span class="p-1" style="background-color: '.$allList->color.'!important;">' .$allList->libelle.'</span><br><i class="fa fa-caret-down align-self-center"></i>'?>
                         </td>
                         <td class="text-center text-sm">
-                            <h6>Due Date</h6><br>
+                            <h6>Date & Hour</h6><br>
                             <?php
                             $f = new DateTime($allList->getDueDate()); echo '<svg class="bd-placeholder-img rounded me-2" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="white"></rect></svg>'
                                 .$f->format('d-m-Y H:i A');
@@ -492,11 +493,12 @@ class Task
                                 </div>
                             </td>
                             <td class="text-center text-sm">
-                                <h6>Department</h6><br>
+                                <h6>Department</h6>
+                                <?php Department::buttonAddDepartment($allList);?>
                                 <?='<span class="p-1" style="background-color: '.$allList->color.'!important;">' .$allList->libelle.'</span><br><i class="fa fa-caret-down align-self-center"></i>'?>
                             </td>
                             <td class="text-center text-sm">
-                                <h6>Due Date</h6><br>
+                                <h6>Date & Hour</h6>
                                 <?php
                                 $f = new DateTime($allList->getDueDate()); echo '<svg class="bd-placeholder-img rounded me-2" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="white"></rect></svg>'
                                     .$f->format('d-m-Y H:i A');
@@ -563,8 +565,7 @@ class Task
 
                      <!-- Box add by click -->
                      <?php Department::buttonAddDepartment($tasksActive[$i]);?>
-                     <!-- End box add department by click -->
-                     <!-- Task Name and date -->
+
                      <input type="radio" name="inputRadio" id="inputRadio" class="form-inline" disabled>
                      <label for="inputRadio"><?= $tasksActive[$i]->getTitle()?></label>
                      <p class="text-end" style="color: darkgray !important; font-size: smaller !important; font-style: italic !important;">due date: <?=$tasksActive[$i]->getDueDate()?> 00:00 PM</p>
