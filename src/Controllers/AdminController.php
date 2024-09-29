@@ -256,6 +256,7 @@ class AdminController
                         if ( method_exists(Task::class, $method) ){
 
                             if (isset($args)) {
+
                                 $this->task->{$method}($args);
                             }
 
@@ -281,6 +282,72 @@ class AdminController
                 //default: StaticDb::notFound(); break;
             }
             //end if $_POST
+        }
+    }
+
+    public function doneArchive():void
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
+
+            switch ($_POST){
+
+                //Get Department List or User List for Dropdowns filter
+                case isset($_POST["varsObj"]):
+
+                    $data = json_decode($_POST["varsObj"]) ;
+                    // entity function id
+
+                    if ($data->entity == 'Department'){
+                        //Get all Departments List
+
+                        if (method_exists(Department::class, $data->filter)){
+                            $this->department->{$data->filter}($data->id);
+
+                        }else{
+
+                            StaticDb::notFound();
+                        }
+
+                    }elseif($data->entity == 'User'){
+                        //Get Users List in One department
+                        //var_dump($data);
+
+                        if (method_exists(User::class, $data->filter)){
+
+                            $this->user->{$data->filter}($data->id);
+
+                        }else{
+
+                            StaticDb::notFound();
+                        }
+
+                    }elseif($data->entity == 'Task'){
+
+                        if (method_exists(Task::class, $data->filter)){
+
+                            $this->task->{$data->filter}($data->id);
+
+                        }else{
+
+                            StaticDb::notFound();
+                        }
+
+                    }else{
+
+                        StaticDb::notFound();
+                    }
+
+                    break;
+                case isset($_POST["departmentListForFilterArchive"]):
+                   $this->department->departmentListInDoneArchive();
+                   break;
+
+                case isset($_POST["userDoneArchiveFilterList"]):
+                    //var_dump(json_decode($_POST["userDoneArchiveFilterList"]));
+                    $this->user->displayUserListInFilterDoneArchived(json_decode($_POST["userDoneArchiveFilterList"]));
+                    break;
+                default: break;
+            }
         }
     }
 

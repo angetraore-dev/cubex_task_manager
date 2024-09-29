@@ -80,8 +80,18 @@ class Department
      */
     public static function checkIfExist($libelle):mixed
     {
-        $stmt = "SELECT * FROm task_db.department WHERE libelle = '$libelle'";
+        $stmt = "SELECT * FROM task_db.department WHERE libelle = '$libelle'";
         return StaticDb::getDb()->query($stmt, get_called_class());
+    }
+
+    /**
+     * @param int $departementId
+     * @return array|false|mixed
+     */
+    public static function getAllUserInOneDepartment(int $departementId): mixed
+    {
+        $req = "SELECT * JOIN user u on d.department_id = u.department WHERE d.department_id = ?";
+        return StaticDb::getDB()->prepare($req, [$departementId], get_called_class());
     }
 
     /**
@@ -99,7 +109,25 @@ class Department
                  <?= $item->getLibelle()?>
              </span>
             </a>
+        </li>
+    <?php endforeach; else:
+        echo '<li class="text-center text-muted"><span> No records found</span></li>';
+    endif;
+    }
 
+    /**
+     * List of department display in department dropdown filter in Done Archive
+     * @return void
+     */
+    public function departmentListInDoneArchive():void
+    {
+        $deps = Department::readAll(); if ($deps): foreach ($deps as $item):
+        ?>
+        <li class="list-unstyled departmentListArchivedFilter" data-id="<?= 'Task-displayDepBothCheckedTaskTableDoneArchived-'.$item->getDepartmentId()?>">
+            <a class="dropdown-item" href="#">
+                <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="<?=$item->getColor()?>"></rect></svg>
+                <?= $item->getLibelle()?>
+            </a>
         </li>
     <?php endforeach; else:
         echo '<li class="text-center text-muted"><span> No records found</span></li>';
@@ -131,16 +159,6 @@ class Department
             </div>
 
         <?php else: echo "<p class='text-muted text-center'>nothing to display- Tell to admin for create department</p>"; endif;
-    }
-
-    /**
-     * @param int $departementId
-     * @return array|false|mixed
-     */
-    public static function getAllUserInOneDepartment(int $departementId): mixed
-    {
-        $req = "SELECT * JOIN user u on d.department_id = u.department WHERE d.department_id = ?";
-        return StaticDb::getDB()->prepare($req, [$departementId], get_called_class());
     }
 
     /**

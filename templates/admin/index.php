@@ -367,7 +367,46 @@ ob_start();?>
 
             <!-- Done Archive container -->
             <div class="col-lg-11 col-10 p-1 d-none border border-1" id="doneArchiveContainerDiv">
-                <h3 class="text-center mb-3">Done archive container</h3>
+                <h3 class="text-center mb-3" id="doneArchiveH3">Done archive</h3>
+                <!-- DIV ROW Total count in rapport with filter department or responsible -->
+                <div class="row min-vh-100 vh-100 h-100 g-0 justify-content-between mb-4">
+                    <!-- Total Btn -->
+                    <div class="col-sm-1 ms-0">
+                        <fieldset class="border border-1">
+                            <legend class="float-none w-auto text-sm fs-6 fw-small text-uppercase">total</legend>
+                            <p data-id="" class="text-center showTaskTotalParagraph gold" id="showTaskTotalParagraph"></p>
+                        </fieldset>
+                    </div>
+                    <div class="col-sm-3 me-0">
+                        <fieldset class="d-flex flex-wrap justify-content-around align-content-around border border-1">
+                            <legend class="float-none w-auto text-sm fw-smaller fs-6 text-uppercase">filter</legend>
+
+                            <!-- List of all departments doneArchive mx-2-->
+                            <div class="dropdown mx-2 mb-2 departmentListFilterInDoneArchive">
+                                <button class="btn btn-sm border border-1 dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" style="text-decoration: none; color: white !important;">
+                                    departments
+                                </button>
+                                <ul class="dropdown-menu list-unstyled doneArchiveDepartmentListFilter" id="doneArchiveDepartmentListFilter">
+                                    <li><span class="loader text-center" id="loader-sm"></span></li>
+                                </ul>
+                            </div>
+
+                            <!-- List of all responsibles done Archive -->
+                            <div class="dropdown mx-2 mb-2 doneArchiveUserFilterDropdown">
+                                <button class="btn btn-sm border border-1 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-autohide="true" style="text-decoration: none; color: white !important;">
+                                    users
+                                </button>
+                                <ul class="dropdown-menu list-unstyled" id="doneArchiveUserFilterList">
+                                    <li><span class="loader text-center" id="loader-sm"></span></li>
+                                </ul>
+                            </div>
+                        </fieldset>
+                        <!-- End Row Total And Filter Div DONE ARCHIVE -->
+                    </div>
+
+                    <!-- DONE ARCHIVE RESPONSE DIV -->
+                    <div class="row  min-vh-100 vh-100 h-100 g-0 mb-4 d-none doneArchiveResponseDiv" id="doneArchiveResponseDiv"></div>
+                </div>
             </div>
         </div>
     </div>

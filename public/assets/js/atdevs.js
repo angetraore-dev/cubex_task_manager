@@ -1,15 +1,10 @@
+//import menu_process from "./menu_process";
+
+
 $(document).ready(function (){
+
+
     console.log("angetraore-dev: +225 0507 333 944");
-    //refresh div $("#departmentlist").load(location.href+" #departmentlist>*","")
-    //$("#myMainDiv").load(location.href + " #myRefreshDiv");
-
-    //Dynamic displayed allTables DIV -->
-
-    //All top buttons div
-    //let depUserTaskDiv = $("#depUserTaskDiv");
-    //let taskFormDiv = $("#taskFormDiv");
-    //let userTaskTableDivInDashboard = $('#user-task-table');
-    //let departmentTaskTableDivInDashboard = $('#department-task-table');
 
     //Add-Task-Page and Done Archive
     let addTaskPageDiv = $('#addTaskPageContainerDiv')
@@ -20,37 +15,15 @@ $(document).ready(function (){
     let addBtns = document.querySelectorAll(".addBtn")
     let allBtnsAddTaskPageDiv = $('.allBtnsAddTaskPage')
     let addTaskPageFormsDisplay = $('#addTaskPageFormsDisplay')
-    let firstPageAdminBtnDiv = $('#first-page-admin')
-    let menus = document.querySelectorAll('.pageHref');
-    let backDiv = $('.backDiv');
-    let backToFirstPageAdminBtnDiv = document.querySelectorAll('.back');
+    let firstPageAdminBtnDiv = $('#first-page-admin')//oo
+    let menus = document.querySelectorAll('.pageHref');//oo
+    let backDiv = $('.backDiv');//oo
+    let backToFirstPageAdminBtnDiv = document.querySelectorAll('.back');//oo
     let departmentListDiv = $("#departmentListInTaskPage");
     let activeTasksInTaskPage = $("#activeTasksInTaskPage");
     let viewTaskBtns = document.querySelectorAll(".viewTasksBtn");
     let departmentDropdownContainer = $('#receiveDepartmentList');
 
-
-    //stay on tab active on refresh
-    $(document).on('click', 'a[data-bs-toggle="tab"]', function (e) {
-        try {
-            localStorage.setItem('activeTab', e.target.dataset.bsTarget);
-        } catch (e) {
-            console.log("localstorage is not allowed in code snippets here test it on jsfiddle");
-        }
-        //console.log(localStorage.getItem('activeTab'));
-    });
-    try {
-        var activeTab = localStorage.getItem('activeTab');
-    } catch (e) {
-        console.log("localstorage is not allowed in code snippets here test it on jsfiddle");
-    }
-    if (activeTab) {
-        let triggerEL = document.querySelector(`a[data-bs-target="${activeTab}"]`);
-        if (triggerEL) {
-            bootstrap.Tab.getOrCreateInstance(triggerEL).show()
-        }
-    }
-    //Toast
     let toastMixin = Swal.mixin({
         toast: true,
         icon: "success",
@@ -77,7 +50,7 @@ $(document).ready(function (){
         timerProgressBar: true,
     })
 
-    //For datatable return int on string or char
+//For datatable return int on string or char
     let intVal = function (i) {
         return typeof i === 'string'
             ? i.replace(/[\$,]/g, '') * 1
@@ -86,8 +59,7 @@ $(document).ready(function (){
                 : 0;
     };
 
-    //DataTable.moment("DD-MM-YYYY");
-
+    //menu_process();
 
     //TaskByUserTable in AdminController
     let taskByUserTableVeritable = $(this).closest('#userTaskTable').DataTable({
@@ -158,44 +130,6 @@ $(document).ready(function (){
     });
 
 
-    //Login Process
-    $("#loginform").on("submit", function (event){
-        let form = document.querySelector("#loginform");
-        event.preventDefault()
-        event.stopPropagation()
-        $('.fa-spin').removeClass('d-none').fadeIn();
-
-        if (!form.checkValidity()) {
-
-            form.classList.add('was-validated')
-            $(".fa-spin").addClass('d-none').fadeOut();
-
-        }else {
-            let obj = {};
-            let formData = new FormData(form);
-            formData.forEach((value, key) => obj[key]=value);
-            $.post({
-                url:"http://localhost/php/taskmanagerapp/login/loginRequest",
-                data:{login: JSON.stringify(obj)},
-                success:function (response) {
-                    $(".fa-spin").addClass('d-none').fadeOut();
-
-                    if ( !response ){
-                        toastMixin.fire({
-                            icon: "error",
-                            title: "Error",
-                            text: "Bad credentials"
-                        })
-
-                    }else {
-                        window.location.replace("http://localhost/php/taskmanagerapp"+response)
-                    }
-
-                }
-            })
-        }
-
-    })
 
     //Department Process
     $('#saveDepartment').click(function (){
@@ -238,8 +172,51 @@ $(document).ready(function (){
         $("#departmentForm").get(0).reset();
     })
 
+    //Login Process
+    $("#loginform").on("submit", function (event){
 
-    //Dropdown user Filter
+        let form = document.querySelector("#loginform");
+        event.preventDefault()
+        event.stopPropagation()
+        $('.fa-spin').removeClass('d-none').fadeIn();
+
+        if (!form.checkValidity()) {
+
+            form.classList.add('was-validated')
+            $(".fa-spin").addClass('d-none').fadeOut();
+
+        }else {
+            let obj = {};
+            let formData = new FormData(form);
+            formData.forEach((value, key) => obj[key]=value);
+
+            //contentType: "application/json; charset=utf-8", what type of data you send
+            //dataType: "text/html", what expectation
+            $.post({
+                url:"http://localhost/php/taskmanagerapp/login/loginRequest",
+                data:{login: JSON.stringify(obj)},
+                success:function (response) {
+
+                    $(".fa-spin").addClass('d-none').fadeOut();
+
+                    if ( !response ){
+                        toastMixin.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Bad credentials"
+                        })
+
+                    }else {
+                        window.location.replace("http://localhost/php/taskmanagerapp"+response)
+                    }
+
+                }
+            })
+        }
+
+    })
+
+    //Get user by Task in Dropdown user Filter add Task
     $(document).on("click", 'li[data-id] a', function (){
         const id = $(this).closest('li').data('id');
 
@@ -253,7 +230,7 @@ $(document).ready(function (){
     })
 
     //result of Click On User List in Dropdown user Filter
-    $(document).on("click", 'li[data-id] p', function (){
+    $(document).on("click", 'ul#userbydepartment-1 li[data-id] p', function (){
         const userid = $(this).closest('li').data('id');
         $.post({
             url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
@@ -282,7 +259,7 @@ $(document).ready(function (){
     })
 
     //List Department Clicked in Department Dropdown
-    $(document).on('click', 'li.departmentList', function (){
+    $(document).on('click', 'ul.receiveDepartmentList li.departmentList', function (){
         let depId = $(this).closest('li').data('id')
         $.post({
             url:"http://localhost/php/taskmanagerapp/admin/adminRequest",
@@ -497,6 +474,30 @@ $(document).ready(function (){
         },2000)
     }
 
+    //stay on tab active on refresh
+    $(document).on('click', 'a[data-bs-toggle="tab"]', function (e) {
+        try {
+            localStorage.setItem('activeTab', e.target.dataset.bsTarget);
+        } catch (e) {
+            console.log("localstorage is not allowed in code snippets here test it on jsfiddle");
+        }
+        //console.log(localStorage.getItem('activeTab'));
+    });
+
+    try {
+        var activeTab = localStorage.getItem('activeTab');
+    } catch (e) {
+        console.log("localstorage is not allowed in code snippets here test it on jsfiddle");
+    }
+
+    if (activeTab) {
+        let triggerEL = document.querySelector(`a[data-bs-target="${activeTab}"]`);
+        if (triggerEL) {
+            bootstrap.Tab.getOrCreateInstance(triggerEL).show()
+        }
+    }
+
+
     //First menu on Admin Route
     const menuBtnAction = () => {
         'use strict'
@@ -512,6 +513,8 @@ $(document).ready(function (){
 
                 try {
                     localStorage.setItem('activePage', containerPageDisplay);
+                    window.location.reload()
+
                 } catch (e) {
                     console.log("localstorage is not allowed in code snippets here test it on jsfiddle");
                 }
@@ -555,12 +558,21 @@ $(document).ready(function (){
         console.log("localstorage is not allowed in code snippets here test it on jsfiddle");
     }
     if (activePage) {
-        //console.log(activePage)
+        //addTask-page doneArchiveContainerDiv
+
         firstPageAdminBtnDiv.addClass('d-none').fadeOut()
         loader.removeClass('d-none').fadeIn()
         backDiv.removeClass('d-none').fadeIn()
         $("#"+activePage).removeClass('d-none').fadeIn()
         loader.addClass('d-none').fadeOut()
+        //if (activePage == "doneArchiveContainerDiv"){
+        //             firstPageAdminBtnDiv.addClass('d-none').fadeOut()
+        //             loader.removeClass('d-none').fadeIn()
+        //             backDiv.removeClass('d-none').fadeIn()
+        //             $("#"+activePage).removeClass('d-none').fadeIn()
+        //             loader.addClass('d-none').fadeOut()
+        //             //window.location.reload()
+        //         }
     }
 
 

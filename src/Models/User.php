@@ -287,7 +287,34 @@ class User
         <?php
             endforeach;
             else: echo '<li>No records found</li>';
-            endif;
+        endif;
+    }
+
+    /**
+     * @param $selectedDepartment
+     * @return void
+     */
+    public function displayUserListInFilterDoneArchived($selectedDepartment):void
+    {
+        $usersInDepartmentSelected = self::findByDepartmentId($selectedDepartment);
+        if ($usersInDepartmentSelected):
+            foreach ($usersInDepartmentSelected as $user):
+        ?>
+<!-- User-displayUserListInFilterDoneArchived-->
+        <li class="dropdown-item btn userListInArchiveDropdown" data-id="<?= 'Task-displayUserTasksInDoneArchive-'.$user->getUserId()?>">
+            <p>
+                <?=$user->getFullname()?>
+            </p>
+        </li>
+    <?php
+        endforeach;
+        else: echo '<li>No records found</li>';
+    endif;
+    }
+
+    public function userDoneArchiveTasksFunc($userId):void
+    {//Display User Tasks both checked Table With actions
+
     }
 
     /**
