@@ -1,7 +1,7 @@
 <?php
+
+use App\Models\Archive;
 use App\Models\Department;
-use App\Models\Role;
-use App\Models\Task;
 
 ob_start();?>
 
@@ -26,7 +26,7 @@ ob_start();?>
             <button data-id="meeting-page" class="pageHref btn btn-lg col-4 mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important;">meetings</button>
             <button data-id="order-page" class="pageHref btn btn-lg col-4 mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important; height: 200px !important;">orders</button>
         </div>
-        <?php $role= $_SESSION['role']; if ($role == 1) : ?>
+        <?php $role = $_SESSION['role']; if ($role == 1) : ?>
             <div class="d-flex align-items-start justify-content-between mb-4"><!--col-md-4-->
                 <button data-id="addMeeting-page" class="pageHref btn btn-lg col-4 mb-3 text-center text-capitalize rounded rounded-0 border border-1 border-tertiary" type="button" style="color: gold !important; font-weight: lighter !important;">add meetings (Only x)</button>
             </div>
@@ -369,7 +369,7 @@ ob_start();?>
             <div class="col-lg-11 col-10 p-1 d-none border border-1" id="doneArchiveContainerDiv">
                 <h3 class="text-center mb-3" id="doneArchiveH3">Done archive</h3>
                 <!-- DIV ROW Total count in rapport with filter department or responsible -->
-                <div class="row min-vh-100 vh-100 h-100 g-0 justify-content-between mb-4">
+                <div class="row g-0 justify-content-between mb-4">
                     <!-- Total Btn -->
                     <div class="col-sm-1 ms-0">
                         <fieldset class="border border-1">
@@ -405,7 +405,7 @@ ob_start();?>
                     </div>
 
                     <!-- DONE ARCHIVE RESPONSE DIV -->
-                    <div class="row  min-vh-100 vh-100 h-100 g-0 mb-4 d-none doneArchiveResponseDiv" id="doneArchiveResponseDiv"></div>
+                    <div class="row g-0 mb-4 d-none doneArchiveResponseDiv" style="height: 100% !important; min-height: 100% !important;" id="doneArchiveResponseDiv"></div>
                 </div>
             </div>
         </div>
@@ -428,7 +428,21 @@ ob_start();?>
     </div>
 </div>
 
+<!-- Archive libelle on click doneArchive Crud Event -->
+<div class="modal fade" id="staticBackdropDoneArchive" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropDoneArchiveLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropDoneArchiveLabel">Create archive Folder</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <?php Archive::addArchiveForm();?>
+            </div>
 
+        </div>
+    </div>
+</div>
 <?php $content = ob_get_clean(); ?>
 <?php require_once DOCROOT .'/templates/layout.php';?>
 

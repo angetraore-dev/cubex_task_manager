@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Archive;
 use App\Models\Department;
 use App\Models\StaticDb;
 use App\Models\Task;
@@ -287,21 +288,95 @@ class AdminController
 
     public function doneArchive():void
     {
+        $field = [];
+        $class_name = "";
+        $bindRes = false;
+        $receiveData = 0;
+
         if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
 
             switch ($_POST){
 
-                //Get Department List or User List for Dropdowns filter
+                case isset($_POST["doneArchiveCrud"]):
+
+                    $data = json_decode($_POST["doneArchiveCrud"]);
+
+                    if ($data->existing_archive){
+
+                        $receiveData = $data->existing_archive;
+                    }else{
+
+                        $receiveData = $data->archive_libelle;
+                    }
+
+                    if (is_int($receiveData)){
+                        //existing_archive Libelle
+
+                        $field['archiveid'] = $receiveData;
+
+                    }else{
+                        //bind the data to return an archive folder ID
+                        $class_name = "Archive";
+                        $bindArchive = StaticDb::getDb()->insert(["archive_id" => null, "libelle" => $receiveData], $class_name);
+
+                        if ($bindArchive){
+                            $getArchiveId = StaticDb::getDb()->LastInsertId();
+                        }
+                        $field['archiveid'] = $getArchiveId;
+
+                    }
+                    $field['taskid'] = $data->taskId;
+                    $field['observation'] = $data->obs;
+
+                    //Bind ArchiveTask
+                    $class_name = "Archivetask";
+                    var_dump($field);
+                    die();
+
+
+
+
+
+                    $bindArchiveTask = StaticDb::getDb()->insert($field, $class_name);
+
+                    //Update task To set isArchived to True
+                    if ($bindArchiveTask){
+                        $class_name = "Task";
+                        $bindTaskIsArchived = StaticDb::getDb()->update($data->taskId, ['isArchived' => true], $class_name);
+
+                        if ($bindTaskIsArchived){
+
+                            $bindRes = true;
+                        }
+                    }
+
+
+                    echo $bindRes;
+
+
+                    break;
+                case isset($_POST["defBothChecked"]):
+
+                    $this->task->archiveDefaultDisplay();
+
+                    break;
                 case isset($_POST["varsObj"]):
 
                     $data = json_decode($_POST["varsObj"]) ;
-                    // entity function id
 
                     if ($data->entity == 'Department'){
                         //Get all Departments List
 
                         if (method_exists(Department::class, $data->filter)){
-                            $this->department->{$data->filter}($data->id);
+
+                            if (isset($data->id)){
+
+                                $this->department->{$data->filter}($data->id);
+
+                            }else{
+
+                                $this->department->{$data->filter}();
+                            }
 
                         }else{
 
@@ -309,12 +384,17 @@ class AdminController
                         }
 
                     }elseif($data->entity == 'User'){
-                        //Get Users List in One department
-                        //var_dump($data);
 
                         if (method_exists(User::class, $data->filter)){
 
-                            $this->user->{$data->filter}($data->id);
+                            if (isset($data->id)){
+
+                                $this->user->{$data->filter}($data->id);
+
+                            }else{
+
+                                $this->user->{$data->filter}();
+                            }
 
                         }else{
 
@@ -325,7 +405,14 @@ class AdminController
 
                         if (method_exists(Task::class, $data->filter)){
 
-                            $this->task->{$data->filter}($data->id);
+                            if (isset($data->id)){
+
+                                $this->task->{$data->filter}($data->id);
+
+                            }else{
+
+                                $this->task->{$data->filter}();
+                            }
 
                         }else{
 
@@ -339,12 +426,14 @@ class AdminController
 
                     break;
                 case isset($_POST["departmentListForFilterArchive"]):
-                   $this->department->departmentListInDoneArchive();
-                   break;
 
+                   $this->department->departmentListInDoneArchive();
+
+                   break;
                 case isset($_POST["userDoneArchiveFilterList"]):
-                    //var_dump(json_decode($_POST["userDoneArchiveFilterList"]));
+
                     $this->user->displayUserListInFilterDoneArchived(json_decode($_POST["userDoneArchiveFilterList"]));
+
                     break;
                 default: break;
             }

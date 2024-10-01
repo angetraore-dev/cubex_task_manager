@@ -9,10 +9,12 @@ use PDOException;
 class Database
 {
     //private $db;
-    //private PDO $conn;
+    private PDO $conn;
 
+    //PDO $conn
     public function __construct()
     {
+        //$this->conn = $conn;
         //$this->db = new PDO('mysql:host='.Param::DB_HOST.';dbname='.Param::DB_NAME.';charset=utf8',Param::DB_USER, Param::DB_PASS);
     }
 
@@ -24,7 +26,9 @@ class Database
         try {
             $conn = new PDO('mysql:host='.Param::DB_HOST.';dbname='.Param::DB_NAME.';charset=utf8',Param::DB_USER, Param::DB_PASS);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
             $this->conn = $conn;
+
         }catch (PDOException $exception){
             echo $exception->getMessage();
             die();
@@ -150,6 +154,14 @@ class Database
             return $request->fetch();
         }
         return $request->fetchAll();
+    }
+
+    /**
+     * @return false|string
+     */
+    public function LastInsertId(): bool|string
+    {
+        return $this->getPDO()->lastInsertId();
     }
 
 

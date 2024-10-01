@@ -252,30 +252,6 @@ class Task
     }
 
     /**
-     * task.isArchived is true
-     * Archived Tasks
-     * @return mixed
-     */
-    public static function bothCheckedByUser($userId):mixed
-    {
-        $sql = "SELECT task_id, title, todo, due_date, created_at, isChecked, isArchived, userid, isCheckedByAdmin, file, u.fullname, d.color, d.libelle, d.department_id FROM task INNER JOIN user u on u.user_id = task.userid INNER JOIN department d on d.department_id = u.department WHERE isChecked is true && isCheckedByAdmin is true && task.userid = ?";
-        return StaticDb::getDb()->prepare($sql, [$userId], get_called_class());
-        //return StaticDb::getDb()->query($sql, get_called_class());
-    }
-
-    public static function bothCheckedByDepartment($departmentId):mixed
-    {
-        $stmt = "SELECT task_id, title, todo, due_date, created_at, isChecked, isArchived, userid, isCheckedByAdmin, file, u.fullname, d.color, d.libelle, d.department_id FROM task INNER JOIN user u on u.user_id = task.userid INNER JOIN department d on d.department_id = u.department WHERE isChecked is true && isCheckedByAdmin is true && isArchived is false && d.department_id = ?";
-        return StaticDb::getDb()->prepare($stmt, [$departmentId], get_called_class());
-    }
-
-    public static function countDistinctBothCheckedBydepartment($departmentId):mixed
-    {
-        $stmt = "SELECT task_id, title, todo, due_date, created_at, isChecked, isArchived, userid, isCheckedByAdmin, file, u.fullname, d.color, d.libelle, d.department_id FROM task INNER JOIN user u on u.user_id = task.userid INNER JOIN department d on d.department_id = u.department WHERE isChecked is true && isCheckedByAdmin is true && isArchived is false && d.department_id = ? GROUP BY u.fullname";
-        return StaticDb::getDb()->prepare($stmt, [$departmentId], get_called_class());
-    }
-
-    /**
      * Tasks By user
      * @param $userid
      * @return mixed
@@ -301,6 +277,47 @@ class Task
     {
         $sql = "SELECT task_id, title, todo, due_date, created_at, isChecked, isArchived, userid, isCheckedByAdmin, file, u.fullname, d.color, d.libelle, d.department_id FROM task INNER JOIN user u on u.user_id = task.userid INNER JOIN department d on d.department_id = u.department WHERE u.department = ? GROUP BY u.fullname";
         return StaticDb::getDB()->prepare($sql, [$departmentId], get_called_class(), false);
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function allCheckedDefault():mixed
+    {
+        $stmt = "SELECT task_id, title, todo, due_date, created_at, isChecked, isArchived, userid, isCheckedByAdmin, file, u.fullname, d.color, d.libelle, d.department_id FROM task INNER JOIN user u on u.user_id = task.userid INNER JOIN department d on d.department_id = u.department WHERE isChecked is true && isCheckedByAdmin is true && task.isArchived is false";
+        return StaticDb::getDb()->query($stmt,  get_called_class());
+    }
+
+    /**
+     * @param $userId
+     * @return mixed
+     * task.isArchived is true
+     */
+    public static function bothCheckedByUser($userId):mixed
+    {
+        $sql = "SELECT task_id, title, todo, due_date, created_at, isChecked, isArchived, userid, isCheckedByAdmin, file, u.fullname, d.color, d.libelle, d.department_id FROM task INNER JOIN user u on u.user_id = task.userid INNER JOIN department d on d.department_id = u.department WHERE isChecked is true && isCheckedByAdmin is true && task.userid = ?";
+        return StaticDb::getDb()->prepare($sql, [$userId], get_called_class());
+        //return StaticDb::getDb()->query($sql, get_called_class());
+    }
+
+    /**
+     * @param $departmentId
+     * @return mixed
+     */
+    public static function bothCheckedByDepartment($departmentId):mixed
+    {
+        $stmt = "SELECT task_id, title, todo, due_date, created_at, isChecked, isArchived, userid, isCheckedByAdmin, file, u.fullname, d.color, d.libelle, d.department_id FROM task INNER JOIN user u on u.user_id = task.userid INNER JOIN department d on d.department_id = u.department WHERE isChecked is true && isCheckedByAdmin is true && isArchived is false && d.department_id = ?";
+        return StaticDb::getDb()->prepare($stmt, [$departmentId], get_called_class());
+    }
+
+    /**
+     * @param $departmentId
+     * @return mixed
+     */
+    public static function countDistinctBothCheckedBydepartment($departmentId):mixed
+    {
+        $stmt = "SELECT task_id, title, todo, due_date, created_at, isChecked, isArchived, userid, isCheckedByAdmin, file, u.fullname, d.color, d.libelle, d.department_id FROM task INNER JOIN user u on u.user_id = task.userid INNER JOIN department d on d.department_id = u.department WHERE isChecked is true && isCheckedByAdmin is true && isArchived is false && d.department_id = ? GROUP BY u.fullname";
+        return StaticDb::getDb()->prepare($stmt, [$departmentId], get_called_class());
     }
 
     /*
@@ -1335,6 +1352,158 @@ class Task
 
     //Done Archive Func
 
+    public function archiveDefaultDisplay():void
+    {
+        $allArchived = self::allCheckedDefault(); if ($allArchived):
+        ?>
+        <div class="departmentArchivedTasksDiv">
+        <input type="hidden" name="totalArchived" id="totalArchived" value="<?=count($allArchived)?>">
+        <table class="table table-condensed table-dark text-light text-capitalize caption-top archiveDefaultDisplayTable" id="archiveDefaultDisplayTable" data-id="Task-archiveDefaultDisplay">
+            <caption class="my-3 text-center p-2">
+                <h3 class="d-inline text-sm fw-small gold text-white">
+                    All Done archive Tasks
+                </h3>
+            </caption>
+            <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <!-- departmentTasksListInDropdownFilter_<=$taskdepartment->department_id>-->
+            <?php $y = 1; foreach ($allArchived as $checkedTask): ?>
+                <tr data-id="<?=$checkedTask->getTitle() .'-'.$checkedTask->getTaskId() .'-'.$checkedTask->fullname ?>">
+                    <td>
+                        <?php
+                        echo $y++ .'<br>';
+                        if ($checkedTask->getFile()){
+                            $item = json_decode($checkedTask->getFile(), true);
+                            foreach ($item as $file){?>
+                                <a href="<?= HTTP .'/'.$file ?>" target="_blank"><i class="fa fa-paperclip"></i> </a><br>
+                                <?php
+                            }
+                        }
+                        ?>
+                        <button class="border border-0 delItem" type="button" data-id="<?=$checkedTask->getTaskId()?>" style="text-decoration: none !important; background-color: inherit !important;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                            </svg>
+                        </button>
+                    </td>
+
+                    <td class="">
+                        <form name="doneArchiveAction" class="d-flex flex-wrap form-inline">
+                            <ul class="list-unstyled">
+                                <li class="h6">Task</li>
+                                <li class="nav-item">
+                                    <?php
+                                    echo '<p class="fw-small fs-6 text-capitalize mb-1">'.$checkedTask->getTitle().'<br>'. $checkedTask->getTodo().'</p>';
+                                    ?>
+                                </li>
+                            </ul>
+                            <hr class="vr mx-2" style="background-color: gold !important; color: gold !important; border: 2px solid gold !important;">
+                            <ul class="list-unstyled py-4">
+                                <li class="">
+                                    <input type="radio" name="observation" id="donePerfectly" value="Done Perfectly">
+                                    <label class="label" for="donePerfectly">Done Perfectly</label>
+                                </li>
+                                <li class="">
+                                    <input type="radio" name="observation" id="doneOkay" value="Done Okay">
+                                    <label for="doneOkay">Done Okay</label>
+                                </li>
+                                <li class="">
+                                    <input type="radio" name="observation" id="donePoorly" value="Done Poorly">
+                                    <label for="donePoorly">Done Poorly</label>
+                                </li>
+                            </ul>
+                            <hr class="vr mx-2" style="background-color: gold !important; color: gold !important; border: 2px solid gold !important;">
+                            <ul class="list-unstyled py-4">
+                                <li class="">
+                                    <input type="radio" name="observation" id="doneBeforeTime" value="Done Before Time">
+                                    <label class="label" for="doneBeforeTime">Done Before Time</label>
+                                </li>
+                                <li class="">
+                                    <input type="radio" name="observation" id="doneOnTime" value="Done On Time">
+                                    <label for="doneOnTime">Done On Time</label>
+                                </li>
+                                <li class="">
+                                    <input type="radio" name="observation" id="doneLate" value="Done Late">
+                                    <label for="doneLate">Done Late</label>
+                                </li>
+                            </ul>
+                            <hr class="vr mx-2" style="background-color: gold !important; color: gold !important; border: 2px solid gold !important;">
+
+                        </form>
+                    </td>
+
+                    <td class="text-start text-sm">
+                        <div class="row mb-2">
+                            <?php Department::buttonAddDepartment($checkedTask);?>
+                        </div>
+                        <div class="ms-0 d-flex justify-content-between flex-wrap">
+                            <ul class="list-unstyled">
+                                <li class="ms-0 text-center">
+                                    <?php echo 'Department<br><span class="p-1" style="background-color: '.$checkedTask->color.'!important;">' .$checkedTask->libelle.'</span><br><i class="fa fa-caret-down mx-auto"></i>'?>
+                                </li>
+                            </ul>
+                            <ul class="list-unstyled">
+                                <li class="">
+                                    <?= 'responsible<br>'.$checkedTask->fullname?>
+                                </li>
+                            </ul>
+
+                            <ul class="list-unstyled">
+                                <li class="">Date and Hour<br>
+                                    <?php
+                                    $f = ($checkedTask->getCreatedAt()) ? new DateTime($checkedTask->getCreatedAt()) : date('Y-m-d H:i:s');
+                                    echo $f->format('Y-m-d');
+                                    ?>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </td>
+
+                </tr>
+            <?php endforeach;?>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+        <script type="text/javascript">
+            var p = document.getElementById("showTaskTotalParagraph")
+            var dis = 0;
+            var tot = (document).getElementById("totalArchived").value
+            if (tot.length > 0){
+                dis = tot
+            }
+            p.innerText = dis
+
+            $('#archiveDefaultDisplayTable').DataTable({
+                "RowId": 0,
+                "searching": true,
+                "paging":true,
+                "pageLength": 10,
+                "orderable":true,
+                //"order": [[1, 'asc']],
+                "autoWidth": false,
+                "selected": true,
+                "columns":[
+                    {"data":0},
+                    {"data":1},
+                    {"data":2}
+                ]
+            })
+
+        </script>
+
+    <?php
+    else: echo "<p class='text-center'>No tasks both checked  records found for this Department </p>";
+    endif;
+    }
+
     /**
      * @param $departmentId
      * @return void
@@ -1361,75 +1530,99 @@ class Task
                         <th></th>
                     </tr>
                     </thead>
-                    <?php $i=1; foreach ($uTasksList as $taskdepartment): ?>
-                        <tr id="<?=$taskdepartment->getUserId()?>" data-id="departmentTasksListInDropdownFilter_<?=$taskdepartment->department_id?>">
-                            <td><?= $i++?></td>
-                            <td class="text-center text-sm">
-                                <h6>Responsible</h6>
-                                <?= $taskdepartment->fullname?>
+                    <!-- departmentTasksListInDropdownFilter_<=$taskdepartment->department_id>-->
+                    <?php $y = 1; foreach ($departmentBothChechedTasks as $checkedTask): ?>
+                        <tr>
+                            <td class="text-start">
+                                <?php
+                                    echo $y++ .'<br>';
+                                    if ($checkedTask->getFile()){
+                                        $item = json_decode($checkedTask->getFile(), true);
+                                        foreach ($item as $file){?>
+                                            <a href="<?= HTTP .'/'.$file ?>" target="_blank"><i class="fa fa-paperclip"></i> </a><br>
+                                            <?php
+                                        }
+                                    }
+                                ?>
+                                <button class="border border-0 delItem" type="button" data-id="<?=$checkedTask->getTaskId()?>" style="text-decoration: none !important; background-color: inherit !important;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                                    </svg>
+                                </button>
                             </td>
-                            <td>
-                                <table id="smallTableArchived">
-                                    <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php
-                                    $y =1; foreach($departmentBothChechedTasks as $taskItem) :
-                                        if ( $taskItem->getUserId() == $taskdepartment->getUserId() ) :
+
+                            <td class="d-flex flex-wrap">
+
+                                <ul class="list-unstyled">
+                                    <p class="h6">Task</p>
+                                    <li class="nav-item">
+                                        <?php
+                                            echo '<p class="fw-small fs-6 text-capitalize mb-1">'.$checkedTask->getTitle().'<br>'. $checkedTask->getTodo().'</p>';
+                                        ?>
+                                    </li>
+                                </ul>
+                                <hr class="vr mx-2" style="background-color: gold !important; color: gold !important; border: 2px solid gold !important;">
+                                <ul class="list-unstyled py-4">
+                                    <li class="">
+                                        <input type="radio" name="observation" id="donePerfectly" value="Done Perfectly">
+                                        <label class="label" for="donePerfectly">Done Perfectly</label>
+                                    </li>
+                                    <li class="">
+                                        <input type="radio" name="observation" id="doneOkay" value="Done Okay">
+                                        <label for="doneOkay">Done Okay</label>
+                                    </li>
+                                    <li class="">
+                                        <input type="radio" name="observation" id="donePoorly" value="Done Poorly">
+                                        <label for="donePoorly">Done Poorly</label>
+                                    </li>
+                                </ul>
+                                <hr class="vr mx-2" style="background-color: gold !important; color: gold !important; border: 2px solid gold !important;">
+                                <ul class="list-unstyled py-4">
+                                    <li class="">
+                                        <input type="radio" name="observation" id="doneBeforeTime" value="Done Before Time">
+                                        <label class="label" for="doneBeforeTime">Done Before Time</label>
+                                    </li>
+                                    <li class="">
+                                        <input type="radio" name="observation" id="doneOnTime" value="Done On Time">
+                                        <label for="doneOnTime">Done On Time</label>
+                                    </li>
+                                    <li class="">
+                                        <input type="radio" name="observation" id="doneLate" value="Done Late">
+                                        <label for="doneLate">Done Late</label>
+                                    </li>
+                                </ul>
+                                <hr class="vr mx-2" style="background-color: gold !important; color: gold !important; border: 2px solid gold !important;">
+                            </td>
+
+                            <td class="text-start text-sm">
+                                <div class="ms-0 d-flex justify-content-between flex-wrap">
+                                    <ul class="ms-0 list-unstyled">
+                                        <li class="mr-2">Department</li>
+                                    </ul>
+                                    <ul class="list-unstyled">
+                                        <li class="">
+                                            Responsible
+                                            <br>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1"/>
+                                            </svg>
+                                        </li>
+                                    </ul>
+                                    <ul class="list-unstyled">
+                                        <li class=""><?= $checkedTask->fullname?></li>
+                                    </ul>
+                                    <ul class="list-unstyled">
+                                        <li class="">Date and Hour<br>
+                                            <?php
+                                            $f = ($checkedTask->getCreatedAt()) ? new DateTime($checkedTask->getCreatedAt()) : date('Y-m-d H:i:s');
+                                            echo $f->format('Y-m-d');
                                             ?>
-                                            <tr id="<?=$taskItem->getTaskId()?>" data-id="departmentTasksListInDropdownFilter_<?=$taskItem->department_id?>">
-                                                <td>
-                                                    <?php
-                                                    echo $y++ .'<br>';
-                                                    if ($taskItem->getFile()){
-                                                        $item = json_decode($taskItem->getFile(), true);
-                                                        foreach ($item as $file){?>
-                                                            <a href="<?= HTTP .'/'.$file ?>" target="_blank"><i class="fa fa-paperclip"></i> </a><br>
-                                                            <?php
-                                                        }
-                                                    }
-                                                    ?>
-                                                    <button class="border border-0 delItem" type="button" data-id="<?=$taskItem->getTaskId()?>" style="text-decoration: none !important; background-color: inherit !important;">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-trash3-fill" viewBox="0 0 16 16">
-                                                            <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
-                                                        </svg>
-                                                    </button>
-                                                </td>
-                                                <td class="text-start text-sm">
-                                                    <h6>Task</h6>
-                                                    <div class="row">
-                                                        <ul class="list-unstyled col-md-8">
-                                                            <li class="nav-item">
-                                                                <?php $f = ($taskItem->getCreatedAt()) ? new DateTime($taskItem->getCreatedAt()) : date('Y-m-d H:i:s');
-                                                                echo '<p class="fw-small fs-6 text-capitalize mb-1">
-                                                                  '.$taskItem->getTitle().'<br>'. $taskItem->getTodo().'
-                                                                  <br> assigned To: "'.$taskItem->fullname.'"<br>Created At: ' .$f->format('Y-m-d') .'</p>';
-                                                                ?>
-                                                            </li>
-                                                        </ul>
-                                                        <ul class="list-unstyled col-md-4">
-                                                            <li>
-                                                                <span class="d-inline">
-                                                                    <input type="checkbox" name="usercheckbox" id="usercheckbox" class="checkbox" value="<?=$taskItem->getIsChecked()?>" <?php echo ($taskItem->getIsChecked()) ? 'checked="checked"' : ''?> data-id="<?=$taskItem->getTaskId().'_isChecked'?>">
-                                                                    <label class="text-sm" for="usercheckbox">Responsible</label>
-                                                                </span>
-                                                            </li>
-                                                            <li class="d-inline">
-                                                                <input type="checkbox" name="admincheckbox" id="admincheckbox" class="checkbox" value="<?=$taskItem->getIsCheckedByAdmin()?>" <?php echo ($taskItem->getIsCheckedByAdmin()) ? 'checked="checked"' : ''?> data-id="<?=$taskItem->getTaskId().'_IsCheckedByAdmin'?>">
-                                                                <label for="admincheckbox" class="text-sm">Admin</label>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        <?php endif; endforeach;?>
-                                    </tbody>
-                                </table>
+                                        </li>
+                                    </ul>
+                                </div>
+
                             </td>
+
                         </tr>
                     <?php endforeach;?>
                     <tbody>
@@ -1460,28 +1653,6 @@ class Task
                         {"data":1},
                         {"data":2}
                     ]
-                })
-
-                $(document).ready(() => {
-
-                    const smallTables = document.querySelectorAll("#smallTableArchived")
-                    Array.from(smallTables).forEach(smallTable => {
-                        let  opts = {
-                            "RowId": 0,
-                            "searching": true,
-                            "paging":true,
-                            "pageLength": 2,
-                            "orderable":true,
-                            "order": [[0, 'asc']],
-                            "autoWidth": false,
-                            "selected": true,
-                            "columns":[
-                                {"data":0},
-                                {"data":1}
-                            ]
-                        }
-                        new DataTable(smallTable, opts);
-                    })
                 })
 
             </script>

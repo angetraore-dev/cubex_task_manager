@@ -8,7 +8,7 @@ $(document).ready(function (){
 
     //Add-Task-Page and Done Archive
     let addTaskPageDiv = $('#addTaskPageContainerDiv')
-    let doneArchiveDiv = $('#doneArchiveContainerDiv')
+    //let doneArchiveDiv = $('#doneArchiveContainerDiv')
     let allTablesDiv = $('#allTables');
     let loader = $("#loaderDiv");
     let userDropdownFilter = $('#userbydepartment-1')

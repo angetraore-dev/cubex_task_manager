@@ -36,4 +36,10 @@ class StaticDb extends Database
         <?php
     }
 
+    public static function getLastInsertId()
+    {
+        return \App\Models\Database::getDb()->LastInsertId();
+
+    }
+
 }
