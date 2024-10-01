@@ -73,17 +73,27 @@ const doneArchive = () => {
             success: function (response){
                 console.log(response)
                 loader.addClass('d-none').fadeOut()
-                if (( ! response )){
+
+                if (response == false){
+
                     Toast.fire({
                         icon: "error",
                         text: "Something went wrong, plz contact the dev"
                     })
+
+                }else if(response == "already exist"){
+
+                    Toast.fire({
+                        icon: "error",
+                        text: "Libelle Already Exist"
+                    })
+
                 }else {
                     Toast.fire({
                         iconColor:"success",
                         icon: "success",
                         title:"Success",
-                        text: "Task archived"
+                        text: "Task successfully archived"
                     }).then(() => $("#staticBackdropDoneArchive").modal('hide'))
                 }
                 refreshTableAfterAction(lastOpenedFunc)

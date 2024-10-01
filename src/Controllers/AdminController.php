@@ -288,16 +288,18 @@ class AdminController
 
     public function doneArchive():void
     {
-        $field = [];
-        $class_name = "";
-        $bindRes = false;
-        $receiveData = 0;
+
 
         if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
 
             switch ($_POST){
 
                 case isset($_POST["doneArchiveCrud"]):
+
+                    $field = [];
+                    $class_name = null;
+                    $bindRes = false;
+                    $receiveData = 0;
 
                     $data = json_decode($_POST["doneArchiveCrud"]);
 
@@ -315,14 +317,28 @@ class AdminController
                         $field['archiveid'] = $receiveData;
 
                     }else{
-                        //bind the data to return an archive folder ID
-                        $class_name = "Archive";
-                        $bindArchive = StaticDb::getDb()->insert(["archive_id" => null, "libelle" => $receiveData], $class_name);
+                        //Check if Libelle Already exist
 
-                        if ($bindArchive){
-                            $getArchiveId = StaticDb::getDb()->LastInsertId();
+                        $findId = Archive::returnIdByLibelle($receiveData);
+
+                        if (count($findId)){
+
+                            echo "already exist";
+
+                        }else{
+                            //bind the data to return an archive folder ID
+
+                            $class_name = "Archive";
+                            $bindArchive = StaticDb::getDb()->insert(["archive_id" => null, "libelle" => $receiveData], $class_name);
+
+                            if ($bindArchive){
+
+                                $lastInsert = Archive::returnIdByLibelle($receiveData);
+                                $getArchiveId = $lastInsert[0]->getArchiveId();
+                                $field['archiveid'] = $getArchiveId;
+                            }
+
                         }
-                        $field['archiveid'] = $getArchiveId;
 
                     }
                     $field['taskid'] = $data->taskId;
@@ -330,13 +346,6 @@ class AdminController
 
                     //Bind ArchiveTask
                     $class_name = "Archivetask";
-                    var_dump($field);
-                    die();
-
-
-
-
-
                     $bindArchiveTask = StaticDb::getDb()->insert($field, $class_name);
 
                     //Update task To set isArchived to True

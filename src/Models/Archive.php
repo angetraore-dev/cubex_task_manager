@@ -43,6 +43,12 @@ class Archive
         return StaticDb::getDb()->query($stmt, get_called_class());
     }
 
+    public static function returnIdByLibelle($libelle):mixed
+    {
+        $stmt = "SELECT * FROM archive WHERE libelle = ?";
+        return StaticDb::getDb()->prepare($stmt, [$libelle], get_called_class());
+    }
+
     public static function addArchiveForm():void
     {
         ?>
