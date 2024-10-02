@@ -110,13 +110,14 @@ const doneArchive = () => {
 
     //Done Archive Crud Action
     $(document).on('click', 'li input[name="observation"]', function (){
-        console.log(this)
+        //console.log(this)
 
         let TitleTaskIdFullname = $(this).closest("tr").data('id')
         let concatTitleTaskIdFullname = TitleTaskIdFullname.split('-')
         let obs = this.value
         let lastOpenedFunc = $(this).closest("table").data('id')
 
+        $("#addArchiveForm select#existing_archive").load(location.href+" #existing_archive>*","");
         $('#addArchiveForm input[name="taskTitle"]').val(concatTitleTaskIdFullname[0])
         $('#addArchiveForm input[name="taskId"]').val(concatTitleTaskIdFullname[1])
         $('#addArchiveForm input[name="userFullname"]').val(concatTitleTaskIdFullname[2])
@@ -124,6 +125,7 @@ const doneArchive = () => {
         $('#addArchiveForm input[name="lastOpenedFunc"]').val(lastOpenedFunc)
 
         $('#staticBackdropDoneArchive').modal('show')
+
     })
 
     const getAddArchiveForm = (form) => {

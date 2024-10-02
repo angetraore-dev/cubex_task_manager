@@ -66,7 +66,7 @@ class Archive
                 <div class="col archive_libelle_select">
                     <label for="existing_archive">Or</label>
                     <select id="existing_archive" class="form-control bg-body-tertiary text-dark" name="existing_archive">
-                        <option value="">choose here</option>
+                        <option value="" selected>choose here</option>
                         <?php $allArchiveLibelle = Archive::readAll(); if ($allArchiveLibelle): foreach ($allArchiveLibelle as $item): ?>
                             <option value="<?= $item->getArchiveId()?>"><?= $item->getLibelle()?></option>
                         <?php endforeach; else: echo '<option value="">no archive record found Yep</option>'; endif;?>

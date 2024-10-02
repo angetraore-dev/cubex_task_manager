@@ -1530,6 +1530,7 @@ class Task
                     </tr>
                     </thead>
                     <!-- departmentTasksListInDropdownFilter_<=$taskdepartment->department_id>-->
+                    <tbody>
                     <?php $y = 1; foreach ($departmentBothChechedTasks as $checkedTask): ?>
                         <tr data-id="<?=$checkedTask->getTitle() .'-'.$checkedTask->getTaskId() .'-'.$checkedTask->fullname ?>">
                             <td class="text-start">
@@ -1623,7 +1624,7 @@ class Task
                             </td>
                         </tr>
                     <?php endforeach;?>
-                    <tbody>
+
                     </tbody>
                 </table>
             </div>
@@ -1669,12 +1670,13 @@ class Task
     public function displayUserTasksInDoneArchive($userId):void
     {
         $userTasksBothChecked = Task::bothCheckedByUser($userId);
+        //var_dump($userTasksBothChecked);
         if ($userTasksBothChecked):
             ?>
-            <div id="userTaskTableDiv">
+            <div id="userByDepartmentArchiveTakDiv">
                 <input type="hidden" name="totalArchived" id="totalArchived" value="<?=count($userTasksBothChecked)?>">
 
-                <table class="table table-dark text-light text-capitalize caption-top" id="userTaskTable">
+                <table class="table table-dark text-light text-capitalize caption-top userTaskBothCheckedTable" id="userTaskBothCheckedTable" data-id="Task-displayUserTasksInDoneArchive-<?=$userId?>">
                     <caption class="my-3 text-center p-2" style="background-color: <?=$userTasksBothChecked[0]->color?>">
                         <h3 class="d-inline text-sm fw-small text-white">
                             <?=$userTasksBothChecked[0]->fullname .' Checked Tasks from ' .$userTasksBothChecked[0]->libelle?>
@@ -1685,25 +1687,23 @@ class Task
                         <th></th>
                         <th></th>
                         <th></th>
-                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <?php $i=1; foreach ($userTasksBothChecked as $task): ?>
-                        <tr data-id="userTasksTableOnClickUserListInDropdownFilter_<?=$userTasksBothChecked[0]->getUserId()?>">
-
-                            <td>
+                    <?php $y=1; foreach ($userTasksBothChecked as $checkedTask): ?>
+                        <tr data-id="<?=$checkedTask->getTitle() .'-'.$checkedTask->getTaskId() .'-'.$checkedTask->fullname ?>">
+                            <td class="text-start">
                                 <?php
-                                echo $i++ .'<br>';
-                                if ($task->getFile()){
-                                    $item = json_decode($task->getFile(), true);
+                                echo $y++ .'<br>';
+                                if ($checkedTask->getFile()){
+                                    $item = json_decode($checkedTask->getFile(), true);
                                     foreach ($item as $file){?>
                                         <a href="<?= HTTP .'/'.$file ?>" target="_blank"><i class="fa fa-paperclip"></i> </a><br>
                                         <?php
                                     }
                                 }
                                 ?>
-                                <button class="border border-0 delItem" type="button" data-id="<?=$task->getTaskId()?>" style="text-decoration: none !important; background-color: inherit !important;">
+                                <button class="border border-0 delItem" type="button" data-id="<?=$checkedTask->getTaskId()?>" style="text-decoration: none !important; background-color: inherit !important;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-trash3-fill" viewBox="0 0 16 16">
                                         <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
                                     </svg>
@@ -1711,42 +1711,78 @@ class Task
                             </td>
 
                             <td>
-                                <?=$task->getTaskId()?>
-                            </td>
-                            <td class="text-start text-sm">
-                                <h6>Task</h6>
-                                <div class="row">
-                                    <ul class="list-unstyled col-md-8">
+                                <form name="doneArchiveAction" class="d-flex flex-wrap form-inline">
+                                    <ul class="list-unstyled">
+                                        <li class="h6">Task</li>
                                         <li class="nav-item">
-                                            <?php $f = ($task->getCreatedAt()) ? new DateTime($task->getCreatedAt()) : date('Y-m-d H:i:s');
-                                            echo '<p class="fw-small fs-6 text-capitalize mb-1">
-                                                                  '.$task->getTitle().'<br>'. $task->getTodo().'
-                                                                  <br> Created At: ' .$f->format('Y-m-d') .'</p>';
+                                            <?php
+                                            echo '<p class="fw-small fs-6 text-capitalize mb-1">'.$checkedTask->getTitle().'<br>'. $checkedTask->getTodo().'</p>';
                                             ?>
                                         </li>
                                     </ul>
-                                    <ul class="list-unstyled col-md-4">
-                                        <li>
-                                                                <span class="d-inline">
-                                                                    <input type="checkbox" name="usercheckbox" id="usercheckbox" class="checkbox" value="<?=$task->getIsChecked()?>" <?php echo ($task->getIsChecked()) ? 'checked="checked"' : ''?> data-id="<?=$task->getTaskId().'_isChecked'?>">
-                                                                    <label class="text-sm" for="usercheckbox">Responsible</label>
-                                                                </span>
+                                    <hr class="vr mx-2" style="background-color: gold !important; color: gold !important; border: 2px solid gold !important;">
+                                    <ul class="list-unstyled py-4">
+                                        <li class="">
+                                            <input type="radio" name="observation" id="donePerfectly" value="Done Perfectly">
+                                            <label class="label" for="donePerfectly">Done Perfectly</label>
                                         </li>
-                                        <li class="d-inline">
-                                            <input type="checkbox" name="admincheckbox" id="admincheckbox" class="checkbox" value="<?=$task->getIsCheckedByAdmin()?>" <?php echo ($task->getIsCheckedByAdmin()) ? 'checked="checked"' : ''?> data-id="<?=$task->getTaskId().'_IsCheckedByAdmin'?>">
-                                            <label for="admincheckbox" class="text-sm">Admin</label>
+                                        <li class="">
+                                            <input type="radio" name="observation" id="doneOkay" value="Done Okay">
+                                            <label for="doneOkay">Done Okay</label>
+                                        </li>
+                                        <li class="">
+                                            <input type="radio" name="observation" id="donePoorly" value="Done Poorly">
+                                            <label for="donePoorly">Done Poorly</label>
+                                        </li>
+                                    </ul>
+                                    <hr class="vr mx-2" style="background-color: gold !important; color: gold !important; border: 2px solid gold !important;">
+                                    <ul class="list-unstyled py-4">
+                                        <li class="">
+                                            <input type="radio" name="observation" id="doneBeforeTime" value="Done Before Time">
+                                            <label class="label" for="doneBeforeTime">Done Before Time</label>
+                                        </li>
+                                        <li class="">
+                                            <input type="radio" name="observation" id="doneOnTime" value="Done On Time">
+                                            <label for="doneOnTime">Done On Time</label>
+                                        </li>
+                                        <li class="">
+                                            <input type="radio" name="observation" id="doneLate" value="Done Late">
+                                            <label for="doneLate">Done Late</label>
+                                        </li>
+                                    </ul>
+                                    <hr class="vr mx-2" style="background-color: gold !important; color: gold !important; border: 2px solid gold !important;">
+
+                                </form>
+                            </td>
+                            <td class="text-start text-sm">
+                                <div class="row mb-2">
+                                    <?php Department::buttonAddDepartment($checkedTask);?>
+                                </div>
+                                <div class="ms-0 d-flex justify-content-between flex-wrap">
+                                    <ul class="list-unstyled">
+                                        <li class="ms-0 text-center">
+                                            <?php echo 'Department<br><span class="p-1" style="background-color: '.$checkedTask->color.'!important;">' .$checkedTask->libelle.'</span><br><i class="fa fa-caret-down mx-auto"></i>'?>
+                                        </li>
+                                    </ul>
+                                    <ul class="list-unstyled">
+                                        <li class="">
+                                            <?= 'responsible<br>'.$checkedTask->fullname?>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="list-unstyled">
+                                        <li class="">Date and Hour<br>
+                                            <?php
+                                            $f = ($checkedTask->getCreatedAt()) ? new DateTime($checkedTask->getCreatedAt()) : date('Y-m-d H:i:s');
+                                            echo $f->format('Y-m-d');
+                                            ?>
                                         </li>
                                     </ul>
                                 </div>
-                            </td>
-                            <td class="text-center text-sm">
-                                <h6>Date & Hour</h6><br>
-                                <?php
-                                $f = new DateTime($task->getDueDate());
-                                echo $f->format('d-m-Y H:i A');
-                                ?>
+
                             </td>
                         </tr>
+
                     <?php endforeach;?>
                     </tbody>
 
@@ -1761,33 +1797,32 @@ class Task
                     dis = tot
                 }
                 p.innerText = dis
-                $('#userTaskTable').DataTable({
+                $('#userTaskBothCheckedTable').DataTable({
                     "RowId": 0,
                     "searching": true,
                     "paging":true,
                     "pageLength": 10,
                     "orderable":true,
-                    "order": [[1, 'asc']],
+                    //"order": [[1, 'asc']],
                     "autoWidth": false,
                     "selected": true,
                     "columns":[
                         {"data":0},
                         {"data":1},
-                        {"data":2},
-                        {"data":3}
+                        {"data":2}
                     ],
                     "columnDefs":[
                         {
                             "target":1,
                             "searchable":false,
-                            "visible":false
+                            //"visible":false
                         }
                     ]
                 })
             </script>
 
         <?php
-        else: echo "<p class='text-sm text-center'>No user tasks found </p>";
+        else: echo "<p class='text-sm text-center'>No user both checked tasks found </p>";
         endif;
     }
 

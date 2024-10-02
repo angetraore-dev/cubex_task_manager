@@ -35,11 +35,10 @@ class Route
 
     public static function contentToRender():void
     {
-        //__DIR__ or DOCROOT SOLVE REQUIRE ERROR
+        //__DIR__ or DOCROOT SOLVE REQUIRE ERRORs
         $vals = scandir(DOCROOT.'/src/Controllers');
 
         $uri = self::processURI();
-        //var_dump($uri);
 
         //Check if uri require a disponible Controller
         if ( ! in_array($uri['controller'].'.php', $vals) ){
