@@ -55,7 +55,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="<?=HTTP.'/login'?>" class="nav-link">sign in</a>
+                            <a href="<?=HTTP.'/login'?>" class="nav-link signin">sign in</a>
                         </li>
 
                     </ul>
@@ -90,6 +90,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
 <script type="text/javascript" src="<?=HTTP.'/assets/js/atdevs.js'?>"></script>
+<script type="text/javascript" src="<?=HTTP.'/assets/js/done-archive_process.js'?>"></script>
+
+
+
 
 </body>
 </html>
+<!--
+
+<script type="text/javascript" src="<=HTTP.'/assets/js/login.js'?>"
+<script defer type="text/javascript" src="<=HTTP.'/assets/js/menu_process.js'?>
+-->
