@@ -110,6 +110,7 @@ const doneArchive = () => {
 
     //Done Archive Crud Action
     $(document).on('click', 'li input[name="observation"]', function (){
+        console.log(this)
 
         let TitleTaskIdFullname = $(this).closest("tr").data('id')
         let concatTitleTaskIdFullname = TitleTaskIdFullname.split('-')
