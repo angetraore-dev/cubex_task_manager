@@ -4,6 +4,7 @@ namespace App;
 
 class Route
 {
+    //Get The URI
     private static function getURI():array
     {
         return explode("/", $_GET["route"]); //return empty

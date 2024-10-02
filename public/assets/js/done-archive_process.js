@@ -24,7 +24,7 @@ const doneArchive = () => {
         timerProgressBar: true,
     })
 
-    console.info("DOM loaded");
+    //console.info("DOM loaded");
     $('#doneArchiveH3').addClass('gold text-uppercase')
 
     //Vars
@@ -71,7 +71,6 @@ const doneArchive = () => {
             url: "http://localhost/php/taskmanagerapp/admin/doneArchive",
             data: {doneArchiveCrud: JSON.stringify(obj)},
             success: function (response){
-                console.log(response)
                 loader.addClass('d-none').fadeOut()
 
                 if (response == false){
@@ -110,7 +109,6 @@ const doneArchive = () => {
 
     //Done Archive Crud Action
     $(document).on('click', 'li input[name="observation"]', function (){
-        //console.log(this)
 
         let TitleTaskIdFullname = $(this).closest("tr").data('id')
         let concatTitleTaskIdFullname = TitleTaskIdFullname.split('-')
@@ -209,7 +207,7 @@ const doneArchive = () => {
     }
 
     //Render Departments UL List in Department Filter
-    $(document).on('click', 'div.departmentListFilterInDoneArchive', function (){
+    $(document).on('click', 'button#departmentListFilterInDoneArchive', function (){
         DepartmentListFilterInDoneArchive()
     })
 
@@ -258,7 +256,6 @@ const doneArchive = () => {
     //Get both checked Tasks By userId
     $(document).on('click', 'ul li.userListInArchiveDropdown', function (){
         let userIdForCheckedTask = $(this).closest('li').data('id')
-        console.log(userIdForCheckedTask)
         let values = userIdForCheckedTask.split("-")
         let entity = values[0]
         let filterFunc = values[1]

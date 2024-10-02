@@ -365,8 +365,8 @@ ob_start();?>
             <!-- Col Container Page -->
         </div>
 
-            <!-- Done Archive container -->
-            <div class="col-lg-11 col-10 p-1 d-none border border-1" id="doneArchiveContainerDiv">
+            <!-- Done Archive container  border border-1-->
+            <div class="col-lg-11 col-10 p-1 d-none" id="doneArchiveContainerDiv">
                 <h3 class="text-center mb-3" id="doneArchiveH3">Done archive</h3>
                 <!-- DIV ROW Total count in rapport with filter department or responsible -->
                 <div class="row g-0 justify-content-between mb-4">
@@ -382,8 +382,8 @@ ob_start();?>
                             <legend class="float-none w-auto text-sm fw-smaller fs-6 text-uppercase">filter</legend>
 
                             <!-- List of all departments doneArchive mx-2-->
-                            <div class="dropdown mx-2 mb-2 departmentListFilterInDoneArchive">
-                                <button class="btn btn-sm border border-1 dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" style="text-decoration: none; color: white !important;">
+                            <div class="dropdown mx-2 mb-2 ">
+                                <button class="btn btn-sm border border-1 dropdown-toggle" id="departmentListFilterInDoneArchive" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" style="text-decoration: none; color: white !important;">
                                     departments
                                 </button>
                                 <ul class="dropdown-menu list-unstyled doneArchiveDepartmentListFilter" id="doneArchiveDepartmentListFilter">
@@ -406,6 +406,9 @@ ob_start();?>
 
                     <!-- DONE ARCHIVE RESPONSE DIV -->
                     <div class="row g-0 mb-4 d-none doneArchiveResponseDiv" style="height: 100% !important; min-height: 100% !important;" id="doneArchiveResponseDiv"></div>
+                </div>
+                <div class="text-end my-4">
+                    <button type="button" class="btn btn-success btn-outline-secondary text-white text-center" onclick="return window.location.reload();">REFRESH</button>
                 </div>
             </div>
         </div>
