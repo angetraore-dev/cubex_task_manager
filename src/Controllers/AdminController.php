@@ -296,71 +296,73 @@ class AdminController
 
                 case isset($_POST["doneArchiveCrud"]):
 
-                    $field = [];
-                    $class_name = null;
-                    $bindRes = false;
-                    $receiveData = 0;
-
                     $data = json_decode($_POST["doneArchiveCrud"]);
 
-                    if ($data->existing_archive){
+                    if ( ! empty($data->existing_archive) ){
+                        //In case Archive Already Exist
+                        $field = [
+                            'taskid' => $data->taskId,
+                            'observation' => $data->obs,
+                            'archiveid' => $data->existing_archive
+                        ];
+                        //Bind Archivetask
+                        $class_name = "Archivetask";
+                        $bindArchiveTask = StaticDb::getDb()->insert($field, $class_name);
 
-                        $receiveData = $data->existing_archive;
+                        //Update the Concerned Task to isArchived got True
+                        if ( $bindArchiveTask ){
+
+                            $class_name = "Task";
+                            $updateTask = StaticDb::getDb()->update($data->taskId, ["isArchived" => true], $class_name);
+
+                            echo $updateTask;
+                        }
+
+
                     }else{
+                        //Here Create Archive and return Id to Bind ArchiveTask but before check if Libelle already exist
 
                         $receiveData = $data->archive_libelle;
-                    }
+                        $checkIfExist = Archive::returnIdByLibelle($receiveData);
 
-                    if (is_int($receiveData)){
-                        //existing_archive Libelle
-
-                        $field['archiveid'] = $receiveData;
-
-                    }else{
-                        //Check if Libelle Already exist
-
-                        $findId = Archive::returnIdByLibelle($receiveData);
-
-                        if (count($findId)){
+                        if (count($checkIfExist)){
 
                             echo "already exist";
 
                         }else{
-                            //bind the data to return an archive folder ID
+                            //Create archive
 
                             $class_name = "Archive";
-                            $bindArchive = StaticDb::getDb()->insert(["archive_id" => null, "libelle" => $receiveData], $class_name);
+                            $createArchive = StaticDb::getDb()->insert(["libelle" => $receiveData], $class_name);
 
-                            if ($bindArchive){
+                            //Get last Insert Id
+                            if ($createArchive){
 
-                                $lastInsert = Archive::returnIdByLibelle($receiveData);
-                                $getArchiveId = $lastInsert[0]->getArchiveId();
-                                $field['archiveid'] = $getArchiveId;
+                                $getLastInsert = Archive::returnIdByLibelle($receiveData);
+                                $lastInsertId = $getLastInsert[0]->getArchiveId();
+
+                                //Bind ArchiveTask
+                                $field = [
+                                    'taskid' => $data->taskId,
+                                    'observation' => $data->obs,
+                                    'archiveid' => $lastInsertId
+                                ];
+                                $class_name = "Archivetask";
+                                $bindArchiveTask = StaticDb::getDb()->insert($field, $class_name);
+
+                                //update Concerned Task
+                                if ($bindArchiveTask){
+                                    $class_name = "Task";
+                                    $updateTask = StaticDb::getDb()->update($data->taskId, ['isArchived' => true], $class_name);
+
+                                    echo $updateTask;
+                                }
+
                             }
 
                         }
 
                     }
-                    $field['taskid'] = $data->taskId;
-                    $field['observation'] = $data->obs;
-
-                    //Bind ArchiveTask
-                    $class_name = "Archivetask";
-                    $bindArchiveTask = StaticDb::getDb()->insert($field, $class_name);
-
-                    //Update task To set isArchived to True
-                    if ($bindArchiveTask){
-                        $class_name = "Task";
-                        $bindTaskIsArchived = StaticDb::getDb()->update($data->taskId, ['isArchived' => true], $class_name);
-
-                        if ($bindTaskIsArchived){
-
-                            $bindRes = true;
-                        }
-                    }
-
-
-                    echo $bindRes;
 
 
                     break;

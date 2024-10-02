@@ -77,14 +77,18 @@ const doneArchive = () => {
                 if (response == false){
 
                     Toast.fire({
+                        iconColor: "error",
                         icon: "error",
+                        title:"Error",
                         text: "Something went wrong, plz contact the dev"
                     })
 
                 }else if(response == "already exist"){
 
                     Toast.fire({
+                        iconColor: "error",
                         icon: "error",
+                        title:"Error",
                         text: "Libelle Already Exist"
                     })
 
@@ -94,7 +98,10 @@ const doneArchive = () => {
                         icon: "success",
                         title:"Success",
                         text: "Task successfully archived"
-                    }).then(() => $("#staticBackdropDoneArchive").modal('hide'))
+                    }).then(() => {
+                        $('#addArchiveForm').get(0).reset()
+                        $("#staticBackdropDoneArchive").modal('hide')
+                    })
                 }
                 refreshTableAfterAction(lastOpenedFunc)
             }
