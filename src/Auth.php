@@ -6,6 +6,7 @@ use App\Models\User;
 
 class Auth
 {
+    //Authentication Class
     /**
      * @param $user
      * @return void

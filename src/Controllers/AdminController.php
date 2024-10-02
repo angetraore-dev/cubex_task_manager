@@ -286,6 +286,9 @@ class AdminController
         }
     }
 
+    /**
+     * @return void
+     */
     public function doneArchive():void
     {
 
